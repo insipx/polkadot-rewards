@@ -55,20 +55,20 @@ impl<'a> Api<'a> {
         Ok(price.consume())
     }
 
-    pub fn rewards(address: String, page: usize) -> Result<List<Reward>, Error> {
+    pub fn rewards(&self, address: String, page: usize) -> Result<List<Reward>, Error> {
         let req = get_endpoint(&self.app.network);
 
         let mut buf: Vec<u8> = Vec::with_capacity(128);
         let _ = json::object! {
-            "address": app.address,
+            "address": self.app.address.as_str(),
             "page": page,
-            "row": 10
+            "row": 10 // this is how many items the api will return. Not sure why 'row' was chosen, but it kindof makes sense i guess 🤷
         }
         .write(&mut buf)?;
 
         let rewards = req
             .set("Content-Type", "application/json")
-            .send(buf.as_slice())
+            .send(buf.as_slice())?
             .into_string()?;
         let rewards: ApiResponse<List<Reward>> = miniserde::json::from_str(&rewards)?;
         Ok(rewards.consume())
