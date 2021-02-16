@@ -18,33 +18,40 @@
 
 use crate::{
     cli::{App, Network},
-    primitives::{ApiResponse, List, Price, Record, Reward},
+    primitives::{ApiResponse, List, Price, Reward},
 };
 use anyhow::Error;
-use argh::FromArgs;
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
 const KUSAMA_ENDPOINT: &str = "https://kusama.subscan.io/api/";
+const PRICE: &str = "open/price";
+const REWARD_SLASH: &str = "scan/account/reward_slash";
 
-fn get_endpoint(network: &Network) -> ureq::Request {
+fn get_endpoint(network: &Network, end: &str) -> ureq::Request {
     match network {
-        Network::Polkadot => ureq::post(POLKADOT_ENDPOINT),
-        Network::Kusama => ureq::post(KUSAMA_ENDPOINT),
+        Network::Polkadot => ureq::post(&format!("{}{}", POLKADOT_ENDPOINT, end)),
+        Network::Kusama => ureq::post(&format!("{}{}", KUSAMA_ENDPOINT, end)),
     }
 }
 
 // TODO: Rate limit these requests so we don't end up trying to DoS subscan.
 
+/// Wraps the subscan API to make things easy
 pub struct Api<'a> {
     app: &'a App,
 }
 
 impl<'a> Api<'a> {
+    /// instantiate a new instance of the subscan API
+    pub fn new(app: &'a App) -> Self {
+        Self { app }
+    }
+
     /// get a price at a point in time from subscan.
     ///
     /// `time`: UNIX timestamp of the time to query (UTC)
-    pub fn price(&self, time: usize) -> Result<Price, Error> {
-        let req = get_endpoint(&self.app.network);
+    fn price(&self, time: usize) -> Result<Price, Error> {
+        let req = get_endpoint(&self.app.network, PRICE);
 
         let mut buf: Vec<u8> = Vec::with_capacity(32);
         let _ = json::object! { "time": time }.write(&mut buf)?;
@@ -62,8 +69,8 @@ impl<'a> Api<'a> {
     ///
     /// `page`: Which page to query
     /// `count`: How many to return in one request. There's some upper limit on this, probably something like 100
-    pub fn rewards(&self, page: usize, count: usize) -> Result<List<Reward>, Error> {
-        let req = get_endpoint(&self.app.network);
+    fn rewards(&self, page: usize, count: usize) -> Result<List<Reward>, Error> {
+        let req = get_endpoint(&self.app.network, REWARD_SLASH);
 
         let mut buf: Vec<u8> = Vec::with_capacity(128);
         let _ = json::object! {
@@ -90,15 +97,29 @@ impl<'a> Api<'a> {
         // first, get rewards from the first page
         let reward = self.rewards(0, 10)?;
         let total_pages = reward.count / 10;
+        rewards.extend(reward.list.into_iter());
 
-        for i in 1..total_pages {
+        for i in 1..=total_pages {
+            // rate limited
+            std::thread::sleep(std::time::Duration::from_millis(35));
             rewards.extend(self.rewards(i, 10)?.list.into_iter());
         }
-
+        println!("Total Rewards Received: {}", rewards.len());
         // TODO: this is kind of cheating but it's easier than trying to query just what we need
         Ok(rewards
             .into_iter()
-            .filter(|r| r.block_timestamp >= from && r.block_timestamp <= to)
+            .filter(|r| (r.block_timestamp >= from) && (r.block_timestamp <= to))
             .collect())
+    }
+
+    /// Returns a vector of prices corresponding to the passed-in vector of Rewards.
+    pub fn fetch_prices(&self, rewards: &[Reward]) -> Result<Vec<Price>, Error> {
+        let mut prices = Vec::new();
+        for r in rewards.iter() {
+            // we're rate limited at 10 req/s
+            std::thread::sleep(std::time::Duration::from_millis(100));
+            prices.push(self.price(r.block_timestamp)?)
+        }
+        Ok(prices)
     }
 }

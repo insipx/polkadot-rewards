@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
+use crate::api::Api;
 use anyhow::{bail, Error};
 use argh::FromArgs;
 use chrono::{naive::NaiveDateTime, offset::Utc};
@@ -38,10 +39,13 @@ pub struct App {
 
 // we don't return an anyhow::Error here because `argh` macro expects error type to be a `String`
 pub fn date_from_string(value: &str) -> Result<chrono::NaiveDateTime, String> {
-    match NaiveDateTime::parse_from_str(value, "%Y-%m-%d %H:%M:%S") {
+    let time = match NaiveDateTime::parse_from_str(value, "%Y-%m-%d %H:%M:%S") {
         Ok(t) => Ok(t),
         Err(e) => Err(e.to_string()),
-    }
+    };
+    let time = time?;
+    println!("{:?}", time.timestamp());
+    Ok(time)
 }
 
 #[derive(PartialEq, Debug)]
@@ -65,5 +69,13 @@ impl FromStr for Network {
 
 pub fn app() -> Result<(), Error> {
     let app: App = argh::from_env();
+    let api = Api::new(&app);
+    println!("FROM: {}", app.from.timestamp());
+    let rewards =
+        api.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)?;
+    let prices = api.fetch_prices(&rewards)?;
+
+    println!("Rewards: {}", miniserde::json::to_string(&rewards));
+    println!("Prices: {}", miniserde::json::to_string(&prices));
     Ok(())
 }
