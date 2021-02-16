@@ -70,7 +70,6 @@ impl FromStr for Network {
 pub fn app() -> Result<(), Error> {
     let app: App = argh::from_env();
     let api = Api::new(&app);
-    println!("FROM: {}", app.from.timestamp());
     let rewards =
         api.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)?;
     let prices = api.fetch_prices(&rewards)?;
