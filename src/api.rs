@@ -40,6 +40,9 @@ pub struct Api<'a> {
 }
 
 impl<'a> Api<'a> {
+    /// get a price at a point in time from subscan.
+    ///
+    /// `time`: UNIX timestamp of the time to query (UTC)
     pub fn price(&self, time: usize) -> Result<Price, Error> {
         let req = get_endpoint(&self.app.network);
 
@@ -55,14 +58,18 @@ impl<'a> Api<'a> {
         Ok(price.consume())
     }
 
-    pub fn rewards(&self, address: String, page: usize) -> Result<List<Reward>, Error> {
+    /// Get rewards from a specific page of subscan API
+    ///
+    /// `page`: Which page to query
+    /// `count`: How many to return in one request. There's some upper limit on this, probably something like 100
+    pub fn rewards(&self, page: usize, count: usize) -> Result<List<Reward>, Error> {
         let req = get_endpoint(&self.app.network);
 
         let mut buf: Vec<u8> = Vec::with_capacity(128);
         let _ = json::object! {
             "address": self.app.address.as_str(),
             "page": page,
-            "row": 10 // this is how many items the api will return. Not sure why 'row' was chosen, but it kindof makes sense i guess 🤷
+            "row": count // this is how many items the api will return. Not sure why 'row' was chosen, but it kindof makes sense i guess 🤷
         }
         .write(&mut buf)?;
 
@@ -72,5 +79,26 @@ impl<'a> Api<'a> {
             .into_string()?;
         let rewards: ApiResponse<List<Reward>> = miniserde::json::from_str(&rewards)?;
         Ok(rewards.consume())
+    }
+
+    /// Fetch all the rewards starting from some point in time, and ending at another
+    ///
+    /// `from`: UNIX timestamp at which to begin returning rewards
+    /// `to`: UNIX timestamp at which to end returning rewards
+    pub fn fetch_all_rewards(&self, from: usize, to: usize) -> Result<Vec<Reward>, Error> {
+        let mut rewards = Vec::new();
+        // first, get rewards from the first page
+        let reward = self.rewards(0, 10)?;
+        let total_pages = reward.count / 10;
+
+        for i in 1..total_pages {
+            rewards.extend(self.rewards(i, 10)?.list.into_iter());
+        }
+
+        // TODO: this is kind of cheating but it's easier than trying to query just what we need
+        Ok(rewards
+            .into_iter()
+            .filter(|r| r.block_timestamp >= from && r.block_timestamp <= to)
+            .collect())
     }
 }

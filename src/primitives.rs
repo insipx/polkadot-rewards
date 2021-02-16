@@ -33,8 +33,8 @@ impl<T: Serialize + Deserialize> ApiResponse<T> {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct List<T: Serialize + Deserialize> {
-    count: usize,
-    list: Vec<T>,
+    pub count: usize,
+    pub list: Vec<T>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -54,15 +54,15 @@ pub struct Record {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Reward {
-    event_index: String,
-    block_num: usize,
-    extrinsic_idx: usize,
-    module_id: String,
-    event_id: String,
-    params: json::Value, // leaving this as general type because we don't need it and i'm lazy
-    extrinsic_hash: String,
-    event_idx: usize,
-    amount: String,
-    block_timestamp: usize,
-    slash_kton: String,
+    pub event_index: String,
+    pub block_num: usize,
+    pub extrinsic_idx: usize,
+    pub module_id: String,
+    pub event_id: String,
+    pub params: json::Value, // leaving this as general type because we don't need it and i'm lazy
+    pub extrinsic_hash: String,
+    pub event_idx: usize,
+    pub amount: String,
+    pub block_timestamp: usize,
+    pub slash_kton: String,
 }
