@@ -24,13 +24,16 @@ use std::str::FromStr;
 pub struct App {
     #[argh(option, from_str_fn(date_from_string))]
     /// define the when to start crawling for staking rewards
-    from: chrono::NaiveDateTime,
+    pub from: chrono::NaiveDateTime,
     /// define when to stop crawling for staking rewards. Defaults to current time.
     #[argh(option, default = "Utc::now()")]
-    to: chrono::DateTime<Utc>,
+    pub to: chrono::DateTime<Utc>,
     /// the network to crawl for rewards. One of: Polkadot, Kusama
     #[argh(option, default = "Network::Polkadot")]
-    network: Network,
+    pub network: Network,
+    /// network-Formatted Address to get staking rewards for
+    #[argh(option)]
+    pub address: String,
 }
 
 // we don't return an anyhow::Error here because `argh` macro expects error type to be a `String`

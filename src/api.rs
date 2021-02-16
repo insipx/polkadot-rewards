@@ -14,12 +14,63 @@
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
+//! Wrapper around calls to Subscans API
+
+use crate::{
+    cli::{App, Network},
+    primitives::{ApiResponse, List, Price, Record, Reward},
+};
 use anyhow::Error;
 use argh::FromArgs;
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
 const KUSAMA_ENDPOINT: &str = "https://kusama.subscan.io/api/";
 
-pub struct Api {}
+fn get_endpoint(network: &Network) -> ureq::Request {
+    match network {
+        Network::Polkadot => ureq::post(POLKADOT_ENDPOINT),
+        Network::Kusama => ureq::post(KUSAMA_ENDPOINT),
+    }
+}
 
-impl Api {}
+// TODO: Rate limit these requests so we don't end up trying to DoS subscan.
+
+pub struct Api<'a> {
+    app: &'a App,
+}
+
+impl<'a> Api<'a> {
+    pub fn price(&self, time: usize) -> Result<Price, Error> {
+        let req = get_endpoint(&self.app.network);
+
+        let mut buf: Vec<u8> = Vec::with_capacity(32);
+        let _ = json::object! { "time": time }.write(&mut buf)?;
+
+        // we don't use ureq `into_json` because we're cool and use `miniserde` 😎
+        let price = req
+            .set("Content-Type", "application/json")
+            .send(buf.as_slice())?
+            .into_string()?;
+        let price: ApiResponse<Price> = miniserde::json::from_str(&price)?;
+        Ok(price.consume())
+    }
+
+    pub fn rewards(address: String, page: usize) -> Result<List<Reward>, Error> {
+        let req = get_endpoint(&self.app.network);
+
+        let mut buf: Vec<u8> = Vec::with_capacity(128);
+        let _ = json::object! {
+            "address": app.address,
+            "page": page,
+            "row": 10
+        }
+        .write(&mut buf)?;
+
+        let rewards = req
+            .set("Content-Type", "application/json")
+            .send(buf.as_slice())
+            .into_string()?;
+        let rewards: ApiResponse<List<Reward>> = miniserde::json::from_str(&rewards)?;
+        Ok(rewards.consume())
+    }
+}
