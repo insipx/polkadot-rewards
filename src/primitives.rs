@@ -14,10 +14,11 @@
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
-use miniserde::{json, Deserialize, Serialize};
+use chrono::offset::Utc;
+use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct ApiResponse<T: Serialize + Deserialize> {
+pub struct ApiResponse<T> {
     code: usize,
     message: String,
     ttl: Option<usize>,
@@ -25,24 +26,24 @@ pub struct ApiResponse<T: Serialize + Deserialize> {
     data: T,
 }
 
-impl<T: Serialize + Deserialize> ApiResponse<T> {
+impl<T> ApiResponse<T> {
     pub fn consume(self) -> T {
         self.data
     }
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct List<T: Serialize + Deserialize> {
+pub struct List<T> {
     pub count: usize,
     pub list: Vec<T>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Price {
-    price: String,
-    time: usize,
-    height: usize,
-    records: Vec<Record>,
+    pub price: String,
+    pub time: usize,
+    pub height: usize,
+    pub records: Vec<Record>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -59,10 +60,20 @@ pub struct Reward {
     pub extrinsic_idx: usize,
     pub module_id: String,
     pub event_id: String,
-    pub params: json::Value, // leaving this as general type because we don't need it and i'm lazy
+    pub params: serde_json::Value, // leaving this as general type because we don't need it and i'm lazy
     pub extrinsic_hash: String,
     pub event_idx: usize,
     pub amount: String,
     pub block_timestamp: usize,
     pub slash_kton: String,
+}
+
+// "block_num,block_time,amount_dot,price_usd,price_time"
+#[derive(Debug, Serialize)]
+pub struct CsvRecord {
+    pub block_num: usize,
+    pub block_time: chrono::DateTime<Utc>,
+    pub amount: f64,
+    pub price: f64,
+    pub time: chrono::DateTime<Utc>,
 }

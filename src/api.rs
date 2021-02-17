@@ -56,12 +56,10 @@ impl<'a> Api<'a> {
         let mut buf: Vec<u8> = Vec::with_capacity(32);
         let _ = json::object! { "time": time }.write(&mut buf)?;
 
-        // we don't use ureq `into_json` because we're cool and use `miniserde` 😎
-        let price = req
+        let price: ApiResponse<Price> = req
             .set("Content-Type", "application/json")
             .send(buf.as_slice())?
-            .into_string()?;
-        let price: ApiResponse<Price> = miniserde::json::from_str(&price)?;
+            .into_json()?;
         Ok(price.consume())
     }
 
@@ -84,7 +82,7 @@ impl<'a> Api<'a> {
             .set("Content-Type", "application/json")
             .send(buf.as_slice())?
             .into_string()?;
-        let rewards: ApiResponse<List<Reward>> = miniserde::json::from_str(&rewards)?;
+        let rewards: ApiResponse<List<Reward>> = serde_json::from_str(&rewards)?;
         Ok(rewards.consume())
     }
 

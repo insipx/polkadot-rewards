@@ -14,27 +14,46 @@
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
-use crate::api::Api;
+use crate::{api::Api, primitives::CsvRecord};
 use anyhow::{bail, Error};
 use argh::FromArgs;
-use chrono::{naive::NaiveDateTime, offset::Utc};
-use std::str::FromStr;
+use chrono::{
+    naive::NaiveDateTime,
+    offset::{TimeZone, Utc},
+};
+use std::{convert::TryInto, fs::File, io, path::PathBuf, str::FromStr};
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Polkadot Staking Rewards CLI-App
 pub struct App {
-    #[argh(option, from_str_fn(date_from_string))]
+    #[argh(option, from_str_fn(date_from_string), short = 'f')]
     /// define the when to start crawling for staking rewards
     pub from: chrono::NaiveDateTime,
     /// define when to stop crawling for staking rewards. Defaults to current time.
-    #[argh(option, default = "Utc::now()")]
+    #[argh(option, default = "Utc::now()", short = 't')]
     pub to: chrono::DateTime<Utc>,
     /// the network to crawl for rewards. One of: Polkadot, Kusama
-    #[argh(option, default = "Network::Polkadot")]
+    #[argh(option, default = "Network::Polkadot", short = 'n')]
     pub network: Network,
-    /// network-Formatted Address to get staking rewards for
-    #[argh(option)]
+    /// network-formatted Address to get staking rewards for
+    #[argh(option, short = 'a')]
     pub address: String,
+    /// directory to output completed CSV to
+    #[argh(option, default = "default_file_location()", short = 'p')]
+    folder: PathBuf,
+    /// output the CSV file to STDOUT. Disables creating a new file.
+    #[argh(switch, short = 's')]
+    stdout: bool,
+}
+
+fn default_file_location() -> PathBuf {
+    match std::env::current_dir() {
+        Err(e) => {
+            log::error!("{}", e.to_string());
+            std::process::exit(1);
+        }
+        Ok(p) => p,
+    }
 }
 
 // we don't return an anyhow::Error here because `argh` macro expects error type to be a `String`
@@ -67,14 +86,77 @@ impl FromStr for Network {
     }
 }
 
+impl ToString for Network {
+    fn to_string(&self) -> String {
+        match self {
+            Network::Kusama => "ksm".to_string(),
+            Network::Polkadot => "dot".to_string(),
+        }
+    }
+}
+
 pub fn app() -> Result<(), Error> {
-    let app: App = argh::from_env();
+    let mut app: App = argh::from_env();
     let api = Api::new(&app);
     let rewards =
         api.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)?;
     let prices = api.fetch_prices(&rewards)?;
 
-    println!("Rewards: {}", miniserde::json::to_string(&rewards));
-    println!("Prices: {}", miniserde::json::to_string(&prices));
+    app.folder.push(construct_file_name(&app));
+    app.folder.set_extension("csv");
+
+    let mut wtr = Output::new(&app)?;
+
+    for (reward, price) in rewards.iter().zip(prices.iter()) {
+        wtr.serialize(CsvRecord {
+            block_num: reward.block_num,
+            block_time: Utc.timestamp(reward.block_timestamp.try_into()?, 0),
+            amount: amount_to_network(&app.network, &reward.amount)?,
+            price: f64::from_str(&price.price)?,
+            time: Utc.timestamp(price.time.try_into()?, 0),
+        })?;
+    }
     Ok(())
+}
+
+fn amount_to_network(network: &Network, amount: &str) -> Result<f64, Error> {
+    match network {
+        Network::Polkadot => Ok(f64::from_str(amount)? / (10000000000f64)),
+        Network::Kusama => Ok(f64::from_str(amount)? / (10000000000000f64)),
+    }
+}
+
+// constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
+fn construct_file_name(app: &App) -> String {
+    format!(
+        "{}-{}-{}-{}-rewards",
+        app.network.to_string(),
+        &app.address,
+        app.from.to_string(),
+        app.to.to_string()
+    )
+}
+
+enum Output {
+    FileOut(csv::Writer<File>),
+    StdOut(csv::Writer<std::io::Stdout>),
+}
+
+impl Output {
+    fn new(app: &App) -> Result<Self, Error> {
+        if app.stdout {
+            Ok(Output::StdOut(csv::Writer::from_writer(io::stdout())))
+        } else {
+            let file = File::create(&app.folder)?;
+            Ok(Output::FileOut(csv::Writer::from_writer(file)))
+        }
+    }
+
+    fn serialize<T: serde::Serialize>(&mut self, val: T) -> Result<(), Error> {
+        match self {
+            Output::FileOut(f) => f.serialize(val)?,
+            Output::StdOut(s) => s.serialize(val)?,
+        };
+        Ok(())
+    }
 }
