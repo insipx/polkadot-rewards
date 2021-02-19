@@ -61,8 +61,6 @@ jobs:
             ~/.cargo/registry
             ~/.cargo/git
             target
-            bin/node-template-archive/target
-            bin/polkadot-archive/target
           key: ${{ runner.os }}-cargo-${{ hashFiles('**/Cargo.lock') }}
 
       - name: Check Code Format
