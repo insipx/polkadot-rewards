@@ -5,7 +5,6 @@
 
 </div>
 
--- 
 
 [![Rust](https://github.com/insipx/polkadot-rewards/actions/workflows/rust.yml/badge.svg)](https://github.com/insipx/polkadot-rewards/actions/workflows/rust.yml)
 
