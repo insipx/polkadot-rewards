@@ -13,13 +13,13 @@
 
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
-
+#![allow(clippy::option_map_unit_fn)]
 use anyhow::Error;
 mod api;
 mod cli;
 mod primitives;
 
 fn main() -> Result<(), Error> {
-    cli::app()?;
-    Ok(())
+	cli::app()?;
+	Ok(())
 }
