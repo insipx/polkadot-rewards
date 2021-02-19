@@ -1,5 +1,5 @@
 <div align="center">
-# Polkadot Rewards [![Rust](https://github.com/insipx/polkadot-rewards/actions/workflows/rust.yml/badge.svg)](https://github.com/insipx/polkadot-rewards/actions/workflows/rust.yml)
+# Polkadot Rewards ![Rust](https://github.com/insipx/polkadot-rewards/actions/workflows/rust.yml/badge.svg)](https://github.com/insipx/polkadot-rewards/actions/workflows/rust.yml)
 
 Crawl rewards for a Polkadot/Kusama account from subscan. Outputs to a CSV.
 </div>
