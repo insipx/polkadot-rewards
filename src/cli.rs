@@ -32,10 +32,15 @@ const OUTPUT_DATE: &str = "%Y-%m-%a:%H-%M-%S";
 pub struct App {
     #[argh(option, from_str_fn(date_from_string), short = 'f')]
     /// date to start crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
-    pub from: chrono::NaiveDateTime,
+    pub from: NaiveDateTime,
     /// date to stop crawling for staking rewards. Defaults to current time. Format: "YYY-MM-DD HH:MM:SS"
-    #[argh(option, default = "Utc::now()", short = 't')]
-    pub to: chrono::DateTime<Utc>,
+    #[argh(
+        option,
+        from_str_fn(date_from_string),
+        default = "default_date()",
+        short = 't'
+    )]
+    pub to: NaiveDateTime,
     /// network to crawl for rewards. One of: [Polkadot, Kusama, KSM, DOT]
     #[argh(option, default = "Network::Polkadot", short = 'n')]
     pub network: Network,
@@ -54,6 +59,10 @@ pub struct App {
     /// get extra information about the program's execution.
     #[argh(switch, short = 'v')]
     verbose: bool,
+}
+
+fn default_date() -> NaiveDateTime {
+    Utc::now().naive_utc()
 }
 
 fn default_file_location() -> PathBuf {
