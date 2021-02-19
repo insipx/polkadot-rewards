@@ -99,7 +99,9 @@ impl<'a> Api<'a> {
     /// `from`: UNIX timestamp at which to begin returning rewards
     /// `to`: UNIX timestamp at which to end returning rewards
     pub fn fetch_all_rewards(&self, from: usize, to: usize) -> Result<Vec<Reward>, Error> {
-        self.progress.map(|r| r.reset());
+        if let Some(r) = self.progress {
+            r.reset()
+        }
         let mut rewards = Vec::new();
         // first, get rewards from the first page
         let reward = self.rewards(0, 10)?;
