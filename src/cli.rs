@@ -31,24 +31,27 @@ const OUTPUT_DATE: &str = "%Y-%m-%a:%H-%M-%S";
 /// Polkadot Staking Rewards CLI-App
 pub struct App {
     #[argh(option, from_str_fn(date_from_string), short = 'f')]
-    /// define the when to start crawling for staking rewards
+    /// date to start crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
     pub from: chrono::NaiveDateTime,
-    /// define when to stop crawling for staking rewards. Defaults to current time.
+    /// date to stop crawling for staking rewards. Defaults to current time. Format: "YYY-MM-DD HH:MM:SS"
     #[argh(option, default = "Utc::now()", short = 't')]
     pub to: chrono::DateTime<Utc>,
-    /// the network to crawl for rewards. One of: Polkadot, Kusama
+    /// network to crawl for rewards. One of: [Polkadot, Kusama, KSM, DOT]
     #[argh(option, default = "Network::Polkadot", short = 'n')]
     pub network: Network,
-    /// network-formatted Address to get staking rewards for
+    /// network-formatted address to get staking rewards for.
     #[argh(option, short = 'a')]
     pub address: String,
-    /// directory to output completed CSV to
+    /// date format to use in output CSV data. Uses rfc2822 by default.  EX: "%Y-%m-%d %H:%M:%S".
+    #[argh(option)]
+    date_format: Option<String>,
+    /// directory to output completed CSV to.
     #[argh(option, default = "default_file_location()", short = 'p')]
     folder: PathBuf,
     /// output the CSV file to STDOUT. Disables creating a new file.
     #[argh(switch, short = 's')]
     stdout: bool,
-    /// get extra information about the program's execution
+    /// get extra information about the program's execution.
     #[argh(switch, short = 'v')]
     verbose: bool,
 }
@@ -122,13 +125,31 @@ pub fn app() -> Result<(), Error> {
     let mut wtr = Output::new(&app)?;
 
     for (reward, price) in rewards.iter().zip(prices.iter()) {
-        wtr.serialize(CsvRecord {
-            block_num: reward.block_num,
-            block_time: Utc.timestamp(reward.block_timestamp.try_into()?, 0),
-            amount: amount_to_network(&app.network, &reward.amount)?,
-            price: f64::from_str(&price.price)?,
-            time: Utc.timestamp(price.time.try_into()?, 0),
-        })?;
+        if let Some(date_format) = &app.date_format {
+            wtr.serialize(CsvRecord {
+                block_num: reward.block_num,
+                block_time: Utc
+                    .timestamp(reward.block_timestamp.try_into()?, 0)
+                    .format(&date_format)
+                    .to_string(),
+                amount: amount_to_network(&app.network, &reward.amount)?,
+                price: f64::from_str(&price.price)?,
+                time: Utc
+                    .timestamp(price.time.try_into()?, 0)
+                    .format(&date_format)
+                    .to_string(),
+            })?;
+        } else {
+            wtr.serialize(CsvRecord {
+                block_num: reward.block_num,
+                block_time: Utc
+                    .timestamp(reward.block_timestamp.try_into()?, 0)
+                    .to_rfc2822(),
+                amount: amount_to_network(&app.network, &reward.amount)?,
+                price: f64::from_str(&price.price)?,
+                time: Utc.timestamp(price.time.try_into()?, 0).to_rfc2822(),
+            })?;
+        }
     }
 
     if app.stdout {

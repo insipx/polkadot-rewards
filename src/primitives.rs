@@ -14,7 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
-use chrono::offset::Utc;
 use serde::{Deserialize, Serialize};
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -72,8 +71,8 @@ pub struct Reward {
 #[derive(Debug, Serialize)]
 pub struct CsvRecord {
     pub block_num: usize,
-    pub block_time: chrono::DateTime<Utc>,
+    pub block_time: String,
     pub amount: f64,
     pub price: f64,
-    pub time: chrono::DateTime<Utc>,
+    pub time: String,
 }
