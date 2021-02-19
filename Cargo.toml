@@ -15,6 +15,5 @@ env_logger = "0.8.3"
 serde = { version = "1", features = ["derive"] }
 serde_json = "1"
 ureq = { version = "2.0", features = ["json"] }
-json = "0.12"
 log = "0.4.14"
-either = "1.6.1"
+indicatif = "0.15"

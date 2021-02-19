@@ -21,7 +21,11 @@ use chrono::{
     naive::NaiveDateTime,
     offset::{TimeZone, Utc},
 };
+use env_logger::{Builder, Env};
+use indicatif::{ProgressBar, ProgressStyle};
 use std::{convert::TryInto, fs::File, io, path::PathBuf, str::FromStr};
+
+const OUTPUT_DATE: &str = "%Y-%m-%a:%H-%M-%S";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Polkadot Staking Rewards CLI-App
@@ -44,6 +48,9 @@ pub struct App {
     /// output the CSV file to STDOUT. Disables creating a new file.
     #[argh(switch, short = 's')]
     stdout: bool,
+    /// get extra information about the program's execution
+    #[argh(switch, short = 'v')]
+    verbose: bool,
 }
 
 fn default_file_location() -> PathBuf {
@@ -63,7 +70,6 @@ pub fn date_from_string(value: &str) -> Result<chrono::NaiveDateTime, String> {
         Err(e) => Err(e.to_string()),
     };
     let time = time?;
-    println!("{:?}", time.timestamp());
     Ok(time)
 }
 
@@ -97,12 +103,20 @@ impl ToString for Network {
 
 pub fn app() -> Result<(), Error> {
     let mut app: App = argh::from_env();
-    let api = Api::new(&app);
+    let progress = if app.verbose {
+        Builder::from_env(Env::default().default_filter_or("info")).init();
+        None
+    } else {
+        Some(construct_progress_bar())
+    };
+    let api = Api::new(&app, progress.as_ref());
+
     let rewards =
         api.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)?;
     let prices = api.fetch_prices(&rewards)?;
 
-    app.folder.push(construct_file_name(&app));
+    let file_name = construct_file_name(&app);
+    app.folder.push(&file_name);
     app.folder.set_extension("csv");
 
     let mut wtr = Output::new(&app)?;
@@ -116,7 +130,25 @@ pub fn app() -> Result<(), Error> {
             time: Utc.timestamp(price.time.try_into()?, 0),
         })?;
     }
+
+    if app.stdout {
+        progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
+    } else {
+        progress.map(|p| p.finish_with_message(&format!("wrote data to file {}", &file_name)));
+    }
     Ok(())
+}
+
+fn construct_progress_bar() -> ProgressBar {
+    let bar = ProgressBar::new(1000);
+    bar.set_style(
+        ProgressStyle::default_bar()
+            .template(
+                "{spinner:.blue} {msg} [{elapsed_precise}] [{bar:40.cyan/blue}] {percent}% ({eta})",
+            )
+            .progress_chars("#>-"),
+    );
+    bar
 }
 
 fn amount_to_network(network: &Network, amount: &str) -> Result<f64, Error> {
@@ -132,8 +164,8 @@ fn construct_file_name(app: &App) -> String {
         "{}-{}-{}-{}-rewards",
         app.network.to_string(),
         &app.address,
-        app.from.to_string(),
-        app.to.to_string()
+        app.from.format(OUTPUT_DATE),
+        app.to.format(OUTPUT_DATE)
     )
 }
 
