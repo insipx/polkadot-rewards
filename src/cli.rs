@@ -184,7 +184,7 @@ fn construct_progress_bar() -> ProgressBar {
 fn amount_to_network(network: &Network, amount: &str) -> Result<f64, Error> {
     match network {
         Network::Polkadot => Ok(f64::from_str(amount)? / (10000000000f64)),
-        Network::Kusama => Ok(f64::from_str(amount)? / (10000000000000f64)),
+        Network::Kusama => Ok(f64::from_str(amount)? / (1000000000000f64)),
     }
 }
 
