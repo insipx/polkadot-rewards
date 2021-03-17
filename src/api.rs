@@ -106,31 +106,31 @@ impl<'a> Api<'a> {
 	/// `to`: UNIX timestamp at which to end returning rewards
 	pub fn fetch_all_rewards(&self, from: usize, to: usize) -> Result<Vec<Reward>, Error> {
 		self.progress.map(|r| r.reset());
-		let mut rewards = Vec::new();
-		// first, get rewards from the first page
-		let reward = self.rewards(0, 10).context("Failed to fetch initial reward page")?;
-		let total_pages = reward.count / 10;
-		rewards.extend(reward.list.into_iter().flatten());
+		// get the first page only to get the count (query only one item)
+		let total_pages = self
+			.rewards(0, 1)
+			.context("Failed to fetch initial reward page")?
+			.count / 100;
 
 		self.progress.map(|p| p.set_message("Fetching Rewards"));
 		self.progress.map(|p| p.set_length(total_pages as u64));
 
-		for i in 1..=total_pages {
+		let rewards = (0..total_pages).filter_map(|i| {
 			self.progress.map(|p| p.inc(1));
-			// rate limited
 			std::thread::sleep(std::time::Duration::from_millis(35));
-			rewards.extend(
-				self.rewards(i, 10)
-				.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))?
+			self.rewards(i, 100)
+				.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))
+				.unwrap()
 				.list
-				.into_iter()
-				.flatten()
-			);
-		}
-		// TODO: this is kind of cheating but it's easier than trying to query just what we need
-		self.progress.map(|p| p.finish_with_message(&format!("Total Rewards Received: {}", rewards.len())));
+		})
+		.flatten()
+		.filter(|r| (r.block_timestamp >= from) && (r.block_timestamp <= to))
+		.collect();
 
-		Ok(rewards.into_iter().filter(|r| (r.block_timestamp >= from) && (r.block_timestamp <= to)).collect())
+		// TODO: this is kind of cheating but it's easier than trying to query just what we need
+		self.progress.map(|p| p.finish());
+
+		Ok(rewards)
 	}
 
 	/// Returns a vector of prices corresponding to the passed-in vector of Rewards.
