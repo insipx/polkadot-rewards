@@ -136,14 +136,14 @@ pub fn app() -> Result<(), Error> {
 		wtr.serialize(CsvRecord {
 			block_num: reward.block_num,
 			block_time: {
-				let time = Utc.timestamp(reward.block_timestamp.try_into()?, 0);
+				let time = Utc.timestamp(reward.timestamp.try_into()?, 0);
 				if let Some(date_format) = &app.date_format {
 					time.format(&date_format).to_string()
 				} else {
 					time.to_rfc2822()
 				}
 			},
-			amount: amount_to_network(&app.network, &reward.amount)?,
+			amount: amount_to_network(&app.network, &reward.amount),
 			price: *price.market_data.current_price.get(&app.currency)
 				.ok_or_else(||
 					anyhow!(
@@ -173,10 +173,10 @@ fn construct_progress_bar() -> ProgressBar {
 	bar
 }
 
-fn amount_to_network(network: &Network, amount: &str) -> Result<f64, Error> {
+fn amount_to_network(network: &Network, amount: &u128) -> f64 {
 	match network {
-		Network::Polkadot => Ok(f64::from_str(amount)? / (10000000000f64)),
-		Network::Kusama => Ok(f64::from_str(amount)? / (1000000000000f64)),
+		Network::Polkadot => *amount as f64 / (10000000000f64),
+		Network::Kusama => *amount as f64 / (1000000000000f64),
 	}
 }
 

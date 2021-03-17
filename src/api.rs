@@ -18,11 +18,12 @@
 
 use crate::{
 	cli::{App, Network},
-	primitives::{ApiResponse, List, Price, Reward},
+	primitives::{ApiResponse, List, Price, Reward, RewardEntry},
 };
 use anyhow::{Error, Context};
 use indicatif::ProgressBar;
 use chrono::naive::NaiveDateTime;
+use std::{collections::HashMap, convert::TryInto};
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
 const KUSAMA_ENDPOINT: &str = "https://kusama.subscan.io/api/";
@@ -41,7 +42,8 @@ fn price_endpoint(network: &Network, timestamp: usize) -> String {
 		"{}/coins/{}/history?date={}",
 		PRICE_ENDPOINT,
 		network.id(),
-		NaiveDateTime::from_timestamp(timestamp as i64, 0).format("%d-%m-%Y"),
+		NaiveDateTime::from_timestamp(timestamp.try_into().unwrap(), 0)
+			.format("%d-%m-%Y"),
 	)
 }
 
@@ -104,7 +106,7 @@ impl<'a> Api<'a> {
 	///
 	/// `from`: UNIX timestamp at which to begin returning rewards
 	/// `to`: UNIX timestamp at which to end returning rewards
-	pub fn fetch_all_rewards(&self, from: usize, to: usize) -> Result<Vec<Reward>, Error> {
+	pub fn fetch_all_rewards(&self, from: usize, to: usize) -> Result<Vec<RewardEntry>, Error> {
 		self.progress.map(|r| r.reset());
 		// get the first page only to get the count (query only one item)
 		let total_pages = self
@@ -115,7 +117,7 @@ impl<'a> Api<'a> {
 		self.progress.map(|p| p.set_message("Fetching Rewards"));
 		self.progress.map(|p| p.set_length(total_pages as u64));
 
-		let rewards = (0..total_pages).filter_map(|i| {
+		let rewards: Vec<Reward> = (0..total_pages).filter_map(|i| {
 			self.progress.map(|p| p.inc(1));
 			std::thread::sleep(std::time::Duration::from_millis(35));
 			self.rewards(i, 100)
@@ -130,11 +132,26 @@ impl<'a> Api<'a> {
 		// TODO: this is kind of cheating but it's easier than trying to query just what we need
 		self.progress.map(|p| p.finish());
 
-		Ok(rewards)
+		// merge all entries from the same day
+		let mut merged = HashMap::new();
+		for reward in rewards {
+			let day = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0)
+				.format("%Y-%m-%d")
+				.to_string();
+			let amount: u128 = reward.amount.parse()?;
+			let value = RewardEntry {
+				block_num: reward.block_num,
+				timestamp: reward.block_timestamp,
+				amount,
+			};
+			merged.entry(day).or_insert(value).amount += amount;
+		}
+
+		Ok(merged.into_iter().map(|(_k, v)| v).collect())
 	}
 
 	/// Returns a vector of prices corresponding to the passed-in vector of Rewards.
-	pub fn fetch_prices(&self, rewards: &[Reward]) -> Result<Vec<Price>, Error> {
+	pub fn fetch_prices(&self, rewards: &[RewardEntry]) -> Result<Vec<Price>, Error> {
 		self.progress.map(|p| p.reset());
 		self.progress.map(|p| p.set_length(rewards.len() as u64));
 		self.progress.map(|p| p.set_message("Fetching Price Data"));
@@ -143,7 +160,7 @@ impl<'a> Api<'a> {
 			self.progress.map(|p| p.inc(1));
 			// we're rate limited at 10 req/s
 			std::thread::sleep(std::time::Duration::from_millis(35));
-			prices.push(self.price(r.block_timestamp)?)
+			prices.push(self.price(r.timestamp)?)
 		}
 		self.progress.map(|p| p.finish_with_message("Prices Fetched"));
 		Ok(prices)

@@ -51,8 +51,8 @@ pub struct MarketData {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Reward {
 	pub event_index: String,
-	pub block_num: usize,
-	pub extrinsic_idx: usize,
+	pub block_num: u64,
+	pub extrinsic_idx: u64,
 	pub module_id: String,
 	pub event_id: String,
 	pub params: serde_json::Value, // leaving this as general type because we don't need it and i'm lazy
@@ -63,10 +63,17 @@ pub struct Reward {
 	pub slash_kton: String,
 }
 
+#[derive(Debug)]
+pub struct RewardEntry {
+	pub block_num: u64,
+	pub timestamp: usize,
+	pub amount: u128,
+}
+
 // "block_num,block_time,amount_dot,price_usd,price_time"
 #[derive(Debug, Serialize)]
 pub struct CsvRecord {
-	pub block_num: usize,
+	pub block_num: u64,
 	pub block_time: String,
 	pub amount: f64,
 	pub price: f64,
