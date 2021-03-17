@@ -119,7 +119,8 @@ impl<'a> Api<'a> {
 
 		let rewards: Vec<Reward> = (0..total_pages).filter_map(|i| {
 			self.progress.map(|p| p.inc(1));
-			std::thread::sleep(std::time::Duration::from_millis(35));
+			// subscan allows 10 requests per second
+			std::thread::sleep(std::time::Duration::from_millis(100));
 			self.rewards(i, 100)
 				.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))
 				.unwrap()
@@ -158,8 +159,8 @@ impl<'a> Api<'a> {
 		let mut prices = Vec::new();
 		for r in rewards.iter() {
 			self.progress.map(|p| p.inc(1));
-			// we're rate limited at 10 req/s
-			std::thread::sleep(std::time::Duration::from_millis(35));
+			// coingecko allows 100 requests per minute
+			std::thread::sleep(std::time::Duration::from_millis(600));
 			prices.push(self.price(r.timestamp)?)
 		}
 		self.progress.map(|p| p.finish_with_message("Prices Fetched"));
