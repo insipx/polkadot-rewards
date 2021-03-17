@@ -15,7 +15,7 @@
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::{api::Api, primitives::CsvRecord};
-use anyhow::{bail, Error};
+use anyhow::{Context, Error, bail};
 use argh::FromArgs;
 use chrono::{
 	naive::NaiveDateTime,
@@ -118,14 +118,16 @@ pub fn app() -> Result<(), Error> {
 	};
 	let api = Api::new(&app, progress.as_ref());
 
-	let rewards = api.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)?;
-	let prices = api.fetch_prices(&rewards)?;
+	let rewards = api.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)
+		.context("Failed to fetch rewards.")?;
+	let prices = api.fetch_prices(&rewards)
+		.context("Failed to fetch prices.")?;
 
 	let file_name = construct_file_name(&app);
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
-	let mut wtr = Output::new(&app)?;
+	let mut wtr = Output::new(&app).context("Failed to create output.")?;
 
 	for (reward, price) in rewards.iter().zip(prices.iter()) {
 		if let Some(date_format) = &app.date_format {
@@ -135,7 +137,7 @@ pub fn app() -> Result<(), Error> {
 				amount: amount_to_network(&app.network, &reward.amount)?,
 				price: f64::from_str(&price.price)?,
 				time: Utc.timestamp(price.time.try_into()?, 0).format(&date_format).to_string(),
-			})?;
+			}).context("Failed to format CsvRecord")?;
 		} else {
 			wtr.serialize(CsvRecord {
 				block_num: reward.block_num,
@@ -143,7 +145,7 @@ pub fn app() -> Result<(), Error> {
 				amount: amount_to_network(&app.network, &reward.amount)?,
 				price: f64::from_str(&price.price)?,
 				time: Utc.timestamp(price.time.try_into()?, 0).to_rfc2822(),
-			})?;
+			}).context("Failed to format CsvRecord")?;
 		}
 	}
 

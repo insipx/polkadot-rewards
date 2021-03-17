@@ -20,7 +20,7 @@ use crate::{
 	cli::{App, Network},
 	primitives::{ApiResponse, List, Price, Reward},
 };
-use anyhow::Error;
+use anyhow::{Error, Context};
 use indicatif::ProgressBar;
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
@@ -76,9 +76,14 @@ impl<'a> Api<'a> {
 				"address": self.app.address.as_str(),
 				"page": page,
 				"row": count
-			}))?
+			}))
+			.with_context(|| format!(
+				"Failed to fetch reward for address={} page={} count={}",
+				self.app.address, page, count,
+			))?
 			.into_string()?;
-		let rewards: ApiResponse<List<Reward>> = serde_json::from_str(&rewards)?;
+		let rewards: ApiResponse<List<Reward>> = serde_json::from_str(&rewards)
+			.with_context(|| format!("Failed to decode response: {}", rewards))?;
 		Ok(rewards.consume())
 	}
 	/*
@@ -94,7 +99,7 @@ impl<'a> Api<'a> {
 		self.progress.map(|r| r.reset());
 		let mut rewards = Vec::new();
 		// first, get rewards from the first page
-		let reward = self.rewards(0, 10)?;
+		let reward = self.rewards(0, 10).context("Failed to fetch initial reward page")?;
 		let total_pages = reward.count / 10;
 		rewards.extend(reward.list.into_iter());
 
@@ -105,7 +110,12 @@ impl<'a> Api<'a> {
 			self.progress.map(|p| p.inc(1));
 			// rate limited
 			std::thread::sleep(std::time::Duration::from_millis(35));
-			rewards.extend(self.rewards(i, 10)?.list.into_iter());
+			rewards.extend(
+				self.rewards(i, 10)
+				.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))?
+				.list
+				.into_iter()
+			);
 		}
 		// TODO: this is kind of cheating but it's easier than trying to query just what we need
 		self.progress.map(|p| p.finish_with_message(&format!("Total Rewards Received: {}", rewards.len())));
