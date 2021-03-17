@@ -15,7 +15,7 @@
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::{api::Api, primitives::CsvRecord};
-use anyhow::{Context, Error, bail};
+use anyhow::{Context, Error, bail, anyhow};
 use argh::FromArgs;
 use chrono::{
 	naive::NaiveDateTime,
@@ -39,6 +39,9 @@ pub struct App {
 	/// network to crawl for rewards. One of: [Polkadot, Kusama, KSM, DOT]
 	#[argh(option, default = "Network::Polkadot", short = 'n')]
 	pub network: Network,
+	/// the fiat currency which should be used for prices
+	#[argh(option, short = 'c')]
+	pub currency: String,
 	/// network-formatted address to get staking rewards for.
 	#[argh(option, short = 'a')]
 	pub address: String,
@@ -88,6 +91,15 @@ pub enum Network {
 	Kusama,
 }
 
+impl Network {
+	pub fn id(&self) -> &'static str {
+		match self {
+			Self::Polkadot => "polkdadot",
+			Self::Kusama => "kusama",
+		}
+	}
+}
+
 impl FromStr for Network {
 	type Err = Error;
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -95,15 +107,6 @@ impl FromStr for Network {
 			"polkadot" | "dot" => Ok(Network::Polkadot),
 			"kusama" | "ksm" => Ok(Network::Kusama),
 			_ => bail!("Network must be one of: 'kusama', 'polkadot', 'dot', 'ksm'"),
-		}
-	}
-}
-
-impl ToString for Network {
-	fn to_string(&self) -> String {
-		match self {
-			Network::Kusama => "ksm".to_string(),
-			Network::Polkadot => "dot".to_string(),
 		}
 	}
 }
@@ -130,23 +133,26 @@ pub fn app() -> Result<(), Error> {
 	let mut wtr = Output::new(&app).context("Failed to create output.")?;
 
 	for (reward, price) in rewards.iter().zip(prices.iter()) {
-		if let Some(date_format) = &app.date_format {
-			wtr.serialize(CsvRecord {
-				block_num: reward.block_num,
-				block_time: Utc.timestamp(reward.block_timestamp.try_into()?, 0).format(&date_format).to_string(),
-				amount: amount_to_network(&app.network, &reward.amount)?,
-				price: f64::from_str(&price.price)?,
-				time: Utc.timestamp(price.time.try_into()?, 0).format(&date_format).to_string(),
-			}).context("Failed to format CsvRecord")?;
-		} else {
-			wtr.serialize(CsvRecord {
-				block_num: reward.block_num,
-				block_time: Utc.timestamp(reward.block_timestamp.try_into()?, 0).to_rfc2822(),
-				amount: amount_to_network(&app.network, &reward.amount)?,
-				price: f64::from_str(&price.price)?,
-				time: Utc.timestamp(price.time.try_into()?, 0).to_rfc2822(),
-			}).context("Failed to format CsvRecord")?;
-		}
+		wtr.serialize(CsvRecord {
+			block_num: reward.block_num,
+			block_time: {
+				let time = Utc.timestamp(reward.block_timestamp.try_into()?, 0);
+				if let Some(date_format) = &app.date_format {
+					time.format(&date_format).to_string()
+				} else {
+					time.to_rfc2822()
+				}
+			},
+			amount: amount_to_network(&app.network, &reward.amount)?,
+			price: *price.market_data.current_price.get(&app.currency)
+				.ok_or_else(||
+					anyhow!(
+						"Specified fiat currency '{}' not supported: {:#?}",
+						app.currency,
+						price.market_data.current_price.keys(),
+					)
+				)?,
+		}).context("Failed to format CsvRecord")?;
 	}
 
 	if app.stdout {
@@ -178,7 +184,7 @@ fn amount_to_network(network: &Network, amount: &str) -> Result<f64, Error> {
 fn construct_file_name(app: &App) -> String {
 	format!(
 		"{}-{}-{}-{}-rewards",
-		app.network.to_string(),
+		app.network.id(),
 		&app.address,
 		app.from.format(OUTPUT_DATE),
 		app.to.format(OUTPUT_DATE)

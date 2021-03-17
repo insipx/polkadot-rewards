@@ -22,10 +22,11 @@ use crate::{
 };
 use anyhow::{Error, Context};
 use indicatif::ProgressBar;
+use chrono::naive::NaiveDateTime;
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
 const KUSAMA_ENDPOINT: &str = "https://kusama.subscan.io/api/";
-const PRICE: &str = "open/price";
+const PRICE_ENDPOINT: &str = "https://api.coingecko.com/api/v3";
 const REWARD_SLASH: &str = "scan/account/reward_slash";
 
 fn get_endpoint(network: &Network, end: &str) -> String {
@@ -33,6 +34,15 @@ fn get_endpoint(network: &Network, end: &str) -> String {
 		Network::Polkadot => format!("{}{}", POLKADOT_ENDPOINT, end),
 		Network::Kusama => format!("{}{}", KUSAMA_ENDPOINT, end),
 	}
+}
+
+fn price_endpoint(network: &Network, timestamp: usize) -> String {
+	format!(
+		"{}/coins/{}/history?date={}",
+		PRICE_ENDPOINT,
+		network.id(),
+		NaiveDateTime::from_timestamp(timestamp as i64, 0).format("%d-%m-%Y"),
+	)
 }
 
 // TODO: Rate limit these requests so we don't end up trying to DoS subscan.
@@ -56,11 +66,10 @@ impl<'a> Api<'a> {
 	///
 	/// `time`: UNIX timestamp of the time to query (UTC)
 	fn price(&self, time: usize) -> Result<Price, Error> {
-		let req = self.agent.post(&get_endpoint(&self.app.network, PRICE));
+		let req = self.agent.get(&price_endpoint(&self.app.network, time));
 
-		let price: ApiResponse<Price> =
-			req.set("Content-Type", "application/json").send_json(ureq::json!({ "time": time }))?.into_json()?;
-		Ok(price.consume())
+		let price: Price = req.send_bytes(&[])?.into_json()?;
+		Ok(price)
 	}
 
 	/// Get rewards from a specific page of subscan API
