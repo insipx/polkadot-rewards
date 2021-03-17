@@ -34,7 +34,7 @@ impl<T> ApiResponse<T> {
 #[derive(Serialize, Deserialize, Debug)]
 pub struct List<T> {
 	pub count: usize,
-	pub list: Vec<T>,
+	pub list: Option<Vec<T>>,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

@@ -101,7 +101,7 @@ impl<'a> Api<'a> {
 		// first, get rewards from the first page
 		let reward = self.rewards(0, 10).context("Failed to fetch initial reward page")?;
 		let total_pages = reward.count / 10;
-		rewards.extend(reward.list.into_iter());
+		rewards.extend(reward.list.into_iter().flatten());
 
 		self.progress.map(|p| p.set_message("Fetching Rewards"));
 		self.progress.map(|p| p.set_length(total_pages as u64));
@@ -115,6 +115,7 @@ impl<'a> Api<'a> {
 				.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))?
 				.list
 				.into_iter()
+				.flatten()
 			);
 		}
 		// TODO: this is kind of cheating but it's easier than trying to query just what we need
