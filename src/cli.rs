@@ -172,7 +172,7 @@ fn amount_to_network(network: &Network, amount: &u128) -> f64 {
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
 fn construct_file_name(app: &App, rewards: &[RewardEntry]) -> String {
 	format!(
-		"{}-{}-{}-{}-rewards",
+		"{}-{}-{}--{}-rewards",
 		app.network.id(),
 		&app.address,
 		rewards.first().unwrap().day.format(OUTPUT_DATE),
