@@ -23,7 +23,10 @@ use crate::{
 use anyhow::{anyhow, Context, Error};
 use chrono::{naive::NaiveDateTime, NaiveDate};
 use indicatif::ProgressBar;
-use std::{collections::BTreeMap, convert::TryInto};
+use std::{
+	collections::{BTreeMap, BTreeSet},
+	convert::TryInto,
+};
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
 const KUSAMA_ENDPOINT: &str = "https://kusama.subscan.io/api/";
@@ -146,11 +149,19 @@ impl<'a> Api<'a> {
 		for reward in rewards {
 			let day = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).date();
 			let amount: u128 = reward.amount.parse()?;
-			let value = RewardEntry { block_nums: vec![reward.block_num], day, amount };
+			let value = RewardEntry {
+				block_nums: {
+					let mut blocks = BTreeSet::new();
+					blocks.insert(reward.block_num);
+					blocks
+				},
+				day,
+				amount,
+			};
 			merged
 				.entry(day)
 				.and_modify(|e: &mut RewardEntry| {
-					e.block_nums.push(reward.block_num);
+					e.block_nums.insert(reward.block_num);
 					e.amount += amount;
 				})
 				.or_insert(value);

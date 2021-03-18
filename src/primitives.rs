@@ -16,7 +16,7 @@
 
 use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
-use std::collections::HashMap;
+use std::collections::{BTreeSet, HashMap};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ApiResponse<T> {
@@ -66,7 +66,7 @@ pub struct Reward {
 
 #[derive(Debug)]
 pub struct RewardEntry {
-	pub block_nums: Vec<u64>,
+	pub block_nums: BTreeSet<u64>,
 	pub day: NaiveDate,
 	pub amount: u128,
 }
