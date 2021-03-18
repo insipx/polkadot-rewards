@@ -100,9 +100,19 @@ impl<'a> Api<'a> {
 	/// `from`: UNIX timestamp at which to begin returning rewards
 	/// `to`: UNIX timestamp at which to end returning rewards
 	pub fn fetch_all_rewards(&self) -> Result<Vec<RewardEntry>, Error> {
+		const PAGE_SIZE: usize = 100;
+
 		self.progress.map(|r| r.reset());
 		// get the first page only to get the count (query only one item)
-		let total_pages = self.rewards(0, 1).context("Failed to fetch initial reward page")?.count / 100;
+		let total_pages = {
+			let num_entries = self.rewards(0, 1).context("Failed to fetch initial reward page")?.count;
+			let full_pages = num_entries / PAGE_SIZE;
+			if num_entries % PAGE_SIZE == 0 {
+				full_pages
+			} else {
+				full_pages + 1
+			}
+		};
 
 		self.progress.map(|p| p.set_message("Fetching Rewards"));
 		self.progress.map(|p| p.set_length(total_pages.try_into().unwrap()));
@@ -112,7 +122,7 @@ impl<'a> Api<'a> {
 				self.progress.map(|p| p.inc(1));
 				// subscan allows 10 requests per second
 				std::thread::sleep(std::time::Duration::from_millis(100));
-				self.rewards(i, 100)
+				self.rewards(i, PAGE_SIZE)
 					.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))
 					.unwrap()
 					.list
