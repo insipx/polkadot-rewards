@@ -91,7 +91,7 @@ pub enum Network {
 impl Network {
 	pub fn id(&self) -> &'static str {
 		match self {
-			Self::Polkadot => "polkdadot",
+			Self::Polkadot => "polkadot",
 			Self::Kusama => "kusama",
 		}
 	}
