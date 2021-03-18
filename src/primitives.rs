@@ -74,8 +74,8 @@ pub struct RewardEntry {
 // "block_num,block_time,amount_dot,price_usd,price_time"
 #[derive(Debug, Serialize)]
 pub struct CsvRecord {
-	pub block_nums: String,
 	pub date: String,
 	pub amount: f64,
 	pub price: f64,
+	pub block_nums: String,
 }

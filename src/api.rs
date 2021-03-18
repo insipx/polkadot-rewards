@@ -20,7 +20,7 @@ use crate::{
 	cli::{App, Network},
 	primitives::{ApiResponse, List, Price, Reward, RewardEntry},
 };
-use anyhow::{Context, Error};
+use anyhow::{anyhow, Context, Error};
 use chrono::{naive::NaiveDateTime, NaiveDate};
 use indicatif::ProgressBar;
 use std::{collections::BTreeMap, convert::TryInto};
@@ -148,18 +148,26 @@ impl<'a> Api<'a> {
 	}
 
 	/// Returns a vector of prices corresponding to the passed-in vector of Rewards.
-	pub fn fetch_prices(&self, rewards: &[RewardEntry]) -> Result<Vec<Price>, Error> {
+	pub fn fetch_prices(&self, rewards: &[RewardEntry]) -> Result<Vec<f64>, Error> {
 		self.progress.map(|p| p.reset());
 		self.progress.map(|p| p.set_length(rewards.len().try_into().unwrap()));
 		self.progress.map(|p| p.set_message("Fetching Price Data"));
-		let mut prices = Vec::new();
-		for r in rewards.iter() {
+		let mut prices = Vec::with_capacity(rewards.len());
+		for r in rewards {
 			self.progress.map(|p| p.inc(1));
 			// coingecko allows 100 requests per minute
 			// it seems to be a bit oversensitive. We therefore restrain outselfs
 			// to 60 requests a minute.
 			std::thread::sleep(std::time::Duration::from_millis(1000));
-			prices.push(self.price(r.day)?)
+			let result = self.price(r.day)?;
+			let price = result.market_data.current_price.get(&self.app.currency).ok_or_else(|| {
+				anyhow!(
+					"Specified fiat currency '{}' not supported: {:#?}",
+					self.app.currency,
+					result.market_data.current_price.keys(),
+				)
+			})?;
+			prices.push(*price);
 		}
 		self.progress.map(|p| p.finish_with_message("Prices Fetched"));
 		Ok(prices)

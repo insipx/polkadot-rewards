@@ -23,6 +23,7 @@ use argh::FromArgs;
 use chrono::naive::NaiveDateTime;
 use env_logger::{Builder, Env};
 use indicatif::{ProgressBar, ProgressStyle};
+use sp_arithmetic::{FixedPointNumber, FixedU128};
 use std::{fs::File, io, path::PathBuf, str::FromStr};
 
 const OUTPUT_DATE: &str = "%Y-%m-%d";
@@ -94,6 +95,17 @@ impl Network {
 			Self::Kusama => "kusama",
 		}
 	}
+
+	fn amount_to_network(&self, amount: &u128) -> Result<f64, Error> {
+		let denominator = match self {
+			Self::Polkadot => 10_000_000_000u128,
+			Self::Kusama => 1_000_000_000_000u128,
+		};
+		let frac = FixedU128::checked_from_rational(*amount, denominator)
+			.ok_or_else(|| anyhow!("Amount '{}' overflowed FixedU128", amount))?
+			.to_fraction();
+		Ok(frac)
+	}
 }
 
 impl FromStr for Network {
@@ -130,18 +142,11 @@ pub fn app() -> Result<(), Error> {
 
 	for (reward, price) in rewards.into_iter().zip(prices) {
 		wtr.serialize(CsvRecord {
-			block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| {
-				format!("{}|{}", acc, i)
-			}),
+			block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+				.to_string(),
 			date: reward.day.format(&app.date_format).to_string(),
-			amount: amount_to_network(&app.network, &reward.amount),
-			price: *price.market_data.current_price.get(&app.currency).ok_or_else(|| {
-				anyhow!(
-					"Specified fiat currency '{}' not supported: {:#?}",
-					app.currency,
-					price.market_data.current_price.keys(),
-				)
-			})?,
+			amount: app.network.amount_to_network(&reward.amount)?,
+			price,
 		})
 		.context("Failed to format CsvRecord")?;
 	}
@@ -164,18 +169,12 @@ fn construct_progress_bar() -> ProgressBar {
 	bar
 }
 
-fn amount_to_network(network: &Network, amount: &u128) -> f64 {
-	match network {
-		Network::Polkadot => *amount as f64 / (10000000000f64),
-		Network::Kusama => *amount as f64 / (1000000000000f64),
-	}
-}
-
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
 fn construct_file_name(app: &App, rewards: &[RewardEntry]) -> String {
 	format!(
-		"{}-{}-{}--{}-rewards",
+		"{}->{}-{}-{}--{}-rewards",
 		app.network.id(),
+		app.currency,
 		&app.address,
 		rewards.first().unwrap().day.format(OUTPUT_DATE),
 		rewards.last().unwrap().day.format(OUTPUT_DATE)
