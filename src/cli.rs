@@ -14,10 +14,13 @@
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
-use crate::{api::Api, primitives::CsvRecord};
-use anyhow::{anyhow, bail, Context, Error};
+use crate::{
+	api::Api,
+	primitives::{CsvRecord, RewardEntry},
+};
+use anyhow::{anyhow, bail, ensure, Context, Error};
 use argh::FromArgs;
-use chrono::{naive::NaiveDateTime, offset::Utc};
+use chrono::naive::NaiveDateTime;
 use env_logger::{Builder, Env};
 use indicatif::{ProgressBar, ProgressStyle};
 use std::{fs::File, io, path::PathBuf, str::FromStr};
@@ -29,10 +32,10 @@ const OUTPUT_DATE: &str = "%Y-%m-%d";
 pub struct App {
 	#[argh(option, from_str_fn(date_from_string), short = 'f')]
 	/// date to start crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
-	pub from: NaiveDateTime,
-	/// date to stop crawling for staking rewards. Defaults to current time. Format: "YYY-MM-DD HH:MM:SS"
-	#[argh(option, from_str_fn(date_from_string), default = "default_date()", short = 't')]
-	pub to: NaiveDateTime,
+	pub from: Option<NaiveDateTime>,
+	/// date to stop crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
+	#[argh(option, from_str_fn(date_from_string), short = 't')]
+	pub to: Option<NaiveDateTime>,
 	/// network to crawl for rewards. One of: [Polkadot, Kusama, KSM, DOT]
 	#[argh(option, default = "Network::Polkadot", short = 'n')]
 	pub network: Network,
@@ -54,10 +57,6 @@ pub struct App {
 	/// get extra information about the program's execution.
 	#[argh(switch, short = 'v')]
 	verbose: bool,
-}
-
-fn default_date() -> NaiveDateTime {
-	Utc::now().naive_utc()
 }
 
 fn default_file_location() -> PathBuf {
@@ -118,12 +117,12 @@ pub fn app() -> Result<(), Error> {
 	};
 	let api = Api::new(&app, progress.as_ref());
 
-	let rewards = api
-		.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)
-		.context("Failed to fetch rewards.")?;
+	let rewards = api.fetch_all_rewards().context("Failed to fetch rewards.")?;
 	let prices = api.fetch_prices(&rewards).context("Failed to fetch prices.")?;
 
-	let file_name = construct_file_name(&app);
+	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
+
+	let file_name = construct_file_name(&app, &rewards);
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
@@ -171,13 +170,13 @@ fn amount_to_network(network: &Network, amount: &u128) -> f64 {
 }
 
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
-fn construct_file_name(app: &App) -> String {
+fn construct_file_name(app: &App, rewards: &[RewardEntry]) -> String {
 	format!(
 		"{}-{}-{}-{}-rewards",
 		app.network.id(),
 		&app.address,
-		app.from.format(OUTPUT_DATE),
-		app.to.format(OUTPUT_DATE)
+		rewards.first().unwrap().day.format(OUTPUT_DATE),
+		rewards.last().unwrap().day.format(OUTPUT_DATE)
 	)
 }
 

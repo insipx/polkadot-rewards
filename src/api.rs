@@ -99,7 +99,7 @@ impl<'a> Api<'a> {
 	///
 	/// `from`: UNIX timestamp at which to begin returning rewards
 	/// `to`: UNIX timestamp at which to end returning rewards
-	pub fn fetch_all_rewards(&self, from: usize, to: usize) -> Result<Vec<RewardEntry>, Error> {
+	pub fn fetch_all_rewards(&self) -> Result<Vec<RewardEntry>, Error> {
 		self.progress.map(|r| r.reset());
 		// get the first page only to get the count (query only one item)
 		let total_pages = self.rewards(0, 1).context("Failed to fetch initial reward page")?.count / 100;
@@ -118,7 +118,12 @@ impl<'a> Api<'a> {
 					.list
 			})
 			.flatten()
-			.filter(|r| (r.block_timestamp >= from) && (r.block_timestamp <= to))
+			.filter(|r| {
+				let timestamp = NaiveDateTime::from_timestamp(r.block_timestamp as i64, 0);
+				let from = if let Some(from) = self.app.from { timestamp >= from } else { true };
+				let to = if let Some(to) = self.app.to { timestamp <= to } else { true };
+				from && to
+			})
 			.collect();
 
 		// TODO: this is kind of cheating but it's easier than trying to query just what we need
