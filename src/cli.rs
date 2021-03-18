@@ -25,7 +25,7 @@ use env_logger::{Builder, Env};
 use indicatif::{ProgressBar, ProgressStyle};
 use std::{convert::TryInto, fs::File, io, path::PathBuf, str::FromStr};
 
-const OUTPUT_DATE: &str = "%Y-%m-%a:%H-%M-%S";
+const OUTPUT_DATE: &str = "%Y-%m-%d";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Polkadot Staking Rewards CLI-App
@@ -46,8 +46,8 @@ pub struct App {
 	#[argh(option, short = 'a')]
 	pub address: String,
 	/// date format to use in output CSV data. Uses rfc2822 by default.  EX: "%Y-%m-%d %H:%M:%S".
-	#[argh(option)]
-	date_format: Option<String>,
+	#[argh(option, default = "OUTPUT_DATE.to_string()")]
+	date_format: String,
 	/// directory to output completed CSV to.
 	#[argh(option, default = "default_file_location()", short = 'p')]
 	folder: PathBuf,
@@ -135,14 +135,7 @@ pub fn app() -> Result<(), Error> {
 	for (reward, price) in rewards.iter().zip(prices.iter()) {
 		wtr.serialize(CsvRecord {
 			block_num: reward.block_num,
-			block_time: {
-				let time = Utc.timestamp(reward.timestamp.try_into()?, 0);
-				if let Some(date_format) = &app.date_format {
-					time.format(&date_format).to_string()
-				} else {
-					time.to_rfc2822()
-				}
-			},
+			block_time: Utc.timestamp(reward.timestamp.try_into()?, 0).format(&app.date_format).to_string(),
 			amount: amount_to_network(&app.network, &reward.amount),
 			price: *price.market_data.current_price.get(&app.currency).ok_or_else(|| {
 				anyhow!(

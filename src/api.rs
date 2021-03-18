@@ -23,7 +23,7 @@ use crate::{
 use anyhow::{Context, Error};
 use chrono::naive::NaiveDateTime;
 use indicatif::ProgressBar;
-use std::{collections::HashMap, convert::TryInto};
+use std::{collections::BTreeMap, convert::TryInto};
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
 const KUSAMA_ENDPOINT: &str = "https://kusama.subscan.io/api/";
@@ -130,7 +130,7 @@ impl<'a> Api<'a> {
 		self.progress.map(|p| p.finish());
 
 		// merge all entries from the same day
-		let mut merged = HashMap::new();
+		let mut merged = BTreeMap::new();
 		for reward in rewards {
 			let day =
 				NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).format("%Y-%m-%d").to_string();
