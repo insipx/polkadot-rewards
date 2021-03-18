@@ -188,11 +188,13 @@ enum Output {
 
 impl Output {
 	fn new(app: &App) -> Result<Self, Error> {
+		let mut builder = csv::WriterBuilder::new();
+		builder.delimiter(b';');
 		if app.stdout {
-			Ok(Output::StdOut(csv::Writer::from_writer(io::stdout())))
+			Ok(Output::StdOut(builder.from_writer(io::stdout())))
 		} else {
 			let file = File::create(&app.folder)?;
-			Ok(Output::FileOut(csv::Writer::from_writer(file)))
+			Ok(Output::FileOut(builder.from_writer(file)))
 		}
 	}
 
