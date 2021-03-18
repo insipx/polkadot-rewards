@@ -103,8 +103,10 @@ impl<'a> Api<'a> {
 		const PAGE_SIZE: usize = 100;
 
 		self.progress.map(|r| r.reset());
-		// get the first page only to get the count (query only one item)
-		let total_pages = {
+		self.progress.map(|p| p.set_message("Fetching Rewards"));
+		self.progress.map(|r| r.tick());
+
+		let page_estimate = {
 			let num_entries = self.rewards(0, 1).context("Failed to fetch initial reward page")?.count;
 			let full_pages = num_entries / PAGE_SIZE;
 			if num_entries % PAGE_SIZE == 0 {
@@ -115,18 +117,18 @@ impl<'a> Api<'a> {
 		};
 
 		self.progress.map(|p| p.set_message("Fetching Rewards"));
-		self.progress.map(|p| p.set_length(total_pages.try_into().unwrap()));
+		self.progress.map(|p| p.set_length(page_estimate.try_into().unwrap()));
+		self.progress.map(|r| r.tick());
 
-		let rewards: Vec<Reward> = (0..total_pages)
-			.filter_map(|i| {
+		let rewards: Vec<Reward> = (0..)
+			.map(|i| {
 				self.progress.map(|p| p.inc(1));
 				// subscan allows 10 requests per second
 				std::thread::sleep(std::time::Duration::from_millis(100));
-				self.rewards(i, PAGE_SIZE)
-					.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))
-					.unwrap()
-					.list
+				self.rewards(i, PAGE_SIZE).with_context(|| format!("Failed to fetch page {}", i)).unwrap().list
 			})
+			.take_while(|list| list.is_some())
+			.filter_map(|list| list)
 			.flatten()
 			.filter(|r| {
 				let timestamp = NaiveDateTime::from_timestamp(r.block_timestamp.try_into().unwrap(), 0);
@@ -160,8 +162,9 @@ impl<'a> Api<'a> {
 	/// Returns a vector of prices corresponding to the passed-in vector of Rewards.
 	pub fn fetch_prices(&self, rewards: &[RewardEntry]) -> Result<Vec<f64>, Error> {
 		self.progress.map(|p| p.reset());
-		self.progress.map(|p| p.set_length(rewards.len().try_into().unwrap()));
 		self.progress.map(|p| p.set_message("Fetching Price Data"));
+		self.progress.map(|p| p.set_length(rewards.len().try_into().unwrap()));
+		self.progress.map(|r| r.tick());
 		let mut prices = Vec::with_capacity(rewards.len());
 		for r in rewards {
 			self.progress.map(|p| p.inc(1));
