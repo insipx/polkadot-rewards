@@ -15,7 +15,7 @@
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::{api::Api, primitives::CsvRecord};
-use anyhow::{Context, Error, bail, anyhow};
+use anyhow::{anyhow, bail, Context, Error};
 use argh::FromArgs;
 use chrono::{
 	naive::NaiveDateTime,
@@ -121,10 +121,10 @@ pub fn app() -> Result<(), Error> {
 	};
 	let api = Api::new(&app, progress.as_ref());
 
-	let rewards = api.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)
+	let rewards = api
+		.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)
 		.context("Failed to fetch rewards.")?;
-	let prices = api.fetch_prices(&rewards)
-		.context("Failed to fetch prices.")?;
+	let prices = api.fetch_prices(&rewards).context("Failed to fetch prices.")?;
 
 	let file_name = construct_file_name(&app);
 	app.folder.push(&file_name);
@@ -144,15 +144,15 @@ pub fn app() -> Result<(), Error> {
 				}
 			},
 			amount: amount_to_network(&app.network, &reward.amount),
-			price: *price.market_data.current_price.get(&app.currency)
-				.ok_or_else(||
-					anyhow!(
-						"Specified fiat currency '{}' not supported: {:#?}",
-						app.currency,
-						price.market_data.current_price.keys(),
-					)
-				)?,
-		}).context("Failed to format CsvRecord")?;
+			price: *price.market_data.current_price.get(&app.currency).ok_or_else(|| {
+				anyhow!(
+					"Specified fiat currency '{}' not supported: {:#?}",
+					app.currency,
+					price.market_data.current_price.keys(),
+				)
+			})?,
+		})
+		.context("Failed to format CsvRecord")?;
 	}
 
 	if app.stdout {

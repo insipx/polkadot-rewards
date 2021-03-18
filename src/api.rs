@@ -20,9 +20,9 @@ use crate::{
 	cli::{App, Network},
 	primitives::{ApiResponse, List, Price, Reward, RewardEntry},
 };
-use anyhow::{Error, Context};
-use indicatif::ProgressBar;
+use anyhow::{Context, Error};
 use chrono::naive::NaiveDateTime;
+use indicatif::ProgressBar;
 use std::{collections::HashMap, convert::TryInto};
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
@@ -42,8 +42,7 @@ fn price_endpoint(network: &Network, timestamp: usize) -> String {
 		"{}/coins/{}/history?date={}",
 		PRICE_ENDPOINT,
 		network.id(),
-		NaiveDateTime::from_timestamp(timestamp.try_into().unwrap(), 0)
-			.format("%d-%m-%Y"),
+		NaiveDateTime::from_timestamp(timestamp.try_into().unwrap(), 0).format("%d-%m-%Y"),
 	)
 }
 
@@ -88,13 +87,12 @@ impl<'a> Api<'a> {
 				"page": page,
 				"row": count
 			}))
-			.with_context(|| format!(
-				"Failed to fetch reward for address={} page={} count={}",
-				self.app.address, page, count,
-			))?
+			.with_context(|| {
+				format!("Failed to fetch reward for address={} page={} count={}", self.app.address, page, count,)
+			})?
 			.into_string()?;
-		let rewards: ApiResponse<List<Reward>> = serde_json::from_str(&rewards)
-			.with_context(|| format!("Failed to decode response: {}", rewards))?;
+		let rewards: ApiResponse<List<Reward>> =
+			serde_json::from_str(&rewards).with_context(|| format!("Failed to decode response: {}", rewards))?;
 		Ok(rewards.consume())
 	}
 	/*
@@ -109,26 +107,24 @@ impl<'a> Api<'a> {
 	pub fn fetch_all_rewards(&self, from: usize, to: usize) -> Result<Vec<RewardEntry>, Error> {
 		self.progress.map(|r| r.reset());
 		// get the first page only to get the count (query only one item)
-		let total_pages = self
-			.rewards(0, 1)
-			.context("Failed to fetch initial reward page")?
-			.count / 100;
+		let total_pages = self.rewards(0, 1).context("Failed to fetch initial reward page")?.count / 100;
 
 		self.progress.map(|p| p.set_message("Fetching Rewards"));
 		self.progress.map(|p| p.set_length(total_pages as u64));
 
-		let rewards: Vec<Reward> = (0..total_pages).filter_map(|i| {
-			self.progress.map(|p| p.inc(1));
-			// subscan allows 10 requests per second
-			std::thread::sleep(std::time::Duration::from_millis(100));
-			self.rewards(i, 100)
-				.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))
-				.unwrap()
-				.list
-		})
-		.flatten()
-		.filter(|r| (r.block_timestamp >= from) && (r.block_timestamp <= to))
-		.collect();
+		let rewards: Vec<Reward> = (0..total_pages)
+			.filter_map(|i| {
+				self.progress.map(|p| p.inc(1));
+				// subscan allows 10 requests per second
+				std::thread::sleep(std::time::Duration::from_millis(100));
+				self.rewards(i, 100)
+					.with_context(|| format!("Failed to fetch page {} of {}", i, total_pages))
+					.unwrap()
+					.list
+			})
+			.flatten()
+			.filter(|r| (r.block_timestamp >= from) && (r.block_timestamp <= to))
+			.collect();
 
 		// TODO: this is kind of cheating but it's easier than trying to query just what we need
 		self.progress.map(|p| p.finish());
@@ -136,15 +132,10 @@ impl<'a> Api<'a> {
 		// merge all entries from the same day
 		let mut merged = HashMap::new();
 		for reward in rewards {
-			let day = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0)
-				.format("%Y-%m-%d")
-				.to_string();
+			let day =
+				NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).format("%Y-%m-%d").to_string();
 			let amount: u128 = reward.amount.parse()?;
-			let value = RewardEntry {
-				block_num: reward.block_num,
-				timestamp: reward.block_timestamp,
-				amount,
-			};
+			let value = RewardEntry { block_num: reward.block_num, timestamp: reward.block_timestamp, amount };
 			merged.entry(day).or_insert(value).amount += amount;
 		}
 
