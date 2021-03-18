@@ -105,7 +105,7 @@ impl<'a> Api<'a> {
 		let total_pages = self.rewards(0, 1).context("Failed to fetch initial reward page")?.count / 100;
 
 		self.progress.map(|p| p.set_message("Fetching Rewards"));
-		self.progress.map(|p| p.set_length(total_pages as u64));
+		self.progress.map(|p| p.set_length(total_pages.try_into().unwrap()));
 
 		let rewards: Vec<Reward> = (0..total_pages)
 			.filter_map(|i| {
@@ -119,7 +119,7 @@ impl<'a> Api<'a> {
 			})
 			.flatten()
 			.filter(|r| {
-				let timestamp = NaiveDateTime::from_timestamp(r.block_timestamp as i64, 0);
+				let timestamp = NaiveDateTime::from_timestamp(r.block_timestamp.try_into().unwrap(), 0);
 				let from = if let Some(from) = self.app.from { timestamp >= from } else { true };
 				let to = if let Some(to) = self.app.to { timestamp <= to } else { true };
 				from && to
@@ -150,7 +150,7 @@ impl<'a> Api<'a> {
 	/// Returns a vector of prices corresponding to the passed-in vector of Rewards.
 	pub fn fetch_prices(&self, rewards: &[RewardEntry]) -> Result<Vec<Price>, Error> {
 		self.progress.map(|p| p.reset());
-		self.progress.map(|p| p.set_length(rewards.len() as u64));
+		self.progress.map(|p| p.set_length(rewards.len().try_into().unwrap()));
 		self.progress.map(|p| p.set_message("Fetching Price Data"));
 		let mut prices = Vec::new();
 		for r in rewards.iter() {
