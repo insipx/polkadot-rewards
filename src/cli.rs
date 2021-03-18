@@ -17,13 +17,10 @@
 use crate::{api::Api, primitives::CsvRecord};
 use anyhow::{anyhow, bail, Context, Error};
 use argh::FromArgs;
-use chrono::{
-	naive::NaiveDateTime,
-	offset::{TimeZone, Utc},
-};
+use chrono::{naive::NaiveDateTime, offset::Utc};
 use env_logger::{Builder, Env};
 use indicatif::{ProgressBar, ProgressStyle};
-use std::{convert::TryInto, fs::File, io, path::PathBuf, str::FromStr};
+use std::{fs::File, io, path::PathBuf, str::FromStr};
 
 const OUTPUT_DATE: &str = "%Y-%m-%d";
 
@@ -135,7 +132,7 @@ pub fn app() -> Result<(), Error> {
 	for (reward, price) in rewards.iter().zip(prices.iter()) {
 		wtr.serialize(CsvRecord {
 			block_num: reward.block_num,
-			block_time: Utc.timestamp(reward.timestamp.try_into()?, 0).format(&app.date_format).to_string(),
+			block_time: reward.day.format(&app.date_format).to_string(),
 			amount: amount_to_network(&app.network, &reward.amount),
 			price: *price.market_data.current_price.get(&app.currency).ok_or_else(|| {
 				anyhow!(

@@ -21,7 +21,7 @@ use crate::{
 	primitives::{ApiResponse, List, Price, Reward, RewardEntry},
 };
 use anyhow::{Context, Error};
-use chrono::naive::NaiveDateTime;
+use chrono::{naive::NaiveDateTime, NaiveDate};
 use indicatif::ProgressBar;
 use std::{collections::BTreeMap, convert::TryInto};
 
@@ -37,13 +37,8 @@ fn get_endpoint(network: &Network, end: &str) -> String {
 	}
 }
 
-fn price_endpoint(network: &Network, timestamp: usize) -> String {
-	format!(
-		"{}/coins/{}/history?date={}",
-		PRICE_ENDPOINT,
-		network.id(),
-		NaiveDateTime::from_timestamp(timestamp.try_into().unwrap(), 0).format("%d-%m-%Y"),
-	)
+fn price_endpoint(network: &Network, day: NaiveDate) -> String {
+	format!("{}/coins/{}/history?date={}", PRICE_ENDPOINT, network.id(), day.format("%d-%m-%Y"),)
 }
 
 // TODO: Rate limit these requests so we don't end up trying to DoS subscan.
@@ -66,8 +61,8 @@ impl<'a> Api<'a> {
 	/// get a price at a point in time from subscan.
 	///
 	/// `time`: UNIX timestamp of the time to query (UTC)
-	fn price(&self, time: usize) -> Result<Price, Error> {
-		let req = self.agent.get(&price_endpoint(&self.app.network, time));
+	fn price(&self, day: NaiveDate) -> Result<Price, Error> {
+		let req = self.agent.get(&price_endpoint(&self.app.network, day));
 
 		let price: Price = req.send_bytes(&[])?.into_json()?;
 		Ok(price)
@@ -132,10 +127,9 @@ impl<'a> Api<'a> {
 		// merge all entries from the same day
 		let mut merged = BTreeMap::new();
 		for reward in rewards {
-			let day =
-				NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).format("%Y-%m-%d").to_string();
+			let day = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).date();
 			let amount: u128 = reward.amount.parse()?;
-			let value = RewardEntry { block_num: reward.block_num, timestamp: reward.block_timestamp, amount };
+			let value = RewardEntry { block_num: reward.block_num, day, amount };
 			merged.entry(day).or_insert(value).amount += amount;
 		}
 
@@ -152,7 +146,7 @@ impl<'a> Api<'a> {
 			self.progress.map(|p| p.inc(1));
 			// coingecko allows 100 requests per minute
 			std::thread::sleep(std::time::Duration::from_millis(600));
-			prices.push(self.price(r.timestamp)?)
+			prices.push(self.price(r.day)?)
 		}
 		self.progress.map(|p| p.finish_with_message("Prices Fetched"));
 		Ok(prices)

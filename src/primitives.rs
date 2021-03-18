@@ -14,6 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
+use chrono::NaiveDate;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
@@ -66,7 +67,7 @@ pub struct Reward {
 #[derive(Debug)]
 pub struct RewardEntry {
 	pub block_num: u64,
-	pub timestamp: usize,
+	pub day: NaiveDate,
 	pub amount: u128,
 }
 
