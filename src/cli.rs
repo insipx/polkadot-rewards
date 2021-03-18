@@ -128,10 +128,12 @@ pub fn app() -> Result<(), Error> {
 
 	let mut wtr = Output::new(&app).context("Failed to create output.")?;
 
-	for (reward, price) in rewards.iter().zip(prices.iter()) {
+	for (reward, price) in rewards.into_iter().zip(prices) {
 		wtr.serialize(CsvRecord {
-			block_num: reward.block_num,
-			block_time: reward.day.format(&app.date_format).to_string(),
+			block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| {
+				format!("{}|{}", acc, i)
+			}),
+			date: reward.day.format(&app.date_format).to_string(),
 			amount: amount_to_network(&app.network, &reward.amount),
 			price: *price.market_data.current_price.get(&app.currency).ok_or_else(|| {
 				anyhow!(

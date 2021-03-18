@@ -66,7 +66,7 @@ pub struct Reward {
 
 #[derive(Debug)]
 pub struct RewardEntry {
-	pub block_num: u64,
+	pub block_nums: Vec<u64>,
 	pub day: NaiveDate,
 	pub amount: u128,
 }
@@ -74,8 +74,8 @@ pub struct RewardEntry {
 // "block_num,block_time,amount_dot,price_usd,price_time"
 #[derive(Debug, Serialize)]
 pub struct CsvRecord {
-	pub block_num: u64,
-	pub block_time: String,
+	pub block_nums: String,
+	pub date: String,
 	pub amount: f64,
 	pub price: f64,
 }

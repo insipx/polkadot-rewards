@@ -134,8 +134,14 @@ impl<'a> Api<'a> {
 		for reward in rewards {
 			let day = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).date();
 			let amount: u128 = reward.amount.parse()?;
-			let value = RewardEntry { block_num: reward.block_num, day, amount };
-			merged.entry(day).or_insert(value).amount += amount;
+			let value = RewardEntry { block_nums: vec![reward.block_num], day, amount };
+			merged
+				.entry(day)
+				.and_modify(|e: &mut RewardEntry| {
+					e.block_nums.push(reward.block_num);
+					e.amount += amount;
+				})
+				.or_insert(value);
 		}
 
 		Ok(merged.into_iter().map(|(_k, v)| v).collect())
