@@ -156,7 +156,7 @@ impl<'a> Api<'a> {
 				.or_insert(value);
 		}
 
-		Ok(merged.into_iter().map(|(_k, v)| v).collect())
+		Ok(merged.into_iter().map(|(_k, v)| v).rev().collect())
 	}
 
 	/// Returns a vector of prices corresponding to the passed-in vector of Rewards.
