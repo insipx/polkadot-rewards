@@ -61,7 +61,7 @@ pub struct Reward {
 	pub event_idx: usize,
 	pub amount: String,
 	pub block_timestamp: usize,
-	pub slash_kton: String,
+	// pub slash_kton: String,
 }
 
 #[derive(Debug)]
