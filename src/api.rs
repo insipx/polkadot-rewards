@@ -131,7 +131,7 @@ impl<'a> Api<'a> {
 				self.rewards(i, PAGE_SIZE).with_context(|| format!("Failed to fetch page {}", i)).unwrap().list
 			})
 			.take_while(|list| list.is_some())
-			.filter_map(|list| list)
+			.flatten()
 			.flatten()
 			.filter(|r| {
 				let timestamp = NaiveDateTime::from_timestamp(r.block_timestamp.try_into().unwrap(), 0);
