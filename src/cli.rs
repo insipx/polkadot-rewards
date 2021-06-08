@@ -14,37 +14,41 @@
 // You should have received a copy of the GNU General Public License
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
-use crate::{api::Api, primitives::CsvRecord};
-use anyhow::{bail, Error};
-use argh::FromArgs;
-use chrono::{
-	naive::NaiveDateTime,
-	offset::{TimeZone, Utc},
+use crate::{
+	api::Api,
+	primitives::{CsvRecord, RewardEntry},
 };
+use anyhow::{anyhow, bail, ensure, Context, Error};
+use argh::FromArgs;
+use chrono::naive::NaiveDateTime;
 use env_logger::{Builder, Env};
 use indicatif::{ProgressBar, ProgressStyle};
-use std::{convert::TryInto, fs::File, io, path::PathBuf, str::FromStr};
+use sp_arithmetic::{FixedPointNumber, FixedU128};
+use std::{fs::File, io, path::PathBuf, str::FromStr};
 
-const OUTPUT_DATE: &str = "%Y-%m-%a:%H-%M-%S";
+const OUTPUT_DATE: &str = "%Y-%m-%d";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Polkadot Staking Rewards CLI-App
 pub struct App {
 	#[argh(option, from_str_fn(date_from_string), short = 'f')]
 	/// date to start crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
-	pub from: NaiveDateTime,
-	/// date to stop crawling for staking rewards. Defaults to current time. Format: "YYY-MM-DD HH:MM:SS"
-	#[argh(option, from_str_fn(date_from_string), default = "default_date()", short = 't')]
-	pub to: NaiveDateTime,
+	pub from: Option<NaiveDateTime>,
+	/// date to stop crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
+	#[argh(option, from_str_fn(date_from_string), short = 't')]
+	pub to: Option<NaiveDateTime>,
 	/// network to crawl for rewards. One of: [Polkadot, Kusama, KSM, DOT]
 	#[argh(option, default = "Network::Polkadot", short = 'n')]
 	pub network: Network,
+	/// the fiat currency which should be used for prices
+	#[argh(option, short = 'c')]
+	pub currency: String,
 	/// network-formatted address to get staking rewards for.
 	#[argh(option, short = 'a')]
 	pub address: String,
 	/// date format to use in output CSV data. Uses rfc2822 by default.  EX: "%Y-%m-%d %H:%M:%S".
-	#[argh(option)]
-	date_format: Option<String>,
+	#[argh(option, default = "OUTPUT_DATE.to_string()")]
+	date_format: String,
 	/// directory to output completed CSV to.
 	#[argh(option, default = "default_file_location()", short = 'p')]
 	folder: PathBuf,
@@ -54,10 +58,6 @@ pub struct App {
 	/// get extra information about the program's execution.
 	#[argh(switch, short = 'v')]
 	verbose: bool,
-}
-
-fn default_date() -> NaiveDateTime {
-	Utc::now().naive_utc()
 }
 
 fn default_file_location() -> PathBuf {
@@ -88,6 +88,26 @@ pub enum Network {
 	Kusama,
 }
 
+impl Network {
+	pub fn id(&self) -> &'static str {
+		match self {
+			Self::Polkadot => "polkadot",
+			Self::Kusama => "kusama",
+		}
+	}
+
+	fn amount_to_network(&self, amount: &u128) -> Result<f64, Error> {
+		let denominator = match self {
+			Self::Polkadot => 10_000_000_000u128,
+			Self::Kusama => 1_000_000_000_000u128,
+		};
+		let frac = FixedU128::checked_from_rational(*amount, denominator)
+			.ok_or_else(|| anyhow!("Amount '{}' overflowed FixedU128", amount))?
+			.to_fraction();
+		Ok(frac)
+	}
+}
+
 impl FromStr for Network {
 	type Err = Error;
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
@@ -95,15 +115,6 @@ impl FromStr for Network {
 			"polkadot" | "dot" => Ok(Network::Polkadot),
 			"kusama" | "ksm" => Ok(Network::Kusama),
 			_ => bail!("Network must be one of: 'kusama', 'polkadot', 'dot', 'ksm'"),
-		}
-	}
-}
-
-impl ToString for Network {
-	fn to_string(&self) -> String {
-		match self {
-			Network::Kusama => "ksm".to_string(),
-			Network::Polkadot => "dot".to_string(),
 		}
 	}
 }
@@ -118,33 +129,26 @@ pub fn app() -> Result<(), Error> {
 	};
 	let api = Api::new(&app, progress.as_ref());
 
-	let rewards = api.fetch_all_rewards(app.from.timestamp() as usize, app.to.timestamp() as usize)?;
-	let prices = api.fetch_prices(&rewards)?;
+	let rewards = api.fetch_all_rewards().context("Failed to fetch rewards.")?;
+	let prices = api.fetch_prices(&rewards).context("Failed to fetch prices.")?;
 
-	let file_name = construct_file_name(&app);
+	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
+
+	let file_name = construct_file_name(&app, &rewards);
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
-	let mut wtr = Output::new(&app)?;
+	let mut wtr = Output::new(&app).context("Failed to create output.")?;
 
-	for (reward, price) in rewards.iter().zip(prices.iter()) {
-		if let Some(date_format) = &app.date_format {
-			wtr.serialize(CsvRecord {
-				block_num: reward.block_num,
-				block_time: Utc.timestamp(reward.block_timestamp.try_into()?, 0).format(&date_format).to_string(),
-				amount: amount_to_network(&app.network, &reward.amount)?,
-				price: f64::from_str(&price.price)?,
-				time: Utc.timestamp(price.time.try_into()?, 0).format(&date_format).to_string(),
-			})?;
-		} else {
-			wtr.serialize(CsvRecord {
-				block_num: reward.block_num,
-				block_time: Utc.timestamp(reward.block_timestamp.try_into()?, 0).to_rfc2822(),
-				amount: amount_to_network(&app.network, &reward.amount)?,
-				price: f64::from_str(&price.price)?,
-				time: Utc.timestamp(price.time.try_into()?, 0).to_rfc2822(),
-			})?;
-		}
+	for (reward, price) in rewards.into_iter().zip(prices) {
+		wtr.serialize(CsvRecord {
+			block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+				.to_string(),
+			date: reward.day.format(&app.date_format).to_string(),
+			amount: app.network.amount_to_network(&reward.amount)?,
+			price,
+		})
+		.context("Failed to format CsvRecord")?;
 	}
 
 	if app.stdout {
@@ -165,21 +169,15 @@ fn construct_progress_bar() -> ProgressBar {
 	bar
 }
 
-fn amount_to_network(network: &Network, amount: &str) -> Result<f64, Error> {
-	match network {
-		Network::Polkadot => Ok(f64::from_str(amount)? / (10000000000f64)),
-		Network::Kusama => Ok(f64::from_str(amount)? / (1000000000000f64)),
-	}
-}
-
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
-fn construct_file_name(app: &App) -> String {
+fn construct_file_name(app: &App, rewards: &[RewardEntry]) -> String {
 	format!(
-		"{}-{}-{}-{}-rewards",
-		app.network.to_string(),
+		"{}->{}-{}-{}--{}-rewards",
+		app.network.id(),
+		app.currency,
 		&app.address,
-		app.from.format(OUTPUT_DATE),
-		app.to.format(OUTPUT_DATE)
+		rewards.first().unwrap().day.format(OUTPUT_DATE),
+		rewards.last().unwrap().day.format(OUTPUT_DATE)
 	)
 }
 
@@ -190,11 +188,13 @@ enum Output {
 
 impl Output {
 	fn new(app: &App) -> Result<Self, Error> {
+		let mut builder = csv::WriterBuilder::new();
+		builder.delimiter(b';');
 		if app.stdout {
-			Ok(Output::StdOut(csv::Writer::from_writer(io::stdout())))
+			Ok(Output::StdOut(builder.from_writer(io::stdout())))
 		} else {
 			let file = File::create(&app.folder)?;
-			Ok(Output::FileOut(csv::Writer::from_writer(file)))
+			Ok(Output::FileOut(builder.from_writer(file)))
 		}
 	}
 

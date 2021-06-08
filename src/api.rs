@@ -18,14 +18,19 @@
 
 use crate::{
 	cli::{App, Network},
-	primitives::{ApiResponse, List, Price, Reward},
+	primitives::{ApiResponse, List, Price, Reward, RewardEntry},
 };
-use anyhow::Error;
+use anyhow::{anyhow, Context, Error};
+use chrono::{naive::NaiveDateTime, NaiveDate};
 use indicatif::ProgressBar;
+use std::{
+	collections::{BTreeMap, BTreeSet},
+	convert::TryInto,
+};
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
 const KUSAMA_ENDPOINT: &str = "https://kusama.subscan.io/api/";
-const PRICE: &str = "open/price";
+const PRICE_ENDPOINT: &str = "https://api.coingecko.com/api/v3";
 const REWARD_SLASH: &str = "scan/account/reward_slash";
 
 fn get_endpoint(network: &Network, end: &str) -> String {
@@ -33,6 +38,10 @@ fn get_endpoint(network: &Network, end: &str) -> String {
 		Network::Polkadot => format!("{}{}", POLKADOT_ENDPOINT, end),
 		Network::Kusama => format!("{}{}", KUSAMA_ENDPOINT, end),
 	}
+}
+
+fn price_endpoint(network: &Network, day: NaiveDate) -> String {
+	format!("{}/coins/{}/history?date={}", PRICE_ENDPOINT, network.id(), day.format("%d-%m-%Y"),)
 }
 
 // TODO: Rate limit these requests so we don't end up trying to DoS subscan.
@@ -55,12 +64,11 @@ impl<'a> Api<'a> {
 	/// get a price at a point in time from subscan.
 	///
 	/// `time`: UNIX timestamp of the time to query (UTC)
-	fn price(&self, time: usize) -> Result<Price, Error> {
-		let req = self.agent.post(&get_endpoint(&self.app.network, PRICE));
+	fn price(&self, day: NaiveDate) -> Result<Price, Error> {
+		let req = self.agent.get(&price_endpoint(&self.app.network, day));
 
-		let price: ApiResponse<Price> =
-			req.set("Content-Type", "application/json").send_json(ureq::json!({ "time": time }))?.into_json()?;
-		Ok(price.consume())
+		let price: Price = req.send_bytes(&[])?.into_json()?;
+		Ok(price)
 	}
 
 	/// Get rewards from a specific page of subscan API
@@ -76,9 +84,13 @@ impl<'a> Api<'a> {
 				"address": self.app.address.as_str(),
 				"page": page,
 				"row": count
-			}))?
+			}))
+			.with_context(|| {
+				format!("Failed to fetch reward for address={} page={} count={}", self.app.address, page, count,)
+			})?
 			.into_string()?;
-		let rewards: ApiResponse<List<Reward>> = serde_json::from_str(&rewards)?;
+		let rewards: ApiResponse<List<Reward>> =
+			serde_json::from_str(&rewards).with_context(|| format!("Failed to decode response: {}", rewards))?;
 		Ok(rewards.consume())
 	}
 	/*
@@ -90,40 +102,96 @@ impl<'a> Api<'a> {
 	///
 	/// `from`: UNIX timestamp at which to begin returning rewards
 	/// `to`: UNIX timestamp at which to end returning rewards
-	pub fn fetch_all_rewards(&self, from: usize, to: usize) -> Result<Vec<Reward>, Error> {
+	pub fn fetch_all_rewards(&self) -> Result<Vec<RewardEntry>, Error> {
+		const PAGE_SIZE: usize = 100;
+
 		self.progress.map(|r| r.reset());
-		let mut rewards = Vec::new();
-		// first, get rewards from the first page
-		let reward = self.rewards(0, 10)?;
-		let total_pages = reward.count / 10;
-		rewards.extend(reward.list.into_iter());
+		self.progress.map(|p| p.set_message("Fetching Rewards"));
+		self.progress.map(|r| r.tick());
+
+		let page_estimate = {
+			let num_entries = self.rewards(0, 1).context("Failed to fetch initial reward page")?.count;
+			let full_pages = num_entries / PAGE_SIZE;
+			if num_entries % PAGE_SIZE == 0 {
+				full_pages
+			} else {
+				full_pages + 1
+			}
+		};
 
 		self.progress.map(|p| p.set_message("Fetching Rewards"));
-		self.progress.map(|p| p.set_length(total_pages as u64));
+		self.progress.map(|p| p.set_length(page_estimate.try_into().unwrap()));
+		self.progress.map(|r| r.tick());
 
-		for i in 1..=total_pages {
-			self.progress.map(|p| p.inc(1));
-			// rate limited
-			std::thread::sleep(std::time::Duration::from_millis(35));
-			rewards.extend(self.rewards(i, 10)?.list.into_iter());
-		}
+		let rewards: Vec<Reward> = (0..)
+			.map(|i| {
+				self.progress.map(|p| p.inc(1));
+				// subscan allows 10 requests per second
+				std::thread::sleep(std::time::Duration::from_millis(100));
+				self.rewards(i, PAGE_SIZE).with_context(|| format!("Failed to fetch page {}", i)).unwrap().list
+			})
+			.take_while(|list| list.is_some())
+			.flatten()
+			.flatten()
+			.filter(|r| {
+				let timestamp = NaiveDateTime::from_timestamp(r.block_timestamp.try_into().unwrap(), 0);
+				let from = if let Some(from) = self.app.from { timestamp >= from } else { true };
+				let to = if let Some(to) = self.app.to { timestamp <= to } else { true };
+				from && to
+			})
+			.collect();
+
 		// TODO: this is kind of cheating but it's easier than trying to query just what we need
-		self.progress.map(|p| p.finish_with_message(&format!("Total Rewards Received: {}", rewards.len())));
+		self.progress.map(|p| p.finish());
 
-		Ok(rewards.into_iter().filter(|r| (r.block_timestamp >= from) && (r.block_timestamp <= to)).collect())
+		// merge all entries from the same day
+		let mut merged = BTreeMap::new();
+		for reward in rewards {
+			let day = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).date();
+			let amount: u128 = reward.amount.parse()?;
+			let value = RewardEntry {
+				block_nums: {
+					let mut blocks = BTreeSet::new();
+					blocks.insert(reward.block_num);
+					blocks
+				},
+				day,
+				amount,
+			};
+			merged
+				.entry(day)
+				.and_modify(|e: &mut RewardEntry| {
+					e.block_nums.insert(reward.block_num);
+					e.amount += amount;
+				})
+				.or_insert(value);
+		}
+
+		Ok(merged.into_iter().map(|(_k, v)| v).rev().collect())
 	}
 
 	/// Returns a vector of prices corresponding to the passed-in vector of Rewards.
-	pub fn fetch_prices(&self, rewards: &[Reward]) -> Result<Vec<Price>, Error> {
+	pub fn fetch_prices(&self, rewards: &[RewardEntry]) -> Result<Vec<f64>, Error> {
 		self.progress.map(|p| p.reset());
-		self.progress.map(|p| p.set_length(rewards.len() as u64));
 		self.progress.map(|p| p.set_message("Fetching Price Data"));
-		let mut prices = Vec::new();
-		for r in rewards.iter() {
+		self.progress.map(|p| p.set_length(rewards.len().try_into().unwrap()));
+		self.progress.map(|r| r.tick());
+		let mut prices = Vec::with_capacity(rewards.len());
+		for r in rewards {
 			self.progress.map(|p| p.inc(1));
-			// we're rate limited at 10 req/s
-			std::thread::sleep(std::time::Duration::from_millis(35));
-			prices.push(self.price(r.block_timestamp)?)
+			// coingecko allows 100 requests per minute
+			// it seems to be a bit oversensitive. We therefore restrain outselfs
+			// to 60 requests a minute.
+			std::thread::sleep(std::time::Duration::from_millis(1000));
+			let result = self.price(r.day)?;
+			let price = result.market_data.current_price.get(&self.app.currency).ok_or_else(|| {
+				anyhow!(
+					"Specified fiat currency '{}' not supported: {:#?}",
+					self.app.currency,
+					result.market_data.current_price.keys(),
+				)
+			})?;
+			prices.push(*price);
 		}
 		self.progress.map(|p| p.finish_with_message("Prices Fetched"));
 		Ok(prices)
