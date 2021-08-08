@@ -154,7 +154,7 @@ pub fn app() -> Result<(), Error> {
 	if app.stdout {
 		progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
 	} else {
-		progress.map(|p| p.finish_with_message(&format!("wrote data to file {}", &file_name)));
+		progress.map(move |p| p.finish_with_message(format!("Wrote data to file: {}", file_name)));
 	}
 	Ok(())
 }
