@@ -1,0 +1,93 @@
+name: Publish draft release
+on:
+  push:
+    tags:
+      - v[0-9]+.[0-9]+.[0-9]+*
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Remove Old Release Drafts
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          curl -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/$GITHUB_REPOSITORY/releases \
+            | tr '\r\n' ' ' \
+            | jq '.[] | select(.draft == true) | .id' \
+            | xargs -I '{}' \
+          curl -X DELETE -H "Authorization: Bearer $GITHUB_TOKEN" https://api.github.com/repos/$GITHUB_REPOSITORY/releases/{}
+  
+  deploy:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Rust
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          profile: minimal
+
+      - name: Build
+        env:
+        run: cargo build --release
+
+      - name: Prepare binary
+        run: |
+          strip target/release/polkadot-rewards
+          mkdir -p release
+          
+      - name: Package for Debian/Ubuntu
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          cargo install cargo-deb
+          cargo deb
+          mv ./target/debian/*.deb ./release/polkadot-rewards.deb
+          tar -C ./target/release/ -czvf ./release/polkadot-rewards-linux.tar.gz ./polkadot-rewards
+
+      - name: Build Release for Mac
+        if: matrix.os == 'macos-latest'
+        run: |
+          tar -C ./target/release/ -czvf ./release/polkadot-rewards-mac.tar.gz ./polkadot-rewards
+
+      - name: Build Release Windows
+        if: matrix.os == 'windows-latest'
+        run: |
+          tar -C ./target/release/ -czvf ./release/polkadot-rewards-win.tar.gz ./polkadot-rewards.exe
+
+      - name: Package vanilla linux binary
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          mv target/release/polkadot-rewards ./release/polkadot-rewards
+
+      - name: Get changelog
+        id: changelog_reader
+        uses: mindsers/changelog-reader-action@v2
+        with:
+          validation_depth: 2
+          path: ./CHANGELOG.md
+          version: ${{ steps.tag_name.outputs.current_version }}
+
+      - name: Generate release notes
+        run: |
+            cat<<'EOF' > ${{ github.sha }}-BODY.txt
+            # Polkadot Rewards ${{ steps.changelog_reader.outputs.version }}
+            ${{ steps.changelog_reader.outputs.changes }}
+          EOF
+
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.changelog_reader.outputs.version }}
+          name: Release ${{ steps.changelog_reader.outputs.version }}
+          body_path: ${{ github.sha }}-BODY.txt
+          draft: true
+          files: |
+            ./release/*.tar.gz
+            ./release/*.deb
+            ./release/polkadot-rewards
+        env:
+ 

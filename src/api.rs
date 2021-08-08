@@ -180,7 +180,7 @@ impl<'a> Api<'a> {
 		for r in rewards {
 			self.progress.map(|p| p.inc(1));
 			// coingecko allows 100 requests per minute
-			// it seems to be a bit oversensitive. We therefore restrain outselfs
+			// it seems to be a bit oversensitive. We therefore restrain ourselfs
 			// to 60 requests a minute.
 			std::thread::sleep(std::time::Duration::from_millis(1000));
 			let result = self.price(r.day)?;
