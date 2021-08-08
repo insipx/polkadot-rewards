@@ -44,19 +44,14 @@ Usage: polkadot-rewards [-f <from>] [-t <to>] [-n <network>] -c <currency> -a <a
 Polkadot Staking Rewards CLI-App
 
 Options:
-  -f, --from        date to start crawling for staking rewards. Format:
-                    "YYY-MM-DD HH:MM:SS"
-  -t, --to          date to stop crawling for staking rewards. Format:
-                    "YYY-MM-DD HH:MM:SS"
-  -n, --network     network to crawl for rewards. One of: [Polkadot, Kusama,
-                    KSM, DOT]
+  -f, --from        date to start crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
+  -t, --to          date to stop crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
+  -n, --network     network to crawl for rewards. One of: [Polkadot, Kusama, KSM, DOT]
   -c, --currency    the fiat currency which should be used for prices
   -a, --address     network-formatted address to get staking rewards for.
-  --date-format     date format to use in output CSV data. Uses rfc2822 by
-                    default.  EX: "%Y-%m-%d %H:%M:%S".
+  --date-format     date format to use in output CSV data. Uses rfc2822 by default.  EX: "%Y-%m-%d %H:%M:%S".
   -p, --folder      directory to output completed CSV to.
   -s, --stdout      output the CSV file to STDOUT. Disables creating a new file.
   -v, --verbose     get extra information about the program's execution.
   --help            display usage information
-
 ```
