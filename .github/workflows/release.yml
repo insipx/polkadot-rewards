@@ -27,7 +27,7 @@ jobs:
         with:
           validation_depth: 2
           path: ./CHANGELOG.md
-          version: ${{ steps.tag_name.outputs.current_version }}
+          version: v${{ steps.tag_name.outputs.current_version }}
       
       - name: Generate release notes
         run: |
@@ -98,13 +98,13 @@ jobs:
         with:
           validation_depth: 2
           path: ./CHANGELOG.md
-          version: ${{ steps.tag_name.outputs.current_version }}
+          version: v${{ steps.tag_name.outputs.current_version }}
       
       - name: Publish Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: ${{ steps.changelog_reader.outputs.version }}
-          name: Release ${{ steps.changelog_reader.outputs.version }}
+          tag_name: v${{ steps.changelog_reader.outputs.version }}
+          name: Release v${{ steps.changelog_reader.outputs.version }}
           body_path: ${{ github.sha }}-BODY.txt
           draft: true
           files: |
