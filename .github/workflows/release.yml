@@ -80,7 +80,7 @@ jobs:
         run: |
           strip target/release/polkadot-rewards.exe
           mkdir -p release
-          mv /target/release/polkadot-rewards.exe ./release/polkadot-rewards.exe
+          mv ./target/release/polkadot-rewards.exe ./release/polkadot-rewards.exe
 
       - name: Package Vanilla Linux Binary
         if: matrix.os == 'ubuntu-latest'
