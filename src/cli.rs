@@ -46,6 +46,9 @@ pub struct App {
 	/// network-formatted address to get staking rewards for.
 	#[argh(option, short = 'a')]
 	pub address: String,
+	/// change the user agent for HTTPS requests
+	#[argh(option, short = 'u', default = "default_user_agent()")]
+	pub user: String,
 	/// date format to use in output CSV data. Uses rfc2822 by default.  EX: "%Y-%m-%d %H:%M:%S".
 	#[argh(option, default = "OUTPUT_DATE.to_string()")]
 	date_format: String,
@@ -59,6 +62,12 @@ pub struct App {
 	#[argh(switch, short = 'v')]
 	verbose: bool,
 }
+
+fn default_user_agent() -> String {
+	let version = env!("CARGO_PKG_VERSION");
+	format!("polkadot-rewards/{}", version)
+}
+
 
 fn default_file_location() -> PathBuf {
 	match std::env::current_dir() {
@@ -86,6 +95,8 @@ pub enum Network {
 	Polkadot,
 	/// The Kusama Network
 	Kusama,
+	/// The Moonbeam Network
+	Moonriver,
 }
 
 impl Network {
@@ -93,13 +104,15 @@ impl Network {
 		match self {
 			Self::Polkadot => "polkadot",
 			Self::Kusama => "kusama",
+			Self::Moonriver => "moonriver",
 		}
 	}
 
 	fn amount_to_network(&self, amount: &u128) -> Result<f64, Error> {
 		let denominator = match self {
-			Self::Polkadot => 10_000_000_000u128,
-			Self::Kusama => 1_000_000_000_000u128,
+			Self::Polkadot  => 10_000_000_000u128, // 1 Billion DOT
+			Self::Kusama    => 1_000_000_000_000u128, // 10 Mil KSM
+			Self::Moonriver => 1_000_000_000_000_000_000u128,
 		};
 		let frac = FixedU128::checked_from_rational(*amount, denominator)
 			.ok_or_else(|| anyhow!("Amount '{}' overflowed FixedU128", amount))?
@@ -112,9 +125,11 @@ impl FromStr for Network {
 	type Err = Error;
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		match s.to_lowercase().as_str() {
-			"polkadot" | "dot" => Ok(Network::Polkadot),
-			"kusama" | "ksm" => Ok(Network::Kusama),
-			_ => bail!("Network must be one of: 'kusama', 'polkadot', 'dot', 'ksm'"),
+			"polkadot"  | "dot"			 => Ok(Network::Polkadot),
+			"kusama"    | "ksm"			 => Ok(Network::Kusama),
+			"moonriver" | "movr"		 => Ok(Network::Moonriver),
+			_ => bail!("Network must be one of: 'kusama', 'polkadot', 'moonriver', 'karura', 'khala', 'shiden' or their
+				token abbreviations."),
 		}
 	}
 }
