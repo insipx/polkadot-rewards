@@ -31,7 +31,7 @@ jobs:
         with:
           validation_depth: 2
           path: ./CHANGELOG.md
-          version: ${{ steps.tag_name.outputs.current_version }}
+          version: v${{ steps.tag_name.outputs.current_version }}
 
       - name: Generate release notes
         run: |
@@ -107,7 +107,7 @@ jobs:
         with:
           validation_depth: 2
           path: ./CHANGELOG.md
-          version: ${{ steps.tag_name.outputs.current_version }}
+          version: v${{ steps.tag_name.outputs.current_version }}
 
       - name: Publish Release
         uses: softprops/action-gh-release@v1
