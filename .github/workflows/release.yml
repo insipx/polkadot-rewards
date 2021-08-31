@@ -108,8 +108,8 @@ jobs:
       - name: Publish Release
         uses: softprops/action-gh-release@v1
         with:
-          tag_name: v${{ steps.changelog_reader.outputs.version }}
-          name: Release v${{ steps.changelog_reader.outputs.version }}
+          tag_name: ${{ steps.changelog_reader.outputs.version }}
+          name: Release ${{ steps.changelog_reader.outputs.version }}
           body_path: ${{ github.sha }}-BODY.txt
           draft: true
           files: |
