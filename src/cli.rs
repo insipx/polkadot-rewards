@@ -68,7 +68,6 @@ fn default_user_agent() -> String {
 	format!("polkadot-rewards/{}", version)
 }
 
-
 fn default_file_location() -> PathBuf {
 	match std::env::current_dir() {
 		Err(e) => {
@@ -110,8 +109,8 @@ impl Network {
 
 	fn amount_to_network(&self, amount: &u128) -> Result<f64, Error> {
 		let denominator = match self {
-			Self::Polkadot  => 10_000_000_000u128, // 1 Billion DOT
-			Self::Kusama    => 1_000_000_000_000u128, // 10 Mil KSM
+			Self::Polkadot => 10_000_000_000u128,  // 1 Billion DOT
+			Self::Kusama => 1_000_000_000_000u128, // 10 Mil KSM
 			Self::Moonriver => 1_000_000_000_000_000_000u128,
 		};
 		let frac = FixedU128::checked_from_rational(*amount, denominator)
@@ -125,11 +124,13 @@ impl FromStr for Network {
 	type Err = Error;
 	fn from_str(s: &str) -> Result<Self, Self::Err> {
 		match s.to_lowercase().as_str() {
-			"polkadot"  | "dot"			 => Ok(Network::Polkadot),
-			"kusama"    | "ksm"			 => Ok(Network::Kusama),
-			"moonriver" | "movr"		 => Ok(Network::Moonriver),
-			_ => bail!("Network must be one of: 'kusama', 'polkadot', 'moonriver', 'karura', 'khala', 'shiden' or their
-				token abbreviations."),
+			"polkadot" | "dot" => Ok(Network::Polkadot),
+			"kusama" | "ksm" => Ok(Network::Kusama),
+			"moonriver" | "movr" => Ok(Network::Moonriver),
+			_ => bail!(
+				"Network must be one of: 'kusama', 'polkadot', 'moonriver', 'karura', 'khala', 'shiden' or their
+				token abbreviations."
+			),
 		}
 	}
 }
