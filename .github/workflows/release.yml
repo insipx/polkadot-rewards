@@ -20,6 +20,10 @@ jobs:
   changelog:
     runs-on: ubuntu-latest
     steps:
+      - name: Get version from tag
+        id: tag_name
+        run: |
+          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
       - uses: actions/checkout@v2
       - name: Get changelog
         id: changelog_reader
@@ -27,15 +31,15 @@ jobs:
         with:
           validation_depth: 2
           path: ./CHANGELOG.md
-          version: v${{ steps.tag_name.outputs.current_version }}
-      
+          version: ${{ steps.tag_name.outputs.current_version }}
+
       - name: Generate release notes
         run: |
             cat<<'EOF' > ${{ github.sha }}-BODY.txt
             # Polkadot Rewards ${{ steps.changelog_reader.outputs.version }}
             ${{ steps.changelog_reader.outputs.changes }}
             EOF
-      
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v2
         with:
@@ -49,7 +53,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
-      
+
       - name: Install Rust
         uses: actions-rs/toolchain@v1
         with:
@@ -86,20 +90,25 @@ jobs:
         if: matrix.os == 'ubuntu-latest'
         run: |
           mv target/release/polkadot-rewards ./release/polkadot-rewards
-      
+
       - name: Download Changelog Body
         uses: actions/download-artifact@v2
         with:
           name: changelog_body
-      
+
+      - name: Get version from tag
+        id: tag_name
+        run: |
+          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
+
       - name: Get changelog
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
         with:
           validation_depth: 2
           path: ./CHANGELOG.md
-          version: v${{ steps.tag_name.outputs.current_version }}
-      
+          version: ${{ steps.tag_name.outputs.current_version }}
+
       - name: Publish Release
         uses: softprops/action-gh-release@v1
         with:
@@ -113,4 +122,4 @@ jobs:
             ./release/*.exe
             ./release/polkadot-rewards
             ./release/polkadot-rewards-macos
- 
+
