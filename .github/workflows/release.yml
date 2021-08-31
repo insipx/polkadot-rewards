@@ -24,6 +24,7 @@ jobs:
         id: tag_name
         run: |
           echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
+
       - uses: actions/checkout@v2
       - name: Get changelog
         id: changelog_reader
@@ -45,6 +46,7 @@ jobs:
         with:
           name: changelog_body
           path: ${{ github.sha }}-BODY.txt
+
   deploy:
     needs: [release, changelog]
     strategy:
@@ -96,18 +98,12 @@ jobs:
         with:
           name: changelog_body
 
-      - name: Get version from tag
-        id: tag_name
-        run: |
-          echo ::set-output name=current_version::${GITHUB_REF#refs/tags/v}
-
       - name: Get changelog
         id: changelog_reader
         uses: mindsers/changelog-reader-action@v2
         with:
           validation_depth: 2
           path: ./CHANGELOG.md
-          version: v${{ steps.tag_name.outputs.current_version }}
 
       - name: Publish Release
         uses: softprops/action-gh-release@v1
