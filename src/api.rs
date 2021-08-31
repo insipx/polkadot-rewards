@@ -28,8 +28,13 @@ use std::{
 	convert::TryInto,
 };
 
-const POLKADOT_ENDPOINT: &str = "https://polkadot.subscan.io/api/";
-const KUSAMA_ENDPOINT: &str = "https://kusama.subscan.io/api/";
+const POLKADOT_ENDPOINT: &str = "https://polkadot.api.subscan.io/api/";
+const KUSAMA_ENDPOINT: &str = "https://kusama.api.subscan.io/api/";
+const MOONBEAM_ENDPOINT: &str = "https://moonriver.api.subscan.io/api/";
+// so far these networks dont have rewards on subscan
+// const KARURA_ENDPOINT: &str = "https://karura.api.subscan.io/api/";
+// const KHALA_ENDPOINT: &str = "https://khala.api.subscan.io/api/";
+// const SHIDEN_ENDPOINT: &str = "https://shiden.api.subscan.io/api/";
 const PRICE_ENDPOINT: &str = "https://api.coingecko.com/api/v3";
 const REWARD_SLASH: &str = "scan/account/reward_slash";
 
@@ -37,6 +42,10 @@ fn get_endpoint(network: &Network, end: &str) -> String {
 	match network {
 		Network::Polkadot => format!("{}{}", POLKADOT_ENDPOINT, end),
 		Network::Kusama => format!("{}{}", KUSAMA_ENDPOINT, end),
+		Network::Moonriver => format!("{}{}", MOONBEAM_ENDPOINT, end),
+		// Network::Karura => format!("{}{}", KARURA_ENDPOINT, end),
+		// Network::Khala => format!("{}{}", KHALA_ENDPOINT, end),
+		// Network::Shiden => format!("{}{}", SHIDEN_ENDPOINT, end),
 	}
 }
 
@@ -56,7 +65,7 @@ pub struct Api<'a> {
 impl<'a> Api<'a> {
 	/// instantiate a new instance of the subscan API
 	pub fn new(app: &'a App, progress: Option<&'a ProgressBar>) -> Self {
-		let agent = ureq::builder().build();
+		let agent = ureq::builder().user_agent(&app.user).build();
 
 		Self { app, progress, agent }
 	}
@@ -86,18 +95,14 @@ impl<'a> Api<'a> {
 				"row": count
 			}))
 			.with_context(|| {
-				format!("Failed to fetch reward for address={} page={} count={}", self.app.address, page, count,)
+				format!("Failed to fetch reward for address={} page={} row={}", self.app.address, page, count,)
 			})?
 			.into_string()?;
 		let rewards: ApiResponse<List<Reward>> =
 			serde_json::from_str(&rewards).with_context(|| format!("Failed to decode response: {}", rewards))?;
 		Ok(rewards.consume())
 	}
-	/*
-	fn historical_price(&self, from: String, to: String) {
-		todo!()
-	}
-	*/
+
 	/// Fetch all the rewards starting from some point in time, and ending at another
 	///
 	/// `from`: UNIX timestamp at which to begin returning rewards
@@ -127,7 +132,7 @@ impl<'a> Api<'a> {
 			.map(|i| {
 				self.progress.map(|p| p.inc(1));
 				// subscan allows 10 requests per second
-				std::thread::sleep(std::time::Duration::from_millis(100));
+				std::thread::sleep(std::time::Duration::from_millis(300));
 				self.rewards(i, PAGE_SIZE).with_context(|| format!("Failed to fetch page {}", i)).unwrap().list
 			})
 			.take_while(|list| list.is_some())
