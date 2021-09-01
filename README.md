@@ -50,7 +50,7 @@ Polkadot Staking Rewards CLI-App
 Options:
   -f, --from        date to start crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
   -t, --to          date to stop crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
-  -n, --network     network to crawl for rewards. One of: [Polkadot, Kusama, KSM, DOT]
+  -n, --network     network to crawl for rewards. One of: [Polkadot, Kusama, Moonriver, KSM, DOT, MOVR]
   -c, --currency    the fiat currency which should be used for prices
   -a, --address     network-formatted address to get staking rewards for.
   --date-format     date format to use in output CSV data. Uses rfc2822 by default.  EX: "%Y-%m-%d %H:%M:%S".
