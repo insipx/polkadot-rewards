@@ -71,6 +71,6 @@ Options:
   --no-price        do not gather price data
   --preview         preview, in your terminal, what the output of the CSV will
                     be.
-  -v, --verbose     get extra information about the program's execution.
+  -v, --verbose     get extra information about the program execution.
   --help            display usage information
 ```
