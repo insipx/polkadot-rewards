@@ -1,6 +1,6 @@
 [package]
 name = "polkadot-rewards"
-version = "0.2.0"
+version = "0.3.0"
 authors = ["Andrew Plaza <andrew.plaza@parity.io>"]
 edition = "2018"
 

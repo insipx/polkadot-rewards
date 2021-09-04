@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [v0.3.0] - 2021-08-31
+### Added
+- `--no-price` flag. Skips fetching prices from CoinGecko.
+- `--preview` flag. Outputs a table in CLI instead of a CSV format or writing to a file. Useful if you don't care about
+  preserving the data you get and just want an overview of your rewards from the terminal.
+
 ## [v0.2.0] - 2021-08-31
 ### Added
 - Add Moonriver Network. Available under `MOVR` or `moonriver` ids.
