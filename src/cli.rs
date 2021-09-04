@@ -156,7 +156,7 @@ pub fn app() -> Result<(), Error> {
 	let prices = if !app.no_price {
 		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
 	} else {
-        (0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>()
+		(0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>()
 	};
 
 	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
@@ -167,10 +167,11 @@ pub fn app() -> Result<(), Error> {
 
 	let mut rewards = rewards.iter().zip(&prices).map(|(reward, price)| {
 		Ok(CsvRecord {
-			block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..].to_string(),
+			block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+				.to_string(),
 			date: reward.day.format(&app.date_format).to_string(),
 			amount: app.network.amount_to_network(&reward.amount)?,
-			price: price.into()
+			price: price.into(),
 		})
 	});
 

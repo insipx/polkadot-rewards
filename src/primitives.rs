@@ -15,9 +15,12 @@
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
 use chrono::NaiveDate;
+use cli_table::Table;
 use serde::{Deserialize, Serialize};
-use cli_table::{Table};
-use std::{fmt, collections::{BTreeSet, HashMap}};
+use std::{
+	collections::{BTreeSet, HashMap},
+	fmt,
+};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ApiResponse<T> {
@@ -81,7 +84,7 @@ pub struct CsvRecord {
 	#[table(title = "Blocks")]
 	pub block_nums: String,
 	#[table(title = "Price")]
-	pub price: OptionalPrice
+	pub price: OptionalPrice,
 }
 
 #[derive(Debug, Clone, Serialize)]
@@ -102,5 +105,3 @@ impl From<&Option<f64>> for OptionalPrice {
 		OptionalPrice(*price)
 	}
 }
-
-
