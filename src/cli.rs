@@ -175,7 +175,7 @@ pub fn app() -> Result<(), Error> {
 				price,
 			})
 		})
-        .try_for_each(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))?;
+		.try_for_each(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))?;
 
 	if app.stdout {
 		progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
