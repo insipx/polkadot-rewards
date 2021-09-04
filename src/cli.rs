@@ -58,6 +58,9 @@ pub struct App {
 	/// output the CSV file to STDOUT. Disables creating a new file.
 	#[argh(switch, short = 's')]
 	stdout: bool,
+	#[argh(switch)]
+	/// don't gather price data
+	no_price: bool,
 	/// get extra information about the program's execution.
 	#[argh(switch, short = 'v')]
 	verbose: bool,
@@ -146,7 +149,11 @@ pub fn app() -> Result<(), Error> {
 	let api = Api::new(&app, progress.as_ref());
 
 	let rewards = api.fetch_all_rewards().context("Failed to fetch rewards.")?;
-	let prices = api.fetch_prices(&rewards).context("Failed to fetch prices.")?;
+	let prices = if !app.no_price {
+		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
+	} else {
+		[0..rewards.len()].iter().map(|_| None).collect::<Vec<Option<_>>>()
+	};
 
 	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
 
@@ -156,16 +163,19 @@ pub fn app() -> Result<(), Error> {
 
 	let mut wtr = Output::new(&app).context("Failed to create output.")?;
 
-	for (reward, price) in rewards.into_iter().zip(prices) {
-		wtr.serialize(CsvRecord {
-			block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
-				.to_string(),
-			date: reward.day.format(&app.date_format).to_string(),
-			amount: app.network.amount_to_network(&reward.amount)?,
-			price,
+	rewards
+		.into_iter()
+		.zip(prices)
+		.map(|(reward, price)| {
+			Ok(CsvRecord {
+				block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+					.to_string(),
+				date: reward.day.format(&app.date_format).to_string(),
+				amount: app.network.amount_to_network(&reward.amount)?,
+				price,
+			})
 		})
-		.context("Failed to format CsvRecord")?;
-	}
+		.try_for_each(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))?;
 
 	if app.stdout {
 		progress.map(|p| p.finish_with_message("Writing data to STDOUT"));

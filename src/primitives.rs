@@ -75,6 +75,6 @@ pub struct RewardEntry {
 pub struct CsvRecord {
 	pub date: String,
 	pub amount: f64,
-	pub price: f64,
 	pub block_nums: String,
+	pub price: Option<f64>,
 }
