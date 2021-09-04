@@ -156,8 +156,7 @@ pub fn app() -> Result<(), Error> {
 	let prices = if !app.no_price {
 		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
 	} else {
-		let prices = (0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>();
-		prices
+        (0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>()
 	};
 
 	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
@@ -166,7 +165,7 @@ pub fn app() -> Result<(), Error> {
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
-	let rewards = rewards.iter().zip(&prices).map(|(reward, price)| {
+	let mut rewards = rewards.iter().zip(&prices).map(|(reward, price)| {
 		Ok(CsvRecord {
 			block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..].to_string(),
 			date: reward.day.format(&app.date_format).to_string(),
@@ -177,10 +176,7 @@ pub fn app() -> Result<(), Error> {
 
 	if !app.preview {
 		let mut wtr = Output::new(&app).context("Failed to create output.")?;
-		rewards
-			.map(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))
-			.collect::<Result<(), Error>>()?;
-
+		rewards.try_for_each(|r| wtr.serialize(r?).context("Failed to format CsvRecord"))?;
 		if app.stdout {
 			progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
 		} else {
