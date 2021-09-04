@@ -38,7 +38,7 @@ pub struct App {
 	/// date to stop crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
 	#[argh(option, from_str_fn(date_from_string), short = 't')]
 	pub to: Option<NaiveDateTime>,
-	/// network to crawl for rewards. One of: [Polkadot, Kusama, KSM, DOT]
+	/// network to crawl for rewards. One of: [Polkadot, Kusama, Moonriver, MOVR, KSM, DOT]
 	#[argh(option, default = "Network::Polkadot", short = 'n')]
 	pub network: Network,
 	/// the fiat currency which should be used for prices
@@ -60,12 +60,12 @@ pub struct App {
 	#[argh(switch, short = 's')]
 	stdout: bool,
 	#[argh(switch)]
-	/// don't gather price data
+	/// do not gather price data
 	no_price: bool,
 	#[argh(switch)]
-	/// preview, in your terminal, what the output of the CSV will be.
+	/// preview in your terminal the rewards instead of outputting CSV format.
 	preview: bool,
-	/// get extra information about the program's execution.
+	/// get extra information about the program execution.
 	#[argh(switch, short = 'v')]
 	verbose: bool,
 }
@@ -135,7 +135,7 @@ impl FromStr for Network {
 			"kusama" | "ksm" => Ok(Network::Kusama),
 			"moonriver" | "movr" => Ok(Network::Moonriver),
 			_ => bail!(
-				"Network must be one of: 'kusama', 'polkadot', 'moonriver', 'karura', 'khala', 'shiden' or their
+				"Network must be one of: 'kusama', 'polkadot', 'moonriver', or their
 				token abbreviations."
 			),
 		}
