@@ -150,7 +150,7 @@ pub fn app() -> Result<(), Error> {
 
 	let rewards = api.fetch_all_rewards().context("Failed to fetch rewards.")?;
 	let prices = if !app.no_price {
-		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(|p| Some(p)).collect::<Vec<_>>()
+		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
 	} else {
 		[0..rewards.len()].iter().map(|_| None).collect::<Vec<Option<_>>>()
 	};
@@ -175,8 +175,7 @@ pub fn app() -> Result<(), Error> {
 				price,
 			})
 		})
-		.map(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))
-		.collect::<Result<(), Error>>()?;
+        .try_for_each(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))?;
 
 	if app.stdout {
 		progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
