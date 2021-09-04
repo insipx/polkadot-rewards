@@ -19,7 +19,7 @@
 Pre-Built binaries for Linux, MacOS, and Windows for the latest release are available on the github page [here](https://github.com/insipx/polkadot-rewards/releases).
 
 # Cargo
-`cargo install polkadot-rewards` will place the binary in your $PATH for cargo binaries.
+`cargo install polkadot-rewards` will place the binary in your `$PATH` for cargo binaries.
 
 ## Compiling 
 We'll need to first install Rust. You may need to add Cargo's bin directory to your PATH environment variable. Restarting your computer will do this for you automatically.
