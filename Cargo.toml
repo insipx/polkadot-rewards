@@ -9,8 +9,8 @@ homepage = "https://github.com/insipx/polkadot-rewards"
 repository = "https://github.com/insipx/polkadot-rewards"
 license = "MIT"
 license-file = "LICENSE"
-keywords = ["cli" "polkadot" "moonriver" "kusama" "substrate" "staking" "rewards"]
-categories = ["command-line-utilities" "cryptography::cryptocurrencies" ]
+keywords = ["cli", "polkadot", "moonriver", "kusama", "substrate", "staking", "rewards"]
+categories = ["command-line-utilities", "cryptography::cryptocurrencies" ]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
