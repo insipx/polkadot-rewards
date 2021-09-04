@@ -18,3 +18,4 @@ ureq = { version = "2", features = ["json"] }
 log = "0.4"
 indicatif = "0.16"
 sp-arithmetic = "3"
+cli-table = "0.4.6"
