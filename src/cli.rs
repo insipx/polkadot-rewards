@@ -154,7 +154,7 @@ pub fn app() -> Result<(), Error> {
 
 	let rewards = api.fetch_all_rewards().context("Failed to fetch rewards.")?;
 	let prices = if !app.no_price {
-		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(|p| Some(p)).collect::<Vec<_>>()
+		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
 	} else {
 		let prices = (0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>();
 		prices
