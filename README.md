@@ -5,9 +5,14 @@
 
 </div>
 
-
+<div align="center">
+	
 [![Rust](https://github.com/insipx/polkadot-rewards/actions/workflows/rust.yml/badge.svg)](https://github.com/insipx/polkadot-rewards/actions/workflows/rust.yml)
+![Crates.io](https://img.shields.io/crates/v/polkadot-rewards)
+![Crates.io](https://img.shields.io/crates/d/polkadot-rewards)
+![Crates.io](https://img.shields.io/crates/l/polkadot-rewards)
 
+</div>
 # Installation
 
 ## Binaries
