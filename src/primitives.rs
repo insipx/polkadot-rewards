@@ -15,8 +15,12 @@
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
 use chrono::NaiveDate;
+use cli_table::Table;
 use serde::{Deserialize, Serialize};
-use std::collections::{BTreeSet, HashMap};
+use std::{
+	collections::{BTreeSet, HashMap},
+	fmt,
+};
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ApiResponse<T> {
@@ -71,10 +75,33 @@ pub struct RewardEntry {
 }
 
 // "block_num,block_time,amount_dot,price_usd,price_time"
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, Table, Clone)]
 pub struct CsvRecord {
+	#[table(title = "Date")]
 	pub date: String,
+	#[table(title = "Amount")]
 	pub amount: f64,
+	#[table(title = "Blocks")]
 	pub block_nums: String,
-	pub price: Option<f64>,
+	#[table(title = "Price")]
+	pub price: OptionalPrice,
+}
+
+#[derive(Debug, Clone, Serialize)]
+pub struct OptionalPrice(Option<f64>);
+
+impl fmt::Display for OptionalPrice {
+	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+		if let Some(p) = self.0 {
+			write!(f, "{}", p)
+		} else {
+			write!(f, "")
+		}
+	}
+}
+
+impl From<&Option<f64>> for OptionalPrice {
+	fn from(price: &Option<f64>) -> OptionalPrice {
+		OptionalPrice(*price)
+	}
 }

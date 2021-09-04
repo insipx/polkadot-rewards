@@ -21,6 +21,7 @@ use crate::{
 use anyhow::{anyhow, bail, ensure, Context, Error};
 use argh::FromArgs;
 use chrono::naive::NaiveDateTime;
+use cli_table::WithTitle;
 use env_logger::{Builder, Env};
 use indicatif::{ProgressBar, ProgressStyle};
 use sp_arithmetic::{FixedPointNumber, FixedU128};
@@ -61,6 +62,9 @@ pub struct App {
 	#[argh(switch)]
 	/// don't gather price data
 	no_price: bool,
+	#[argh(switch)]
+	/// preview, in your terminal, what the output of the CSV will be.
+	preview: bool,
 	/// get extra information about the program's execution.
 	#[argh(switch, short = 'v')]
 	verbose: bool,
@@ -152,7 +156,7 @@ pub fn app() -> Result<(), Error> {
 	let prices = if !app.no_price {
 		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
 	} else {
-		[0..rewards.len()].iter().map(|_| None).collect::<Vec<Option<_>>>()
+		(0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>()
 	};
 
 	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
@@ -161,27 +165,30 @@ pub fn app() -> Result<(), Error> {
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
-	let mut wtr = Output::new(&app).context("Failed to create output.")?;
-
-	rewards
-		.into_iter()
-		.zip(prices)
-		.map(|(reward, price)| {
-			Ok(CsvRecord {
-				block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
-					.to_string(),
-				date: reward.day.format(&app.date_format).to_string(),
-				amount: app.network.amount_to_network(&reward.amount)?,
-				price,
-			})
+	let mut rewards = rewards.iter().zip(&prices).map(|(reward, price)| {
+		Ok(CsvRecord {
+			block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+				.to_string(),
+			date: reward.day.format(&app.date_format).to_string(),
+			amount: app.network.amount_to_network(&reward.amount)?,
+			price: price.into(),
 		})
-		.try_for_each(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))?;
+	});
 
-	if app.stdout {
-		progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
+	if !app.preview {
+		let mut wtr = Output::new(&app).context("Failed to create output.")?;
+		rewards.try_for_each(|r| wtr.serialize(r?).context("Failed to format CsvRecord"))?;
+		if app.stdout {
+			progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
+		} else {
+			progress.map(move |p| p.finish_with_message(format!("Wrote data to file: {}", file_name)));
+		}
 	} else {
-		progress.map(move |p| p.finish_with_message(format!("Wrote data to file: {}", file_name)));
+		cli_table::print_stdout(rewards.collect::<Result<Vec<_>, Error>>()?.with_title())?;
+		progress.as_ref().map(|p| p.finish_with_message("Wrote preview"));
+		progress.as_ref().map(|p| p.finish_and_clear());
 	}
+
 	Ok(())
 }
 
