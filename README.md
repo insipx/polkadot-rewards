@@ -45,22 +45,32 @@ You can now use the binary `./polkadot-rewards` from here.
 
 # Usage
 
-./polkadot-rewards --from "YYYY-MM-DD HH:MM:SS" --network "KSM" --address "Addr-Without-Leading-0x" --currency "eur"
+tip: the date format can be directly copied from https://subscan.io by hovering over the `date` section of the reward.
+
+./polkadot-rewards --from "YYYY-MM-DD HH:MM:SS" --network ksm --address "rewards-address" --currency eur
 
 ```bash
-Usage: polkadot-rewards [-f <from>] [-t <to>] [-n <network>] -c <currency> -a <address> [--date-format <date-format>] [-p <folder>] [-s] [-v]
+Usage: polkadot-rewards [-f <from>] [-t <to>] [-n <network>] -c <currency> -a <address> [-u <user>] [--date-format <date-format>] [-p <folder>] [-s] [--no-price] [--preview] [-v]
 
 Polkadot Staking Rewards CLI-App
 
 Options:
-  -f, --from        date to start crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
-  -t, --to          date to stop crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
-  -n, --network     network to crawl for rewards. One of: [Polkadot, Kusama, Moonriver, KSM, DOT, MOVR]
+  -f, --from        date to start crawling for staking rewards. Format:
+                    "YYY-MM-DD HH:MM:SS"
+  -t, --to          date to stop crawling for staking rewards. Format:
+                    "YYY-MM-DD HH:MM:SS"
+  -n, --network     network to crawl for rewards. One of: [Polkadot, Kusama,
+                    KSM, DOT]
   -c, --currency    the fiat currency which should be used for prices
   -a, --address     network-formatted address to get staking rewards for.
-  --date-format     date format to use in output CSV data. Uses rfc2822 by default.  EX: "%Y-%m-%d %H:%M:%S".
+  -u, --user        change the user agent for HTTPS requests
+  --date-format     date format to use in output CSV data. Uses rfc2822 by
+                    default.  EX: "%Y-%m-%d %H:%M:%S".
   -p, --folder      directory to output completed CSV to.
   -s, --stdout      output the CSV file to STDOUT. Disables creating a new file.
+  --no-price        don't gather price data
+  --preview         preview, in your terminal, what the output of the CSV will
+                    be.
   -v, --verbose     get extra information about the program's execution.
   --help            display usage information
 ```
