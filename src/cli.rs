@@ -163,15 +163,20 @@ pub fn app() -> Result<(), Error> {
 
 	let mut wtr = Output::new(&app).context("Failed to create output.")?;
 
-	rewards.into_iter().zip(prices).map(|(reward, price)| {
-		Ok(CsvRecord {
-			block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..].to_string(),
-			date: reward.day.format(&app.date_format).to_string(),
-			amount: app.network.amount_to_network(&reward.amount)?,
-			price
+	rewards
+		.into_iter()
+		.zip(prices)
+		.map(|(reward, price)| {
+			Ok(CsvRecord {
+				block_nums: reward.block_nums.into_iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+					.to_string(),
+				date: reward.day.format(&app.date_format).to_string(),
+				amount: app.network.amount_to_network(&reward.amount)?,
+				price,
+			})
 		})
-	}).map(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))
-	.collect::<Result<(), Error>>()?;
+		.map(|r: Result<_, Error>| wtr.serialize(r?).context("Failed to format CsvRecord"))
+		.collect::<Result<(), Error>>()?;
 
 	if app.stdout {
 		progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
