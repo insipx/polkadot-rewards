@@ -68,7 +68,7 @@ Options:
                     default.  EX: "%Y-%m-%d %H:%M:%S".
   -p, --folder      directory to output completed CSV to.
   -s, --stdout      output the CSV file to STDOUT. Disables creating a new file.
-  --no-price        don't gather price data
+  --no-price        do not gather price data
   --preview         preview, in your terminal, what the output of the CSV will
                     be.
   -v, --verbose     get extra information about the program's execution.
