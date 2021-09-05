@@ -20,7 +20,7 @@
 ## Binaries
 Pre-Built binaries for Linux, MacOS, and Windows for the latest release are available on the github page [here](https://github.com/insipx/polkadot-rewards/releases).
 
-# Cargo
+## Cargo
 `cargo install polkadot-rewards` will place the binary in your `$PATH` for cargo binaries.
 
 ## Compiling 
