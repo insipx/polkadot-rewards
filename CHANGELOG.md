@@ -5,6 +5,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [v0.4.0] - 2021-09-15
 ### Changed
 - Add moonriver, movr to network in `usage`
 - rearrange columns for readability. `amount` and `price` are now next to each other.
@@ -13,7 +15,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `--no-group` flag. `--no-group` does not group block-numbers by day. Instead, each block number gets
 its own row. This additionally adds a `time` column, with the Hour, Minute, Second timestamp of the block.
 - `--time-format` option. This allows the configuration of the time format when using `--no-group` flag
-
 
 ## [v0.3.0] - 2021-08-31
 ### Added
