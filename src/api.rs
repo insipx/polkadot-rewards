@@ -183,11 +183,13 @@ impl<'a> Api<'a> {
 		let mut separated_rewards = Vec::new();
 		let rewards = self.fetch_rewards()?;
 		for reward in rewards {
-			let day = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).date();
+			let date = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0);
 			let amount: u128 = reward.amount.parse()?;
 			let value = SeparatedRewardEntry {
 				block_num: reward.block_num,
-				day, amount
+				amount,
+				day: date.date(),
+				time: date.time(),
 			};
 			separated_rewards.push(value);
 		}
