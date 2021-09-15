@@ -15,13 +15,15 @@
 // along with polkadot-rewards.  If not, see <http://www.gnu.org/licenses/>.
 
 use crate::cli::App;
+use anyhow::{Context, Error};
 use chrono::{NaiveDate, NaiveTime};
 use cli_table::{Table, TableStruct, WithTitle};
-use anyhow::{Error, Context};
 use serde::{Deserialize, Serialize};
 use std::{
 	collections::{BTreeSet, HashMap},
-	fs::File, io, fmt,
+	fmt,
+	fs::File,
+	io,
 };
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -115,28 +117,28 @@ pub struct SeparatedCsvRecord {
 #[serde(untagged)]
 pub enum CsvRecord {
 	Grouped(Vec<GroupedCsvRecord>),
-	Separated(Vec<SeparatedCsvRecord>)
+	Separated(Vec<SeparatedCsvRecord>),
 }
 
 impl CsvRecord {
 	pub fn from_date(&self) -> String {
 		match self {
 			CsvRecord::Grouped(v) => v.last().unwrap().date.clone(),
-			CsvRecord::Separated(v) => v.last().unwrap().date.clone()
+			CsvRecord::Separated(v) => v.last().unwrap().date.clone(),
 		}
 	}
 
 	pub fn to_date(&self) -> String {
 		match self {
 			CsvRecord::Grouped(v) => v.first().unwrap().date.clone(),
-			CsvRecord::Separated(v) => v.first().unwrap().date.clone()
+			CsvRecord::Separated(v) => v.first().unwrap().date.clone(),
 		}
 	}
 
 	pub fn with_title(&self) -> TableStruct {
 		match self {
 			CsvRecord::Grouped(v) => v.with_title(),
-			CsvRecord::Separated(v) => v.with_title()
+			CsvRecord::Separated(v) => v.with_title(),
 		}
 	}
 
@@ -144,7 +146,7 @@ impl CsvRecord {
 		match self {
 			CsvRecord::Grouped(v) => {
 				v.into_iter().try_for_each(|r| wtr.serialize(r).context("Faild to format CsvRecord"))?;
-			},
+			}
 			CsvRecord::Separated(v) => {
 				v.into_iter().try_for_each(|r| wtr.serialize(r).context("Faild to format CsvRecord"))?;
 			}
@@ -175,7 +177,6 @@ impl From<&Option<f64>> for OptionalPrice {
 		OptionalPrice(*price)
 	}
 }
-
 
 pub enum Output {
 	FileOut(csv::Writer<File>),

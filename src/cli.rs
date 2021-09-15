@@ -16,16 +16,16 @@
 
 use crate::{
 	api::Api,
-	primitives::{CsvRecord, GroupedCsvRecord, SeparatedCsvRecord, Output},
+	primitives::{CsvRecord, GroupedCsvRecord, Output, SeparatedCsvRecord},
 };
 use anyhow::{anyhow, bail, ensure, Context, Error};
 use argh::FromArgs;
 use chrono::{naive::NaiveDateTime, NaiveDate};
 use env_logger::{Builder, Env};
 use indicatif::{ProgressBar, ProgressStyle};
-use sp_arithmetic::{FixedPointNumber, FixedU128};
 use itertools::Itertools;
-use std::{path::PathBuf, str::FromStr, collections::HashMap};
+use sp_arithmetic::{FixedPointNumber, FixedU128};
+use std::{collections::HashMap, path::PathBuf, str::FromStr};
 
 const OUTPUT_DATE: &str = "%Y-%m-%d";
 const OUTPUT_TIME: &str = "%H:%M:%S";
@@ -165,11 +165,7 @@ pub fn app() -> Result<(), Error> {
 		CsvRecord::Grouped(create_grouped_rewards(&api, &app)?)
 	};
 
-	let file_name = construct_file_name(
-		&app,
-		rewards.from_date(),
-		rewards.to_date()
-	);
+	let file_name = construct_file_name(&app, rewards.from_date(), rewards.to_date());
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
@@ -201,16 +197,19 @@ fn create_grouped_rewards(api: &Api, app: &App) -> Result<Vec<GroupedCsvRecord>,
 
 	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
 
-	rewards.iter().zip(&prices).map(|(reward, price)| {
-		Ok(GroupedCsvRecord {
-			block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
-				.to_string(),
-			date: reward.day.format(&app.date_format).to_string(),
-			amount: app.network.amount_to_network(&reward.amount)?,
-			price: price.into(),
+	rewards
+		.iter()
+		.zip(&prices)
+		.map(|(reward, price)| {
+			Ok(GroupedCsvRecord {
+				block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+					.to_string(),
+				date: reward.day.format(&app.date_format).to_string(),
+				amount: app.network.amount_to_network(&reward.amount)?,
+				price: price.into(),
+			})
 		})
-	}).collect::<Result<_, Error>>()
-
+		.collect::<Result<_, Error>>()
 }
 
 fn create_separated_rewards(api: &Api, app: &App) -> Result<Vec<SeparatedCsvRecord>, Error> {
@@ -230,16 +229,19 @@ fn create_separated_rewards(api: &Api, app: &App) -> Result<Vec<SeparatedCsvReco
 
 	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
 
-	rewards.iter().map(|r| {
-		let price = prices.get(&r.day);
-		Ok(SeparatedCsvRecord {
-			date: r.day.format(&app.date_format).to_string(),
-			time: r.time.format(&app.time_format).to_string(),
-			block_number: format!("{}", r.block_num),
-			amount: app.network.amount_to_network(&r.amount)?,
-			price: (&price.map(|p| *p)).into()
+	rewards
+		.iter()
+		.map(|r| {
+			let price = prices.get(&r.day);
+			Ok(SeparatedCsvRecord {
+				date: r.day.format(&app.date_format).to_string(),
+				time: r.time.format(&app.time_format).to_string(),
+				block_number: format!("{}", r.block_num),
+				amount: app.network.amount_to_network(&r.amount)?,
+				price: (&price.map(|p| *p)).into(),
+			})
 		})
-	}).collect()
+		.collect()
 }
 
 fn construct_progress_bar() -> ProgressBar {
@@ -254,13 +256,5 @@ fn construct_progress_bar() -> ProgressBar {
 
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
 fn construct_file_name(app: &App, from: String, to: String) -> String {
-	format!(
-		"{}->{}-{}-{}--{}-rewards",
-		app.network.id(),
-		app.currency,
-		&app.address,
-		from,
-		to
-	)
+	format!("{}->{}-{}-{}--{}-rewards", app.network.id(), app.currency, &app.address, from, to)
 }
-

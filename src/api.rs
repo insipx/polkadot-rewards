@@ -185,12 +185,8 @@ impl<'a> Api<'a> {
 		for reward in rewards {
 			let date = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0);
 			let amount: u128 = reward.amount.parse()?;
-			let value = SeparatedRewardEntry {
-				block_num: reward.block_num,
-				amount,
-				day: date.date(),
-				time: date.time(),
-			};
+			let value =
+				SeparatedRewardEntry { block_num: reward.block_num, amount, day: date.date(), time: date.time() };
 			separated_rewards.push(value);
 		}
 		Ok(separated_rewards)
