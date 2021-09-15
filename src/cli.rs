@@ -238,7 +238,7 @@ fn create_separated_rewards(api: &Api, app: &App) -> Result<Vec<SeparatedCsvReco
 				time: r.time.format(&app.time_format).to_string(),
 				block_number: format!("{}", r.block_num),
 				amount: app.network.amount_to_network(&r.amount)?,
-				price: (&price.map(|p| *p)).into(),
+				price: (&price.copied()).into(),
 			})
 		})
 		.collect()
