@@ -67,10 +67,10 @@ pub struct App {
 	/// do not gather price data
 	pub no_price: bool,
 	#[argh(switch)]
-	/// do not group blocks by day
+	/// do not group blocks by day. Give each block its own column. Adds additional exact UTC `time` column.
 	pub no_group: bool,
 	#[argh(switch)]
-	/// preview in your terminal the rewards instead of outputting CSV format.
+	/// preview the rewards in your terminal instead of outputting CSV format.
 	pub preview: bool,
 	/// get extra information about the program execution.
 	#[argh(switch, short = 'v')]
