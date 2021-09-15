@@ -1,6 +1,6 @@
 [package]
 name = "polkadot-rewards"
-version = "0.3.0"
+version = "0.4.0"
 authors = ["Andrew Plaza <andrew.plaza@parity.io>"]
 edition = "2018"
 description = "Handy CLI for all your Polkadot ecosystem staking rewards needs."
@@ -26,3 +26,4 @@ log = "0.4"
 indicatif = "0.16"
 sp-arithmetic = "3"
 cli-table = "0.4.6"
+itertools = "0.10"

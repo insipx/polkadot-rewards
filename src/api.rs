@@ -18,7 +18,7 @@
 
 use crate::{
 	cli::{App, Network},
-	primitives::{ApiResponse, List, Price, Reward, RewardEntry},
+	primitives::{ApiResponse, List, Price, Reward, RewardEntry, SeparatedRewardEntry},
 };
 use anyhow::{anyhow, Context, Error};
 use chrono::{naive::NaiveDateTime, NaiveDate};
@@ -103,11 +103,8 @@ impl<'a> Api<'a> {
 		Ok(rewards.consume())
 	}
 
-	/// Fetch all the rewards starting from some point in time, and ending at another
-	///
-	/// `from`: UNIX timestamp at which to begin returning rewards
-	/// `to`: UNIX timestamp at which to end returning rewards
-	pub fn fetch_all_rewards(&self) -> Result<Vec<RewardEntry>, Error> {
+	/// Fetch all rewardsstarting from some point in time and ending at another.
+	fn fetch_rewards(&self) -> Result<Vec<Reward>, Error> {
 		const PAGE_SIZE: usize = 100;
 
 		self.progress.map(|r| r.reset());
@@ -146,6 +143,13 @@ impl<'a> Api<'a> {
 			})
 			.collect();
 
+		self.progress.map(|p| p.finish());
+		Ok(rewards)
+	}
+
+	/// Fetch all rewards, joining blocks with rewards on the same day
+	pub fn fetch_all_rewards(&self) -> Result<Vec<RewardEntry>, Error> {
+		let rewards = self.fetch_rewards()?;
 		// TODO: this is kind of cheating but it's easier than trying to query just what we need
 		self.progress.map(|p| p.finish());
 
@@ -175,20 +179,33 @@ impl<'a> Api<'a> {
 		Ok(merged.into_iter().map(|(_k, v)| v).rev().collect())
 	}
 
+	pub fn fetch_all_rewards_separated(&self) -> Result<Vec<SeparatedRewardEntry>, Error> {
+		let mut separated_rewards = Vec::new();
+		let rewards = self.fetch_rewards()?;
+		for reward in rewards {
+			let date = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0);
+			let amount: u128 = reward.amount.parse()?;
+			let value =
+				SeparatedRewardEntry { block_num: reward.block_num, amount, day: date.date(), time: date.time() };
+			separated_rewards.push(value);
+		}
+		Ok(separated_rewards)
+	}
+
 	/// Returns a vector of prices corresponding to the passed-in vector of Rewards.
-	pub fn fetch_prices(&self, rewards: &[RewardEntry]) -> Result<Vec<f64>, Error> {
+	pub fn fetch_prices(&self, dates: &[NaiveDate]) -> Result<Vec<f64>, Error> {
 		self.progress.map(|p| p.reset());
 		self.progress.map(|p| p.set_message("Fetching Price Data"));
-		self.progress.map(|p| p.set_length(rewards.len().try_into().unwrap()));
+		self.progress.map(|p| p.set_length(dates.len().try_into().unwrap()));
 		self.progress.map(|r| r.tick());
-		let mut prices = Vec::with_capacity(rewards.len());
-		for r in rewards {
+		let mut prices = Vec::with_capacity(dates.len());
+		for day in dates {
 			self.progress.map(|p| p.inc(1));
 			// coingecko allows 100 requests per minute
 			// it seems to be a bit oversensitive. We therefore restrain ourselfs
 			// to 60 requests a minute.
 			std::thread::sleep(std::time::Duration::from_millis(1000));
-			let result = self.price(r.day)?;
+			let result = self.price(*day)?;
 			let price = result.market_data.current_price.get(&self.app.currency).ok_or_else(|| {
 				anyhow!(
 					"Specified fiat currency '{}' not supported: {:#?}",

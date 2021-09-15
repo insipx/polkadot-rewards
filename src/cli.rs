@@ -16,18 +16,19 @@
 
 use crate::{
 	api::Api,
-	primitives::{CsvRecord, RewardEntry},
+	primitives::{CsvRecord, GroupedCsvRecord, Output, SeparatedCsvRecord},
 };
 use anyhow::{anyhow, bail, ensure, Context, Error};
 use argh::FromArgs;
-use chrono::naive::NaiveDateTime;
-use cli_table::WithTitle;
+use chrono::{naive::NaiveDateTime, NaiveDate};
 use env_logger::{Builder, Env};
 use indicatif::{ProgressBar, ProgressStyle};
+use itertools::Itertools;
 use sp_arithmetic::{FixedPointNumber, FixedU128};
-use std::{fs::File, io, path::PathBuf, str::FromStr};
+use std::{collections::HashMap, path::PathBuf, str::FromStr};
 
 const OUTPUT_DATE: &str = "%Y-%m-%d";
+const OUTPUT_TIME: &str = "%H:%M:%S";
 
 #[derive(FromArgs, PartialEq, Debug)]
 /// Polkadot Staking Rewards CLI-App
@@ -52,22 +53,28 @@ pub struct App {
 	pub user: String,
 	/// date format to use in output CSV data. Uses rfc2822 by default.  EX: "%Y-%m-%d %H:%M:%S".
 	#[argh(option, default = "OUTPUT_DATE.to_string()")]
-	date_format: String,
+	pub date_format: String,
+	#[argh(option, default = "OUTPUT_TIME.to_string()")]
+	/// time format to use with `--no-group` flag. Default "%H:%M:%S".
+	pub time_format: String,
 	/// directory to output completed CSV to.
 	#[argh(option, default = "default_file_location()", short = 'p')]
-	folder: PathBuf,
+	pub folder: PathBuf,
 	/// output the CSV file to STDOUT. Disables creating a new file.
 	#[argh(switch, short = 's')]
-	stdout: bool,
+	pub stdout: bool,
 	#[argh(switch)]
 	/// do not gather price data
-	no_price: bool,
+	pub no_price: bool,
 	#[argh(switch)]
-	/// preview in your terminal the rewards instead of outputting CSV format.
-	preview: bool,
+	/// do not group blocks by day. Give each block its own column. Adds additional exact UTC `time` column.
+	pub no_group: bool,
+	#[argh(switch)]
+	/// preview the rewards in your terminal instead of outputting CSV format.
+	pub preview: bool,
 	/// get extra information about the program execution.
 	#[argh(switch, short = 'v')]
-	verbose: bool,
+	pub verbose: bool,
 }
 
 fn default_user_agent() -> String {
@@ -152,44 +159,89 @@ pub fn app() -> Result<(), Error> {
 	};
 	let api = Api::new(&app, progress.as_ref());
 
-	let rewards = api.fetch_all_rewards().context("Failed to fetch rewards.")?;
-	let prices = if !app.no_price {
-		api.fetch_prices(&rewards).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
+	let rewards = if app.no_group {
+		CsvRecord::Separated(create_separated_rewards(&api, &app)?)
 	} else {
-		(0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>()
+		CsvRecord::Grouped(create_grouped_rewards(&api, &app)?)
 	};
 
-	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
-
-	let file_name = construct_file_name(&app, &rewards);
+	let file_name = construct_file_name(&app, rewards.from_date(), rewards.to_date());
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
-	let mut rewards = rewards.iter().zip(&prices).map(|(reward, price)| {
-		Ok(CsvRecord {
-			block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
-				.to_string(),
-			date: reward.day.format(&app.date_format).to_string(),
-			amount: app.network.amount_to_network(&reward.amount)?,
-			price: price.into(),
-		})
-	});
-
 	if !app.preview {
 		let mut wtr = Output::new(&app).context("Failed to create output.")?;
-		rewards.try_for_each(|r| wtr.serialize(r?).context("Failed to format CsvRecord"))?;
+		rewards.serialize(&mut wtr)?;
 		if app.stdout {
 			progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
 		} else {
 			progress.map(move |p| p.finish_with_message(format!("Wrote data to file: {}", file_name)));
 		}
 	} else {
-		cli_table::print_stdout(rewards.collect::<Result<Vec<_>, Error>>()?.with_title())?;
+		cli_table::print_stdout(rewards.with_title())?;
 		progress.as_ref().map(|p| p.finish_with_message("Wrote preview"));
 		progress.as_ref().map(|p| p.finish_and_clear());
 	}
 
 	Ok(())
+}
+
+fn create_grouped_rewards(api: &Api, app: &App) -> Result<Vec<GroupedCsvRecord>, Error> {
+	let rewards = api.fetch_all_rewards().context("Failed to fetch rewards.")?;
+	let prices = if app.no_price {
+		(0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>()
+	} else {
+		let dates: Vec<NaiveDate> = rewards.iter().map(|r| r.day).collect();
+		api.fetch_prices(dates.as_slice()).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
+	};
+
+	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
+
+	rewards
+		.iter()
+		.zip(&prices)
+		.map(|(reward, price)| {
+			Ok(GroupedCsvRecord {
+				block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+					.to_string(),
+				date: reward.day.format(&app.date_format).to_string(),
+				amount: app.network.amount_to_network(&reward.amount)?,
+				price: price.into(),
+			})
+		})
+		.collect::<Result<_, Error>>()
+}
+
+fn create_separated_rewards(api: &Api, app: &App) -> Result<Vec<SeparatedCsvRecord>, Error> {
+	let rewards = api.fetch_all_rewards_separated().context("Failed to fetch rewards.")?;
+
+	let dates = rewards.iter().map(|r| r.day).unique().collect::<Vec<NaiveDate>>();
+	let prices: HashMap<NaiveDate, f64> = if app.no_price {
+		HashMap::new()
+	} else {
+		api.fetch_prices(dates.as_slice())
+			.context("Failed to fetch prices.")?
+			.into_iter()
+			.enumerate()
+			.map(|(i, p)| (dates[i], p))
+			.collect()
+	};
+
+	ensure!(!rewards.is_empty(), "No rewards found for specified account.");
+
+	rewards
+		.iter()
+		.map(|r| {
+			let price = prices.get(&r.day);
+			Ok(SeparatedCsvRecord {
+				date: r.day.format(&app.date_format).to_string(),
+				time: r.time.format(&app.time_format).to_string(),
+				block_number: format!("{}", r.block_num),
+				amount: app.network.amount_to_network(&r.amount)?,
+				price: (&price.copied()).into(),
+			})
+		})
+		.collect()
 }
 
 fn construct_progress_bar() -> ProgressBar {
@@ -203,39 +255,6 @@ fn construct_progress_bar() -> ProgressBar {
 }
 
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
-fn construct_file_name(app: &App, rewards: &[RewardEntry]) -> String {
-	format!(
-		"{}->{}-{}-{}--{}-rewards",
-		app.network.id(),
-		app.currency,
-		&app.address,
-		rewards.first().unwrap().day.format(OUTPUT_DATE),
-		rewards.last().unwrap().day.format(OUTPUT_DATE)
-	)
-}
-
-enum Output {
-	FileOut(csv::Writer<File>),
-	StdOut(csv::Writer<std::io::Stdout>),
-}
-
-impl Output {
-	fn new(app: &App) -> Result<Self, Error> {
-		let mut builder = csv::WriterBuilder::new();
-		builder.delimiter(b';');
-		if app.stdout {
-			Ok(Output::StdOut(builder.from_writer(io::stdout())))
-		} else {
-			let file = File::create(&app.folder)?;
-			Ok(Output::FileOut(builder.from_writer(file)))
-		}
-	}
-
-	fn serialize<T: serde::Serialize>(&mut self, val: T) -> Result<(), Error> {
-		match self {
-			Output::FileOut(f) => f.serialize(val)?,
-			Output::StdOut(s) => s.serialize(val)?,
-		};
-		Ok(())
-	}
+fn construct_file_name(app: &App, from: String, to: String) -> String {
+	format!("{}->{}-{}-{}--{}-rewards", app.network.id(), app.currency, &app.address, from, to)
 }
