@@ -16,7 +16,7 @@
 
 use crate::{
 	api::Api,
-	primitives::{CsvRecord, RewardEntry},
+	primitives::{CsvRecord, RewardEntry}
 };
 use anyhow::{anyhow, bail, ensure, Context, Error};
 use argh::FromArgs;
@@ -65,6 +65,9 @@ pub struct App {
 	#[argh(switch)]
 	/// preview in your terminal the rewards instead of outputting CSV format.
 	preview: bool,
+	#[argh(switch)]
+	/// include the total reward amount.
+	total: bool,
 	/// get extra information about the program execution.
 	#[argh(switch, short = 'v')]
 	verbose: bool,
@@ -165,15 +168,26 @@ pub fn app() -> Result<(), Error> {
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
-	let mut rewards = rewards.iter().zip(&prices).map(|(reward, price)| {
-		Ok(CsvRecord {
-			block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
-				.to_string(),
-			date: reward.day.format(&app.date_format).to_string(),
-			amount: app.network.amount_to_network(&reward.amount)?,
-			price: price.into(),
-		})
-	});
+	let totals = rewards.iter().rev().scan(0, |state, reward| {
+		*state = *state + reward.amount;
+		Some(*state)
+	})
+	.map(|t| app.network.amount_to_network(&t))
+	.map(|t| if app.total { Some(t) } else { None })
+	.collect::<Vec<Option<Result<f64, Error>>>>();
+
+	let mut rewards = rewards.iter().zip(&prices).zip(totals.into_iter().rev()).map(|((reward, price), total)| {
+			Ok(CsvRecord {
+				block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+					.to_string(),
+				date: reward.day.format(&app.date_format).to_string(),
+				amount: app.network.amount_to_network(&reward.amount)?,
+				price: price.into(),
+				total: (&total.transpose()?).into()
+			})
+		});
+
+
 
 	if !app.preview {
 		let mut wtr = Output::new(&app).context("Failed to create output.")?;

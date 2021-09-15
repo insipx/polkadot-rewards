@@ -84,13 +84,15 @@ pub struct CsvRecord {
 	#[table(title = "Blocks")]
 	pub block_nums: String,
 	#[table(title = "Price")]
-	pub price: OptionalPrice,
+	pub price: OptionalF64,
+	#[table(title = "Total Reward")]
+	pub total: OptionalF64,
 }
 
 #[derive(Debug, Clone, Serialize)]
-pub struct OptionalPrice(Option<f64>);
+pub struct OptionalF64(Option<f64>);
 
-impl fmt::Display for OptionalPrice {
+impl fmt::Display for OptionalF64 {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		if let Some(p) = self.0 {
 			write!(f, "{}", p)
@@ -100,8 +102,9 @@ impl fmt::Display for OptionalPrice {
 	}
 }
 
-impl From<&Option<f64>> for OptionalPrice {
-	fn from(price: &Option<f64>) -> OptionalPrice {
-		OptionalPrice(*price)
+impl From<&Option<f64>> for OptionalF64 {
+	fn from(num: &Option<f64>) -> OptionalF64 {
+		OptionalF64(*num)
 	}
 }
+
