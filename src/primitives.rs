@@ -74,6 +74,13 @@ pub struct RewardEntry {
 	pub amount: u128,
 }
 
+#[derive(Debug)]
+pub struct SeparatedRewardEntry {
+	pub block_num: u64,
+	pub day: NaiveDate,
+	pub amount: u128,
+}
+
 // "block_num,block_time,amount_dot,price_usd,price_time"
 #[derive(Debug, Serialize, Table, Clone)]
 pub struct CsvRecord {
@@ -89,7 +96,11 @@ pub struct CsvRecord {
 
 #[derive(Debug, Clone, Serialize)]
 pub struct OptionalPrice(Option<f64>);
-
+impl OptionalPrice {
+	pub fn new(price: Option<f64>) -> Self {
+		Self(price)
+	}
+}
 impl fmt::Display for OptionalPrice {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		if let Some(p) = self.0 {
