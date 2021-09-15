@@ -1,7 +1,7 @@
 <div align="center">
 
 # Polkadot Rewards
-### Crawl rewards for a Polkadot/Kusama account from subscan. Outputs to a CSV.
+### Crawl rewards for a Polkadot/Kusama/Moonriver accounts from subscan. Outputs to a CSV.
 
 </div>
 
