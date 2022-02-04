@@ -30,11 +30,10 @@ use std::{
 
 const POLKADOT_ENDPOINT: &str = "https://polkadot.api.subscan.io/api/";
 const KUSAMA_ENDPOINT: &str = "https://kusama.api.subscan.io/api/";
-const MOONBEAM_ENDPOINT: &str = "https://moonriver.api.subscan.io/api/";
-// so far these networks dont have rewards on subscan
-// const KARURA_ENDPOINT: &str = "https://karura.api.subscan.io/api/";
-// const KHALA_ENDPOINT: &str = "https://khala.api.subscan.io/api/";
-// const SHIDEN_ENDPOINT: &str = "https://shiden.api.subscan.io/api/";
+const MOONRIVER_ENDPOINT: &str = "https://moonriver.api.subscan.io/api/";
+const MOONBEAM_ENDPOINT: &str = "https://moonbeam.api.subscan.io/api/";
+const ASTAR_ENDPOINT: &str = "https://astar.api.subscan.io/api/";
+
 const PRICE_ENDPOINT: &str = "https://api.coingecko.com/api/v3";
 const REWARD_SLASH: &str = "scan/account/reward_slash";
 
@@ -42,10 +41,9 @@ fn get_endpoint(network: &Network, end: &str) -> String {
 	match network {
 		Network::Polkadot => format!("{}{}", POLKADOT_ENDPOINT, end),
 		Network::Kusama => format!("{}{}", KUSAMA_ENDPOINT, end),
-		Network::Moonriver => format!("{}{}", MOONBEAM_ENDPOINT, end),
-		// Network::Karura => format!("{}{}", KARURA_ENDPOINT, end),
-		// Network::Khala => format!("{}{}", KHALA_ENDPOINT, end),
-		// Network::Shiden => format!("{}{}", SHIDEN_ENDPOINT, end),
+		Network::Moonriver => format!("{}{}", MOONRIVER_ENDPOINT, end),
+		Network::Moonbeam => format!("{}{}", MOONBEAM_ENDPOINT, end),
+		Network::Astar => format!("{}{}", ASTAR_ENDPOINT, end),
 	}
 }
 
