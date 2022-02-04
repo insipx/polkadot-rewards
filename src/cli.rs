@@ -108,8 +108,12 @@ pub enum Network {
 	Polkadot,
 	/// The Kusama Network
 	Kusama,
-	/// The Moonbeam Network
+	/// The Moonriver Network
 	Moonriver,
+	/// The Moonbeam Network
+	Moonbeam,
+	/// The Astar network
+	Astar,
 }
 
 impl Network {
@@ -117,15 +121,19 @@ impl Network {
 		match self {
 			Self::Polkadot => "polkadot",
 			Self::Kusama => "kusama",
+			Self::Moonbeam => "moonbeam",
 			Self::Moonriver => "moonriver",
+			Self::Astar => "astar",
 		}
 	}
 
 	fn amount_to_network(&self, amount: &u128) -> Result<f64, Error> {
 		let denominator = match self {
-			Self::Polkadot => 10_000_000_000u128,  // 1 Billion DOT
-			Self::Kusama => 1_000_000_000_000u128, // 10 Mil KSM
-			Self::Moonriver => 1_000_000_000_000_000_000u128,
+			Self::Polkadot => 10u128.pow(10),
+			Self::Kusama => 10u128.pow(12),
+			Self::Moonriver => 10u128.pow(18),
+			Self::Moonbeam => 10u128.pow(18),
+			Self::Astar => 10u128.pow(18),
 		};
 		let frac = FixedU128::checked_from_rational(*amount, denominator)
 			.ok_or_else(|| anyhow!("Amount '{}' overflowed FixedU128", amount))?
@@ -141,8 +149,10 @@ impl FromStr for Network {
 			"polkadot" | "dot" => Ok(Network::Polkadot),
 			"kusama" | "ksm" => Ok(Network::Kusama),
 			"moonriver" | "movr" => Ok(Network::Moonriver),
+			"moonbeam" | "glmr" => Ok(Network::Moonbeam),
+			"astar" | "astr" => Ok(Network::Astar),
 			_ => bail!(
-				"Network must be one of: 'kusama', 'polkadot', 'moonriver', or their
+				"Network must be one of: 'kusama', 'polkadot', 'moonbeam', 'astar', 'moonriver', or their
 				token abbreviations."
 			),
 		}
