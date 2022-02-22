@@ -137,7 +137,7 @@ impl Network {
 		};
 		let frac = FixedU128::checked_from_rational(*amount, denominator)
 			.ok_or_else(|| anyhow!("Amount '{}' overflowed FixedU128", amount))?
-			.to_fraction();
+			.to_float();
 		Ok(frac)
 	}
 }
@@ -175,7 +175,7 @@ pub fn app() -> Result<(), Error> {
 		CsvRecord::Grouped(create_grouped_rewards(&api, &app)?)
 	};
 
-	let file_name = construct_file_name(&app, rewards.from_date(), rewards.to_date());
+	let file_name = construct_file_name(&app, rewards.to_date_rev(), rewards.to_date());
 	app.folder.push(&file_name);
 	app.folder.set_extension("csv");
 
@@ -248,7 +248,7 @@ fn create_separated_rewards(api: &Api, app: &App) -> Result<Vec<SeparatedCsvReco
 				time: r.time.format(&app.time_format).to_string(),
 				block_number: format!("{}", r.block_num),
 				amount: app.network.amount_to_network(&r.amount)?,
-				price: (&price.copied()).into(),
+				price: price.copied().into(),
 			})
 		})
 		.collect()

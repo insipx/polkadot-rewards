@@ -121,7 +121,7 @@ pub enum CsvRecord {
 }
 
 impl CsvRecord {
-	pub fn from_date(&self) -> String {
+	pub fn to_date_rev(&self) -> String {
 		match self {
 			CsvRecord::Grouped(v) => v.last().unwrap().date.clone(),
 			CsvRecord::Separated(v) => v.last().unwrap().date.clone(),
@@ -169,6 +169,12 @@ impl fmt::Display for OptionalPrice {
 		} else {
 			write!(f, "")
 		}
+	}
+}
+
+impl From<Option<f64>> for OptionalPrice {
+	fn from(price: Option<f64>) -> OptionalPrice {
+		OptionalPrice(price)
 	}
 }
 
