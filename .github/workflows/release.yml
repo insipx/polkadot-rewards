@@ -42,7 +42,7 @@ jobs:
             EOF
 
       - name: Upload Artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: changelog_body
           path: ${{ github.sha }}-BODY.txt
