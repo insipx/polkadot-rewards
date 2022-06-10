@@ -87,6 +87,7 @@ impl<'a> Api<'a> {
 
 		let rewards = req
 			.set("Content-Type", "application/json")
+			.set("X-API-Key", &self.app.api_key)
 			.send_json(ureq::json!({
 				"address": self.app.address.as_str(),
 				"page": page,

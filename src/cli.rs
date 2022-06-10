@@ -75,6 +75,9 @@ pub struct App {
 	/// get extra information about the program execution.
 	#[argh(switch, short = 'v')]
 	pub verbose: bool,
+	/// the subscan api key, optionally provided.
+	#[argh(option, short = 'k')]
+	pub api_key: String,
 }
 
 fn default_user_agent() -> String {
