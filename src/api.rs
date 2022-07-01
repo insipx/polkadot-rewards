@@ -33,6 +33,7 @@ const KUSAMA_ENDPOINT: &str = "https://kusama.api.subscan.io/api/";
 const MOONRIVER_ENDPOINT: &str = "https://moonriver.api.subscan.io/api/";
 const MOONBEAM_ENDPOINT: &str = "https://moonbeam.api.subscan.io/api/";
 const ASTAR_ENDPOINT: &str = "https://astar.api.subscan.io/api/";
+const ALEPH_ENDPOINT: &str = "https://alephzero.api.subscan.io/api/";
 
 const PRICE_ENDPOINT: &str = "https://api.coingecko.com/api/v3";
 const REWARD_SLASH: &str = "scan/account/reward_slash";
@@ -44,6 +45,7 @@ fn get_endpoint(network: &Network, end: &str) -> String {
 		Network::Moonriver => format!("{}{}", MOONRIVER_ENDPOINT, end),
 		Network::Moonbeam => format!("{}{}", MOONBEAM_ENDPOINT, end),
 		Network::Astar => format!("{}{}", ASTAR_ENDPOINT, end),
+		Network::Aleph => format!("{}{}", ALEPH_ENDPOINT, end),
 	}
 }
 
