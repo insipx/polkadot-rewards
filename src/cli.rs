@@ -117,6 +117,8 @@ pub enum Network {
 	Moonbeam,
 	/// The Astar network
 	Astar,
+	/// Alepgh-zero solo-chain
+	Aleph
 }
 
 impl Network {
@@ -127,16 +129,19 @@ impl Network {
 			Self::Moonbeam => "moonbeam",
 			Self::Moonriver => "moonriver",
 			Self::Astar => "astar",
+			Self::Aleph => "aleph",
 		}
 	}
 
 	fn amount_to_network(&self, amount: &u128) -> Result<f64, Error> {
+		// TODO: fetch this from the metadata
 		let denominator = match self {
 			Self::Polkadot => 10u128.pow(10),
 			Self::Kusama => 10u128.pow(12),
 			Self::Moonriver => 10u128.pow(18),
 			Self::Moonbeam => 10u128.pow(18),
 			Self::Astar => 10u128.pow(18),
+			Self::Aleph => 10u128.pow(12),
 		};
 		let frac = FixedU128::checked_from_rational(*amount, denominator)
 			.ok_or_else(|| anyhow!("Amount '{}' overflowed FixedU128", amount))?
@@ -154,8 +159,9 @@ impl FromStr for Network {
 			"moonriver" | "movr" => Ok(Network::Moonriver),
 			"moonbeam" | "glmr" => Ok(Network::Moonbeam),
 			"astar" | "astr" => Ok(Network::Astar),
+			"aleph" | "aleph-zero" | "azero" => Ok(Network::Aleph),
 			_ => bail!(
-				"Network must be one of: 'kusama', 'polkadot', 'moonbeam', 'astar', 'moonriver', or their
+				"Network must be one of: 'kusama', 'polkadot', 'moonbeam', 'astar', 'moonriver', 'aleph-zoer', or their
 				token abbreviations."
 			),
 		}
