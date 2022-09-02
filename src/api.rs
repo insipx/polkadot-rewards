@@ -23,6 +23,7 @@ use crate::{
 use anyhow::{anyhow, Context, Error};
 use chrono::{naive::NaiveDateTime, NaiveDate};
 use indicatif::ProgressBar;
+use kv::{Config, Store, Bucket};
 use std::{
 	collections::{BTreeMap, BTreeSet},
 	convert::TryInto,
@@ -60,6 +61,7 @@ pub struct Api<'a> {
 	app: &'a App,
 	progress: Option<&'a ProgressBar>,
 	agent: ureq::Agent,
+	prices_bucket: Bucket<'a, String, String>
 }
 
 impl<'a> Api<'a> {
@@ -67,16 +69,33 @@ impl<'a> Api<'a> {
 	pub fn new(app: &'a App, progress: Option<&'a ProgressBar>) -> Self {
 		let agent = ureq::builder().user_agent(&app.user).build();
 
-		Self { app, progress, agent }
+		let cfg = Config::new("./cache_store");
+		let cache_store = Store::new(cfg).expect("Failed to initialize cache store in ./cache_store");
+		let prices_bucket = cache_store.bucket::<String, String>(Some("prices")).expect("Failed to crate a 'prices' bucket");
+
+		Self { app, progress, agent, prices_bucket }
 	}
 
 	/// get a price at a point in time from subscan.
 	///
 	/// `time`: UNIX timestamp of the time to query (UTC)
 	fn price(&self, day: NaiveDate) -> Result<Price, Error> {
-		let req = self.agent.get(&price_endpoint(&self.app.network, day));
 
-		let price: Price = req.send_bytes(&[])?.into_json()?;
+		let key = format!("{} {}", self.app.network.id(), day.format("%Y-%m-%d"));
+		let price: Price = if let Some(raw_price) = self.prices_bucket.get(&key).unwrap()  {
+			serde_json::from_str(&raw_price)?
+		} else {
+			let req = self.agent.get(&price_endpoint(&self.app.network, day));
+			let price: Price = req.send_bytes(&[])?.into_json()?;
+			self.prices_bucket.set(&key, &serde_json::to_string(&price).expect("Failed to serialize freshly-deserialized"))?;
+
+			// coingecko allows 50 requests per minute
+			// it seems to be a bit oversensitive. We therefore restrain ourselfs
+			// to 30 requests a minute.
+			std::thread::sleep(std::time::Duration::from_millis(2000));
+
+			price
+		};
 		Ok(price)
 	}
 
@@ -202,10 +221,6 @@ impl<'a> Api<'a> {
 		let mut prices = Vec::with_capacity(dates.len());
 		for day in dates {
 			self.progress.map(|p| p.inc(1));
-			// coingecko allows 100 requests per minute
-			// it seems to be a bit oversensitive. We therefore restrain ourselfs
-			// to 60 requests a minute.
-			std::thread::sleep(std::time::Duration::from_millis(1000));
 			let result = self.price(*day)?;
 			let price = result.market_data.current_price.get(&self.app.currency).ok_or_else(|| {
 				anyhow!(
@@ -217,6 +232,7 @@ impl<'a> Api<'a> {
 			prices.push(*price);
 		}
 		self.progress.map(|p| p.finish_with_message("Prices Fetched"));
+		self.prices_bucket.flush()?;
 		Ok(prices)
 	}
 }
