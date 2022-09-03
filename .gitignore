@@ -1,3 +1,4 @@
 /target
+/cache_store
 .DS_Store
 *.csv
