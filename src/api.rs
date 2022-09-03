@@ -23,7 +23,7 @@ use crate::{
 use anyhow::{anyhow, Context, Error};
 use chrono::{naive::NaiveDateTime, NaiveDate};
 use indicatif::ProgressBar;
-use kv::{Config, Store, Bucket};
+use kv::{Bucket, Config, Store};
 use std::{
 	collections::{BTreeMap, BTreeSet},
 	convert::TryInto,
@@ -61,7 +61,7 @@ pub struct Api<'a> {
 	app: &'a App,
 	progress: Option<&'a ProgressBar>,
 	agent: ureq::Agent,
-	prices_bucket: Bucket<'a, String, String>
+	prices_bucket: Bucket<'a, String, String>,
 }
 
 impl<'a> Api<'a> {
@@ -71,7 +71,8 @@ impl<'a> Api<'a> {
 
 		let cfg = Config::new("./cache_store");
 		let cache_store = Store::new(cfg).expect("Failed to initialize cache store in ./cache_store");
-		let prices_bucket = cache_store.bucket::<String, String>(Some("prices")).expect("Failed to crate a 'prices' bucket");
+		let prices_bucket =
+			cache_store.bucket::<String, String>(Some("prices")).expect("Failed to crate a 'prices' bucket");
 
 		Self { app, progress, agent, prices_bucket }
 	}
@@ -80,14 +81,14 @@ impl<'a> Api<'a> {
 	///
 	/// `time`: UNIX timestamp of the time to query (UTC)
 	fn price(&self, day: NaiveDate) -> Result<Price, Error> {
-
 		let key = format!("{} {}", self.app.network.id(), day.format("%Y-%m-%d"));
-		let price: Price = if let Some(raw_price) = self.prices_bucket.get(&key).unwrap()  {
+		let price: Price = if let Some(raw_price) = self.prices_bucket.get(&key).unwrap() {
 			serde_json::from_str(&raw_price)?
 		} else {
 			let req = self.agent.get(&price_endpoint(&self.app.network, day));
 			let price: Price = req.send_bytes(&[])?.into_json()?;
-			self.prices_bucket.set(&key, &serde_json::to_string(&price).expect("Failed to serialize freshly-deserialized"))?;
+			self.prices_bucket
+				.set(&key, &serde_json::to_string(&price).expect("Failed to serialize freshly-deserialized"))?;
 
 			// coingecko allows 50 requests per minute
 			// it seems to be a bit oversensitive. We therefore restrain ourselfs
