@@ -118,7 +118,7 @@ pub enum Network {
 	/// The Astar network
 	Astar,
 	/// Alepgh-zero solo-chain
-	Aleph
+	Aleph,
 }
 
 impl Network {
@@ -174,7 +174,7 @@ pub fn app() -> Result<(), Error> {
 		Builder::from_env(Env::default().default_filter_or("info")).init();
 		None
 	} else {
-		Some(construct_progress_bar())
+		Some(construct_progress_bar()?)
 	};
 	let api = Api::new(&app, progress.as_ref());
 
@@ -263,14 +263,14 @@ fn create_separated_rewards(api: &Api, app: &App) -> Result<Vec<SeparatedCsvReco
 		.collect()
 }
 
-fn construct_progress_bar() -> ProgressBar {
+fn construct_progress_bar() -> Result<ProgressBar, Error> {
 	let bar = ProgressBar::new(1000);
 	bar.set_style(
 		ProgressStyle::default_bar()
-			.template("{spinner:.blue} {msg} [{elapsed_precise}] [{bar:40.cyan/blue}] {percent}% ({eta})")
+			.template("{spinner:.blue} {msg} [{elapsed_precise}] [{bar:40.cyan/blue}] {percent}% ({eta})")?
 			.progress_chars("#>-"),
 	);
-	bar
+	Ok(bar)
 }
 
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
