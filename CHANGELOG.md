@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+- Calamari network
+
+
 ## [v0.5.2] - 2022-09-03
 
 ### Changed
