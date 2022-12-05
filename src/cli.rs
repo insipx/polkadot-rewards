@@ -30,7 +30,7 @@ use std::{collections::HashMap, path::PathBuf, str::FromStr};
 const OUTPUT_DATE: &str = "%Y-%m-%d";
 const OUTPUT_TIME: &str = "%H:%M:%S";
 
-#[derive(FromArgs, PartialEq, Debug)]
+#[derive(FromArgs, PartialEq, Eq, Debug)]
 /// Polkadot Staking Rewards CLI-App
 pub struct App {
 	#[argh(option, from_str_fn(date_from_string), short = 'f')]
