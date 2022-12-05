@@ -39,7 +39,7 @@ pub struct App {
 	/// date to stop crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
 	#[argh(option, from_str_fn(date_from_string), short = 't')]
 	pub to: Option<NaiveDateTime>,
-	/// network to crawl for rewards. One of: [Polkadot, Kusama, Moonriver, MOVR, KSM, DOT]
+	/// network to crawl for rewards. One of: [Polkadot, Kusama, Moonriver, Moonbeam, Calamari, MOVR, GLMR, KSM, DOT, KMA]
 	#[argh(option, default = "Network::Polkadot", short = 'n')]
 	pub network: Network,
 	/// the fiat currency which should be used for prices
@@ -115,8 +115,10 @@ pub enum Network {
 	Moonriver,
 	/// The Moonbeam Network
 	Moonbeam,
-	/// The Astar network
+	/// The Astar Network
 	Astar,
+	/// The Calamari Network
+	Calamari,
 }
 
 impl Network {
@@ -127,6 +129,7 @@ impl Network {
 			Self::Moonbeam => "moonbeam",
 			Self::Moonriver => "moonriver",
 			Self::Astar => "astar",
+			Self::Calamari => "calamari",
 		}
 	}
 
@@ -137,6 +140,7 @@ impl Network {
 			Self::Moonriver => 10u128.pow(18),
 			Self::Moonbeam => 10u128.pow(18),
 			Self::Astar => 10u128.pow(18),
+			Self::Calamari => 10u128.pow(12),
 		};
 		let frac = FixedU128::checked_from_rational(*amount, denominator)
 			.ok_or_else(|| anyhow!("Amount '{}' overflowed FixedU128", amount))?
@@ -154,8 +158,9 @@ impl FromStr for Network {
 			"moonriver" | "movr" => Ok(Network::Moonriver),
 			"moonbeam" | "glmr" => Ok(Network::Moonbeam),
 			"astar" | "astr" => Ok(Network::Astar),
+			"calamari" | "kma" => Ok(Network::Calamari),
 			_ => bail!(
-				"Network must be one of: 'kusama', 'polkadot', 'moonbeam', 'astar', 'moonriver', or their
+				"Network must be one of: 'kusama', 'polkadot', 'moonbeam', 'astar', 'moonriver', 'calamari' or their
 				token abbreviations."
 			),
 		}
@@ -262,6 +267,10 @@ fn construct_progress_bar() -> ProgressBar {
 	bar.set_style(
 		ProgressStyle::default_bar()
 			.template("{spinner:.blue} {msg} [{elapsed_precise}] [{bar:40.cyan/blue}] {percent}% ({eta})")
+			.expect(
+				"Progress template is invalid, this should not happen if formatted correctly. Please file bug
+			report.",
+			)
 			.progress_chars("#>-"),
 	);
 	bar
