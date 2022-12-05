@@ -119,6 +119,8 @@ pub enum Network {
 	Astar,
 	/// The Calamari Network
 	Calamari,
+	/// Alepgh-zero solo-chain
+	Aleph,
 }
 
 impl Network {
@@ -130,10 +132,12 @@ impl Network {
 			Self::Moonriver => "moonriver",
 			Self::Astar => "astar",
 			Self::Calamari => "calamari",
+			Self::Aleph => "aleph",
 		}
 	}
 
 	fn amount_to_network(&self, amount: &u128) -> Result<f64, Error> {
+		// TODO: fetch this from the metadata
 		let denominator = match self {
 			Self::Polkadot => 10u128.pow(10),
 			Self::Kusama => 10u128.pow(12),
@@ -141,6 +145,7 @@ impl Network {
 			Self::Moonbeam => 10u128.pow(18),
 			Self::Astar => 10u128.pow(18),
 			Self::Calamari => 10u128.pow(12),
+			Self::Aleph => 10u128.pow(12),
 		};
 		let frac = FixedU128::checked_from_rational(*amount, denominator)
 			.ok_or_else(|| anyhow!("Amount '{}' overflowed FixedU128", amount))?
@@ -159,10 +164,8 @@ impl FromStr for Network {
 			"moonbeam" | "glmr" => Ok(Network::Moonbeam),
 			"astar" | "astr" => Ok(Network::Astar),
 			"calamari" | "kma" => Ok(Network::Calamari),
-			_ => bail!(
-				"Network must be one of: 'kusama', 'polkadot', 'moonbeam', 'astar', 'moonriver', 'calamari' or their
-				token abbreviations."
-			),
+			"aleph" | "aleph-zero" | "azero" => Ok(Network::Aleph),
+			_ => bail!( "Network must be one of: 'kusama', 'polkadot', 'moonbeam', 'astar', 'moonriver', 'aleph-zoer', or their token abbreviations."),
 		}
 	}
 }
@@ -173,7 +176,7 @@ pub fn app() -> Result<(), Error> {
 		Builder::from_env(Env::default().default_filter_or("info")).init();
 		None
 	} else {
-		Some(construct_progress_bar())
+		Some(construct_progress_bar()?)
 	};
 	let api = Api::new(&app, progress.as_ref());
 
@@ -262,18 +265,17 @@ fn create_separated_rewards(api: &Api, app: &App) -> Result<Vec<SeparatedCsvReco
 		.collect()
 }
 
-fn construct_progress_bar() -> ProgressBar {
+fn construct_progress_bar() -> Result<ProgressBar, Error> {
 	let bar = ProgressBar::new(1000);
 	bar.set_style(
 		ProgressStyle::default_bar()
 			.template("{spinner:.blue} {msg} [{elapsed_precise}] [{bar:40.cyan/blue}] {percent}% ({eta})")
 			.expect(
-				"Progress template is invalid, this should not happen if formatted correctly. Please file bug
-			report.",
+				"Progress template is invalid, this should not happen if formatted correctly. Please file bug  report.",
 			)
 			.progress_chars("#>-"),
 	);
-	bar
+	Ok(bar)
 }
 
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`

@@ -1,6 +1,6 @@
 [package]
 name = "polkadot-rewards"
-version = "0.5.1"
+version = "0.5.2"
 authors = ["Andrew Plaza <andrew.plaza@parity.io>"]
 edition = "2018"
 description = "Handy CLI for all your Polkadot ecosystem staking rewards needs."
@@ -8,7 +8,6 @@ readme = "README.md"
 homepage = "https://github.com/insipx/polkadot-rewards"
 repository = "https://github.com/insipx/polkadot-rewards"
 license = "MIT"
-license-file = "LICENSE"
 keywords = ["cli", "polkadot", "substrate", "staking", "rewards"]
 categories = ["command-line-utilities", "cryptography::cryptocurrencies" ]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -27,3 +26,4 @@ indicatif = "0.17"
 sp-arithmetic = "6"
 cli-table = "0.4.7"
 itertools = "0.10"
+kv = "0.24"
