@@ -105,7 +105,7 @@ pub fn date_from_string(value: &str) -> Result<chrono::NaiveDateTime, String> {
 	Ok(time)
 }
 
-#[derive(PartialEq, Debug)]
+#[derive(PartialEq, Eq, Debug)]
 pub enum Network {
 	/// The Polkadot Network
 	Polkadot,
