@@ -8,6 +8,10 @@ and this project adheres to
 
 ## [Unreleased]
 
+### Added
+- Calamari network ([#141](https://github.com/insipx/polkadot-rewards/pull/141))
+
+
 ## [v0.5.2] - 2022-09-03
 
 ### Changed
@@ -17,6 +21,7 @@ and this project adheres to
 ### Added
 
 - local kv cache for price data ([#122](https://github.com/insipx/polkadot-rewards/pull/122))
+- Add aleph-zero ([#106](https://github.com/insipx/polkadot-rewards/pull/106))
 
 ## [v0.5.1] - 2022-06-28
 

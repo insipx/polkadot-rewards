@@ -34,6 +34,7 @@ const KUSAMA_ENDPOINT: &str = "https://kusama.api.subscan.io/api/";
 const MOONRIVER_ENDPOINT: &str = "https://moonriver.api.subscan.io/api/";
 const MOONBEAM_ENDPOINT: &str = "https://moonbeam.api.subscan.io/api/";
 const ASTAR_ENDPOINT: &str = "https://astar.api.subscan.io/api/";
+const CALAMARI_ENDPOINT: &str = "https://calamari.api.subscan.io/api/";
 const ALEPH_ENDPOINT: &str = "https://alephzero.api.subscan.io/api/";
 
 const PRICE_ENDPOINT: &str = "https://api.coingecko.com/api/v3";
@@ -46,6 +47,7 @@ fn get_endpoint(network: &Network, end: &str) -> String {
 		Network::Moonriver => format!("{}{}", MOONRIVER_ENDPOINT, end),
 		Network::Moonbeam => format!("{}{}", MOONBEAM_ENDPOINT, end),
 		Network::Astar => format!("{}{}", ASTAR_ENDPOINT, end),
+		Network::Calamari => format!("{}{}", CALAMARI_ENDPOINT, end),
 		Network::Aleph => format!("{}{}", ALEPH_ENDPOINT, end),
 	}
 }
@@ -157,7 +159,8 @@ impl<'a> Api<'a> {
 			.flatten()
 			.flatten()
 			.filter(|r| {
-				let timestamp = NaiveDateTime::from_timestamp(r.block_timestamp.try_into().unwrap(), 0);
+				let timestamp = NaiveDateTime::from_timestamp_opt(r.block_timestamp.try_into().unwrap(), 0)
+					.expect("Block timestamp is out of range. This is a bug.");
 				let from = if let Some(from) = self.app.from { timestamp >= from } else { true };
 				let to = if let Some(to) = self.app.to { timestamp <= to } else { true };
 				from && to
@@ -177,7 +180,9 @@ impl<'a> Api<'a> {
 		// merge all entries from the same day
 		let mut merged = BTreeMap::new();
 		for reward in rewards {
-			let day = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0).date();
+			let day = NaiveDateTime::from_timestamp_opt(reward.block_timestamp.try_into()?, 0)
+				.context("Block timestamp is out of range. This is a bug")?
+				.date();
 			let amount: u128 = reward.amount.parse()?;
 			let value = RewardEntry {
 				block_nums: {
@@ -204,7 +209,8 @@ impl<'a> Api<'a> {
 		let mut separated_rewards = Vec::new();
 		let rewards = self.fetch_rewards()?;
 		for reward in rewards {
-			let date = NaiveDateTime::from_timestamp(reward.block_timestamp.try_into()?, 0);
+			let date = NaiveDateTime::from_timestamp_opt(reward.block_timestamp.try_into()?, 0)
+				.context("Block timestamp is out of range. This is a bug")?;
 			let amount: u128 = reward.amount.parse()?;
 			let value =
 				SeparatedRewardEntry { block_num: reward.block_num, amount, day: date.date(), time: date.time() };
