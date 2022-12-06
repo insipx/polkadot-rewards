@@ -8,6 +8,8 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.5.3] - 2022-12-06
+
 ### Added
 - Calamari network ([#141](https://github.com/insipx/polkadot-rewards/pull/141))
 
