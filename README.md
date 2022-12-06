@@ -82,3 +82,6 @@ Options:
   -v, --verbose     get extra information about the program execution.
   --help            display usage information
 ```
+
+
+Feel free to tip me in Substrate Eco Tokens ;) [5FvMN4hsYsyWXYnKSbro1oY1UPCjttkzPRtgDhx6gGFYcWmH](https://sub.id/GRy2P3kBEzSHCbmDJfquku1cyUyhZaAqojRcNE4A4U3MnLd)
