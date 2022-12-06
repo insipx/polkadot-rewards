@@ -31,7 +31,7 @@ jobs:
         uses: mindsers/changelog-reader-action@v2
         with:
           validation_depth: 2
-          path: ./CHANGELOG.md
+          path: ./polkadot-rewards/CHANGELOG.md
           version: v${{ steps.tag_name.outputs.current_version }}
 
       - name: Generate release notes
@@ -103,7 +103,7 @@ jobs:
         uses: mindsers/changelog-reader-action@v2
         with:
           validation_depth: 2
-          path: ./CHANGELOG.md
+          path: ./polkadot-rewards/CHANGELOG.md
 
       - name: Publish Release
         uses: softprops/action-gh-release@v1
