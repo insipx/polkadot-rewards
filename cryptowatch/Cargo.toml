@@ -2,7 +2,15 @@
 name = "cryptowatch"
 version = "0.1.0"
 edition = "2021"
-
+description = "Client for the cryptowat.ch API"
+readme = "README.md"
+homepage = "https://github.com/insipx/polkadot-rewards/cryptowatch"
+repository = "https://github.com/insipx/polkadot-rewards"
+license = "MIT"
+keywords = ["api", "cryptocurrency"]
+categories = ["api"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
+ureq = { version = "2", features = ["json"] }
+

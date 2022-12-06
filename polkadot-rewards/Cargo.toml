@@ -2,7 +2,7 @@
 name = "polkadot-rewards"
 version = "0.5.3"
 authors = ["Andrew Plaza <andrew.plaza@parity.io>"]
-edition = "2018"
+edition = "2021"
 description = "Handy CLI for all your Polkadot ecosystem staking rewards needs."
 readme = "README.md"
 homepage = "https://github.com/insipx/polkadot-rewards"
