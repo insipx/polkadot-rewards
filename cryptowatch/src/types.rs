@@ -1,7 +1,6 @@
 use chrono::{serde::ts_seconds, DateTime, Utc};
-use std::{borrow::Cow, collections::HashMap};
-
 use serde::{Deserialize, Serialize};
+use std::{borrow::Cow, collections::HashMap};
 
 /// The general REST API "Response" type.
 #[derive(Serialize, Deserialize, Debug)]

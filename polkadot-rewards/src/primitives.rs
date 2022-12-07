@@ -145,11 +145,13 @@ impl CsvRecord {
 	pub fn serialize(self, wtr: &mut Output) -> Result<(), Error> {
 		match self {
 			CsvRecord::Grouped(v) => {
-				v.into_iter().try_for_each(|r| wtr.serialize(r).context("Faild to format CsvRecord"))?;
-			}
+				v.into_iter()
+					.try_for_each(|r| wtr.serialize(r).context("Faild to format CsvRecord"))?;
+			},
 			CsvRecord::Separated(v) => {
-				v.into_iter().try_for_each(|r| wtr.serialize(r).context("Faild to format CsvRecord"))?;
-			}
+				v.into_iter()
+					.try_for_each(|r| wtr.serialize(r).context("Faild to format CsvRecord"))?;
+			},
 		}
 		Ok(())
 	}

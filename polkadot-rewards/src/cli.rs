@@ -39,7 +39,8 @@ pub struct App {
 	/// date to stop crawling for staking rewards. Format: "YYY-MM-DD HH:MM:SS"
 	#[argh(option, from_str_fn(date_from_string), short = 't')]
 	pub to: Option<NaiveDateTime>,
-	/// network to crawl for rewards. One of: [Polkadot, Kusama, Moonriver, Moonbeam, Calamari, MOVR, GLMR, KSM, DOT, KMA]
+	/// network to crawl for rewards. One of: [Polkadot, Kusama, Moonriver, Moonbeam, Calamari, MOVR, GLMR, KSM, DOT,
+	/// KMA]
 	#[argh(option, default = "Network::Polkadot", short = 'n')]
 	pub network: Network,
 	/// the fiat currency which should be used for prices
@@ -90,7 +91,7 @@ fn default_file_location() -> PathBuf {
 		Err(e) => {
 			log::error!("{}", e.to_string());
 			std::process::exit(1);
-		}
+		},
 		Ok(p) => p,
 	}
 }
@@ -213,7 +214,11 @@ fn create_grouped_rewards(api: &Api, app: &App) -> Result<Vec<GroupedCsvRecord>,
 		(0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>()
 	} else {
 		let dates: Vec<NaiveDate> = rewards.iter().map(|r| r.day).collect();
-		api.fetch_prices(dates.as_slice()).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
+		api.fetch_prices(dates.as_slice())
+			.context("Failed to fetch prices.")?
+			.into_iter()
+			.map(Some)
+			.collect::<Vec<_>>()
 	};
 
 	ensure!(!rewards.is_empty(), "No rewards found for specified account.");

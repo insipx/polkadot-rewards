@@ -73,8 +73,9 @@ impl<'a> Api<'a> {
 
 		let cfg = Config::new("./cache_store");
 		let cache_store = Store::new(cfg).expect("Failed to initialize cache store in ./cache_store");
-		let prices_bucket =
-			cache_store.bucket::<String, String>(Some("prices")).expect("Failed to crate a 'prices' bucket");
+		let prices_bucket = cache_store
+			.bucket::<String, String>(Some("prices"))
+			.expect("Failed to crate a 'prices' bucket");
 
 		Self { app, progress, agent, prices_bucket }
 	}
@@ -153,7 +154,10 @@ impl<'a> Api<'a> {
 				self.progress.map(|p| p.inc(1));
 				// subscan allows 10 requests per second
 				std::thread::sleep(std::time::Duration::from_millis(300));
-				self.rewards(i, PAGE_SIZE).with_context(|| format!("Failed to fetch page {}", i)).unwrap().list
+				self.rewards(i, PAGE_SIZE)
+					.with_context(|| format!("Failed to fetch page {}", i))
+					.unwrap()
+					.list
 			})
 			.take_while(|list| list.is_some())
 			.flatten()
