@@ -3,6 +3,7 @@ use std::{borrow::Cow, collections::HashMap};
 
 use serde::{Deserialize, Serialize};
 
+/// The general REST API "Response" type.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Response<T> {
 	result: T,
@@ -16,11 +17,22 @@ impl<T> Response<T> {
 	}
 }
 
+/// Information about the amount of credits left before a user reaches their rate-limit.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ApiAllowance<'a> {
 	cost: f64,
 	remaining: f64,
 	upgrade: Cow<'a, str>,
+}
+
+impl<'a> std::fmt::Display for ApiAllowance<'a> {
+	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
+		write!(
+			f,
+			"This api call cost {} and you have {} credits remaining. {}",
+			self.cost, self.remaining, self.upgrade
+		)
+	}
 }
 
 /// An single asset
@@ -52,6 +64,7 @@ pub struct Pair<'a> {
 	route: Cow<'a, str>,
 }
 
+/// Maping of Period to the [`OHLC`] data for that length of time
 #[derive(Serialize, Deserialize, Debug)]
 #[serde(transparent)]
 pub struct PeriodMap(HashMap<Period, Vec<OHLC>>);
@@ -89,6 +102,7 @@ pub enum Period {
 	P604800Monday,
 }
 
+/// "OHLC" data for a period of time. "OHLC" stands for "Open-High-Low-Close"
 #[derive(Serialize, Deserialize, Debug)]
 pub struct OHLC {
 	#[serde(with = "ts_seconds")]
