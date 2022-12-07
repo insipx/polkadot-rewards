@@ -248,6 +248,11 @@ dependencies = [
 [[package]]
 name = "cryptowatch"
 version = "0.1.0"
+dependencies = [
+ "chrono",
+ "serde",
+ "ureq",
+]
 
 [[package]]
 name = "csv"
