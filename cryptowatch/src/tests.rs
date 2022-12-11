@@ -12,7 +12,7 @@ pub mod test_prelude {
 	pub enum Call {
 		Assets(Assets),
 		Exchanges(Exchanges),
-		Markets(Markets),
+		Markets(Market),
 		Pairs(Pairs),
 	}
 
@@ -29,14 +29,20 @@ pub mod test_prelude {
 	}
 
 	#[allow(unused)]
-	pub enum Markets {
+	pub enum Market {
 		List,
 		Details,
 		Price(OneOrAllMarkets),
 		Trades,
 		TwentyFourHourSummary(OneOrAllMarkets),
-		OrderBook,
+		Orderbook(OrderbookCall),
 		OHLC,
+	}
+
+	pub enum OrderbookCall {
+		Book,
+		Liquidity,
+		Calculator,
 	}
 
 	#[allow(unused)]
@@ -85,19 +91,21 @@ pub mod test_prelude {
 		}
 	}
 
-	impl CallExt for Markets {
+	impl CallExt for Market {
 		fn path(&self) -> PathBuf {
 			match self {
-				Markets::List => Path::new("markets").join("list.json"),
-				Markets::Details => Path::new("markets").join("details.json"),
-				Markets::Price(OneOrAllMarkets::One) => Path::new("markets").join("price.json"),
-				Markets::Price(OneOrAllMarkets::All) => Path::new("markets").join("price-all.json"),
-				Markets::Trades => Path::new("markets").join("trades.json"),
-				Markets::TwentyFourHourSummary(OneOrAllMarkets::One) => Path::new("markets").join("24h-summary.json"),
-				Markets::TwentyFourHourSummary(OneOrAllMarkets::All) =>
+				Market::List => Path::new("markets").join("list.json"),
+				Market::Details => Path::new("markets").join("details.json"),
+				Market::Price(OneOrAllMarkets::One) => Path::new("markets").join("price.json"),
+				Market::Price(OneOrAllMarkets::All) => Path::new("markets").join("price-all.json"),
+				Market::Trades => Path::new("markets").join("trades.json"),
+				Market::TwentyFourHourSummary(OneOrAllMarkets::One) => Path::new("markets").join("24h-summary.json"),
+				Market::TwentyFourHourSummary(OneOrAllMarkets::All) =>
 					Path::new("markets").join("24h-summary-all.json"),
-				Markets::OrderBook => Path::new("markets").join("orderbook.json"),
-				Markets::OHLC => Path::new("markets").join("ohlc.json"),
+				Market::Orderbook(OrderbookCall::Book) => Path::new("markets").join("orderbook.json"),
+				Market::Orderbook(OrderbookCall::Liquidity) => Path::new("markets").join("orderbook-liquidity.json"),
+				Market::Orderbook(OrderbookCall::Calculator) => Path::new("markets").join("orderbook-calculator.json"),
+				Market::OHLC => Path::new("markets").join("ohlc.json"),
 			}
 		}
 	}
@@ -137,19 +145,24 @@ pub mod test_prelude {
 			Call::Exchanges(Exchanges::List) => files.find(|p| p.ends_with("exchanges/list.json")).unwrap(),
 			Call::Exchanges(Exchanges::Details) => files.find(|p| p.ends_with("exchanges/details.json")).unwrap(),
 			Call::Exchanges(Exchanges::Markets) => files.find(|p| p.ends_with("exchanges/markets.json")).unwrap(),
-			Call::Markets(Markets::List) => files.find(|p| p.ends_with("markets/list.json")).unwrap(),
-			Call::Markets(Markets::Details) => files.find(|p| p.ends_with("markets/details.json")).unwrap(),
-			Call::Markets(Markets::Price(OneOrAllMarkets::One)) =>
+			Call::Markets(Market::List) => files.find(|p| p.ends_with("markets/list.json")).unwrap(),
+			Call::Markets(Market::Details) => files.find(|p| p.ends_with("markets/details.json")).unwrap(),
+			Call::Markets(Market::Price(OneOrAllMarkets::One)) =>
 				files.find(|p| p.ends_with("markets/price.json")).unwrap(),
-			Call::Markets(Markets::Price(OneOrAllMarkets::All)) =>
+			Call::Markets(Market::Price(OneOrAllMarkets::All)) =>
 				files.find(|p| p.ends_with("markets/price-all.json")).unwrap(),
-			Call::Markets(Markets::Trades) => files.find(|p| p.ends_with("markets/trades.json")).unwrap(),
-			Call::Markets(Markets::TwentyFourHourSummary(OneOrAllMarkets::One)) =>
+			Call::Markets(Market::Trades) => files.find(|p| p.ends_with("markets/trades.json")).unwrap(),
+			Call::Markets(Market::TwentyFourHourSummary(OneOrAllMarkets::One)) =>
 				files.find(|p| p.ends_with("markets/24h-summary.json")).unwrap(),
-			Call::Markets(Markets::TwentyFourHourSummary(OneOrAllMarkets::All)) =>
+			Call::Markets(Market::TwentyFourHourSummary(OneOrAllMarkets::All)) =>
 				files.find(|p| p.ends_with("markets/24h-summary-all.json")).unwrap(),
-			Call::Markets(Markets::OrderBook) => files.find(|p| p.ends_with("markets/orderbook.json")).unwrap(),
-			Call::Markets(Markets::OHLC) => files.find(|p| p.ends_with("markets/ohlc.json")).unwrap(),
+			Call::Markets(Market::Orderbook(OrderbookCall::Book)) =>
+				files.find(|p| p.ends_with("markets/orderbook.json")).unwrap(),
+			Call::Markets(Market::Orderbook(OrderbookCall::Liquidity)) =>
+				files.find(|p| p.ends_with("markets/orderbook-liquidity.json")).unwrap(),
+			Call::Markets(Market::Orderbook(OrderbookCall::Calculator)) =>
+				files.find(|p| p.ends_with("markets/orderbook-calculator.json")).unwrap(),
+			Call::Markets(Market::OHLC) => files.find(|p| p.ends_with("markets/ohlc.json")).unwrap(),
 			Call::Pairs(Pairs::List) => files.find(|p| p.ends_with("pairs/list.json")).unwrap(),
 			Call::Pairs(Pairs::Details) => files.find(|p| p.ends_with("pairs/details.json")).unwrap(),
 		};

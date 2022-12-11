@@ -1,0 +1,20 @@
+{
+  "result": {
+    "id": 86,
+    "exchange": "kraken",
+    "pair": "btceur",
+    "active": true,
+    "routes": {
+      "price": "https://api.cryptowat.ch/markets/kraken/btceur/price",
+      "summary": "https://api.cryptowat.ch/markets/kraken/btceur/summary",
+      "orderbook": "https://api.cryptowat.ch/markets/kraken/btceur/orderbook",
+      "trades": "https://api.cryptowat.ch/markets/kraken/btceur/trades",
+      "ohlc": "https://api.cryptowat.ch/markets/kraken/btceur/ohlc"
+    }
+  },
+  "allowance": {
+    "cost": 0.002,
+    "remaining": 9.621,
+    "upgrade": "For unlimited API access, create an account at https://cryptowat.ch"
+  }
+}

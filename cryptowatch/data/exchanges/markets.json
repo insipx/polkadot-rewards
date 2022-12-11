@@ -1,0 +1,4818 @@
+{
+  "result": [
+    {
+      "id": 86,
+      "exchange": "kraken",
+      "pair": "btceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btceur"
+    },
+    {
+      "id": 87,
+      "exchange": "kraken",
+      "pair": "btcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcusd"
+    },
+    {
+      "id": 88,
+      "exchange": "kraken",
+      "pair": "btcgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcgbp"
+    },
+    {
+      "id": 89,
+      "exchange": "kraken",
+      "pair": "btcjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcjpy"
+    },
+    {
+      "id": 90,
+      "exchange": "kraken",
+      "pair": "btccad",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btccad"
+    },
+    {
+      "id": 91,
+      "exchange": "kraken",
+      "pair": "ltceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltceur"
+    },
+    {
+      "id": 92,
+      "exchange": "kraken",
+      "pair": "ltcbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltcbtc"
+    },
+    {
+      "id": 93,
+      "exchange": "kraken",
+      "pair": "ltccad",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltccad"
+    },
+    {
+      "id": 94,
+      "exchange": "kraken",
+      "pair": "ltcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltcusd"
+    },
+    {
+      "id": 95,
+      "exchange": "kraken",
+      "pair": "ethbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethbtc"
+    },
+    {
+      "id": 96,
+      "exchange": "kraken",
+      "pair": "ethusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethusd"
+    },
+    {
+      "id": 97,
+      "exchange": "kraken",
+      "pair": "etheur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/etheur"
+    },
+    {
+      "id": 98,
+      "exchange": "kraken",
+      "pair": "ethcad",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethcad"
+    },
+    {
+      "id": 99,
+      "exchange": "kraken",
+      "pair": "ethgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethgbp"
+    },
+    {
+      "id": 100,
+      "exchange": "kraken",
+      "pair": "ethjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethjpy"
+    },
+    {
+      "id": 101,
+      "exchange": "kraken",
+      "pair": "etcbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/etcbtc"
+    },
+    {
+      "id": 102,
+      "exchange": "kraken",
+      "pair": "etceth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/etceth"
+    },
+    {
+      "id": 103,
+      "exchange": "kraken",
+      "pair": "etcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/etcusd"
+    },
+    {
+      "id": 104,
+      "exchange": "kraken",
+      "pair": "etceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/etceur"
+    },
+    {
+      "id": 105,
+      "exchange": "kraken",
+      "pair": "gnobtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gnobtc"
+    },
+    {
+      "id": 106,
+      "exchange": "kraken",
+      "pair": "gnoeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gnoeth"
+    },
+    {
+      "id": 107,
+      "exchange": "kraken",
+      "pair": "gnousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gnousd"
+    },
+    {
+      "id": 108,
+      "exchange": "kraken",
+      "pair": "gnoeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gnoeur"
+    },
+    {
+      "id": 109,
+      "exchange": "kraken",
+      "pair": "eoseth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eoseth"
+    },
+    {
+      "id": 110,
+      "exchange": "kraken",
+      "pair": "eosbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eosbtc"
+    },
+    {
+      "id": 111,
+      "exchange": "kraken",
+      "pair": "eoseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eoseur"
+    },
+    {
+      "id": 112,
+      "exchange": "kraken",
+      "pair": "eosusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eosusd"
+    },
+    {
+      "id": 113,
+      "exchange": "kraken",
+      "pair": "icnbtc",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/icnbtc"
+    },
+    {
+      "id": 114,
+      "exchange": "kraken",
+      "pair": "icneth",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/icneth"
+    },
+    {
+      "id": 115,
+      "exchange": "kraken",
+      "pair": "mlnbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mlnbtc"
+    },
+    {
+      "id": 116,
+      "exchange": "kraken",
+      "pair": "mlneth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mlneth"
+    },
+    {
+      "id": 117,
+      "exchange": "kraken",
+      "pair": "repcad",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/repcad"
+    },
+    {
+      "id": 118,
+      "exchange": "kraken",
+      "pair": "repeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/repeth"
+    },
+    {
+      "id": 119,
+      "exchange": "kraken",
+      "pair": "repeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/repeur"
+    },
+    {
+      "id": 120,
+      "exchange": "kraken",
+      "pair": "repjpy",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/repjpy"
+    },
+    {
+      "id": 121,
+      "exchange": "kraken",
+      "pair": "repusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/repusd"
+    },
+    {
+      "id": 122,
+      "exchange": "kraken",
+      "pair": "repbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/repbtc"
+    },
+    {
+      "id": 123,
+      "exchange": "kraken",
+      "pair": "zeccad",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/zeccad"
+    },
+    {
+      "id": 124,
+      "exchange": "kraken",
+      "pair": "zeceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/zeceur"
+    },
+    {
+      "id": 125,
+      "exchange": "kraken",
+      "pair": "zecgbp",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/zecgbp"
+    },
+    {
+      "id": 126,
+      "exchange": "kraken",
+      "pair": "zecjpy",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/zecjpy"
+    },
+    {
+      "id": 127,
+      "exchange": "kraken",
+      "pair": "zecusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/zecusd"
+    },
+    {
+      "id": 128,
+      "exchange": "kraken",
+      "pair": "zecbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/zecbtc"
+    },
+    {
+      "id": 129,
+      "exchange": "kraken",
+      "pair": "xmrbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xmrbtc"
+    },
+    {
+      "id": 130,
+      "exchange": "kraken",
+      "pair": "xmreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xmreur"
+    },
+    {
+      "id": 131,
+      "exchange": "kraken",
+      "pair": "xmrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xmrusd"
+    },
+    {
+      "id": 132,
+      "exchange": "kraken",
+      "pair": "dogebtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dogebtc"
+    },
+    {
+      "id": 133,
+      "exchange": "kraken",
+      "pair": "xlmbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xlmbtc"
+    },
+    {
+      "id": 134,
+      "exchange": "kraken",
+      "pair": "xlmeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xlmeur"
+    },
+    {
+      "id": 135,
+      "exchange": "kraken",
+      "pair": "xlmusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xlmusd"
+    },
+    {
+      "id": 136,
+      "exchange": "kraken",
+      "pair": "xrpbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpbtc"
+    },
+    {
+      "id": 137,
+      "exchange": "kraken",
+      "pair": "xrpusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpusd"
+    },
+    {
+      "id": 138,
+      "exchange": "kraken",
+      "pair": "xrpeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpeur"
+    },
+    {
+      "id": 139,
+      "exchange": "kraken",
+      "pair": "xrpcad",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpcad"
+    },
+    {
+      "id": 140,
+      "exchange": "kraken",
+      "pair": "xrpjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpjpy"
+    },
+    {
+      "id": 141,
+      "exchange": "kraken",
+      "pair": "dashbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dashbtc"
+    },
+    {
+      "id": 142,
+      "exchange": "kraken",
+      "pair": "dasheur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dasheur"
+    },
+    {
+      "id": 143,
+      "exchange": "kraken",
+      "pair": "dashusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dashusd"
+    },
+    {
+      "id": 144,
+      "exchange": "kraken",
+      "pair": "usdtusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdtusd"
+    },
+    {
+      "id": 145,
+      "exchange": "kraken",
+      "pair": "bchbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bchbtc"
+    },
+    {
+      "id": 146,
+      "exchange": "kraken",
+      "pair": "bchusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bchusd"
+    },
+    {
+      "id": 147,
+      "exchange": "kraken",
+      "pair": "bcheur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bcheur"
+    },
+    {
+      "id": 5197,
+      "exchange": "kraken",
+      "pair": "adausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adausd"
+    },
+    {
+      "id": 5198,
+      "exchange": "kraken",
+      "pair": "adaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adaeur"
+    },
+    {
+      "id": 5199,
+      "exchange": "kraken",
+      "pair": "adacad",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/adacad"
+    },
+    {
+      "id": 5200,
+      "exchange": "kraken",
+      "pair": "adabtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adabtc"
+    },
+    {
+      "id": 5201,
+      "exchange": "kraken",
+      "pair": "adaeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adaeth"
+    },
+    {
+      "id": 5202,
+      "exchange": "kraken",
+      "pair": "qtumusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/qtumusd"
+    },
+    {
+      "id": 5203,
+      "exchange": "kraken",
+      "pair": "qtumeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/qtumeur"
+    },
+    {
+      "id": 5204,
+      "exchange": "kraken",
+      "pair": "qtumcad",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/qtumcad"
+    },
+    {
+      "id": 5205,
+      "exchange": "kraken",
+      "pair": "qtumbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/qtumbtc"
+    },
+    {
+      "id": 5206,
+      "exchange": "kraken",
+      "pair": "qtumeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/qtumeth"
+    },
+    {
+      "id": 5301,
+      "exchange": "kraken",
+      "pair": "xtzusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xtzusd"
+    },
+    {
+      "id": 5302,
+      "exchange": "kraken",
+      "pair": "xtzeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xtzeur"
+    },
+    {
+      "id": 5303,
+      "exchange": "kraken",
+      "pair": "xtzcad",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/xtzcad"
+    },
+    {
+      "id": 5304,
+      "exchange": "kraken",
+      "pair": "xtzbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xtzbtc"
+    },
+    {
+      "id": 5305,
+      "exchange": "kraken",
+      "pair": "xtzeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xtzeth"
+    },
+    {
+      "id": 5588,
+      "exchange": "kraken",
+      "pair": "bsvbtc",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/bsvbtc"
+    },
+    {
+      "id": 5589,
+      "exchange": "kraken",
+      "pair": "bsvusd",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/bsvusd"
+    },
+    {
+      "id": 5590,
+      "exchange": "kraken",
+      "pair": "bsveur",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/bsveur"
+    },
+    {
+      "id": 59932,
+      "exchange": "kraken",
+      "pair": "atometh",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atometh"
+    },
+    {
+      "id": 59933,
+      "exchange": "kraken",
+      "pair": "atomcad",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/atomcad"
+    },
+    {
+      "id": 59934,
+      "exchange": "kraken",
+      "pair": "atomusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atomusd"
+    },
+    {
+      "id": 59935,
+      "exchange": "kraken",
+      "pair": "atomeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atomeur"
+    },
+    {
+      "id": 59936,
+      "exchange": "kraken",
+      "pair": "atombtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atombtc"
+    },
+    {
+      "id": 60935,
+      "exchange": "kraken",
+      "pair": "batusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/batusd"
+    },
+    {
+      "id": 60936,
+      "exchange": "kraken",
+      "pair": "waveseth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/waveseth"
+    },
+    {
+      "id": 60937,
+      "exchange": "kraken",
+      "pair": "bateur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bateur"
+    },
+    {
+      "id": 60938,
+      "exchange": "kraken",
+      "pair": "waveseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/waveseur"
+    },
+    {
+      "id": 60939,
+      "exchange": "kraken",
+      "pair": "wavesbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/wavesbtc"
+    },
+    {
+      "id": 60940,
+      "exchange": "kraken",
+      "pair": "batbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/batbtc"
+    },
+    {
+      "id": 60941,
+      "exchange": "kraken",
+      "pair": "wavesusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/wavesusd"
+    },
+    {
+      "id": 60942,
+      "exchange": "kraken",
+      "pair": "bateth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bateth"
+    },
+    {
+      "id": 61074,
+      "exchange": "kraken",
+      "pair": "icxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/icxeur"
+    },
+    {
+      "id": 61075,
+      "exchange": "kraken",
+      "pair": "icxeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/icxeth"
+    },
+    {
+      "id": 61076,
+      "exchange": "kraken",
+      "pair": "icxbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/icxbtc"
+    },
+    {
+      "id": 61077,
+      "exchange": "kraken",
+      "pair": "icxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/icxusd"
+    },
+    {
+      "id": 61188,
+      "exchange": "kraken",
+      "pair": "saieur",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/saieur"
+    },
+    {
+      "id": 61189,
+      "exchange": "kraken",
+      "pair": "linketh",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/linketh"
+    },
+    {
+      "id": 61190,
+      "exchange": "kraken",
+      "pair": "linkbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/linkbtc"
+    },
+    {
+      "id": 61191,
+      "exchange": "kraken",
+      "pair": "saiusdt",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/saiusdt"
+    },
+    {
+      "id": 61192,
+      "exchange": "kraken",
+      "pair": "ethsai",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethsai"
+    },
+    {
+      "id": 61193,
+      "exchange": "kraken",
+      "pair": "linkeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/linkeur"
+    },
+    {
+      "id": 61194,
+      "exchange": "kraken",
+      "pair": "linkusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/linkusd"
+    },
+    {
+      "id": 61195,
+      "exchange": "kraken",
+      "pair": "saiusd",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/saiusd"
+    },
+    {
+      "id": 61249,
+      "exchange": "kraken",
+      "pair": "scusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/scusd"
+    },
+    {
+      "id": 61250,
+      "exchange": "kraken",
+      "pair": "sceth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sceth"
+    },
+    {
+      "id": 61251,
+      "exchange": "kraken",
+      "pair": "scbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/scbtc"
+    },
+    {
+      "id": 61252,
+      "exchange": "kraken",
+      "pair": "sceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sceur"
+    },
+    {
+      "id": 61371,
+      "exchange": "kraken",
+      "pair": "omgeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/omgeur"
+    },
+    {
+      "id": 61372,
+      "exchange": "kraken",
+      "pair": "omgbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/omgbtc"
+    },
+    {
+      "id": 61373,
+      "exchange": "kraken",
+      "pair": "paxgeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/paxgeth"
+    },
+    {
+      "id": 61374,
+      "exchange": "kraken",
+      "pair": "omgusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/omgusd"
+    },
+    {
+      "id": 61375,
+      "exchange": "kraken",
+      "pair": "omgeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/omgeth"
+    },
+    {
+      "id": 61376,
+      "exchange": "kraken",
+      "pair": "paxgbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/paxgbtc"
+    },
+    {
+      "id": 61377,
+      "exchange": "kraken",
+      "pair": "paxgeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/paxgeur"
+    },
+    {
+      "id": 61378,
+      "exchange": "kraken",
+      "pair": "paxgusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/paxgusd"
+    },
+    {
+      "id": 61401,
+      "exchange": "kraken",
+      "pair": "nanoeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nanoeth"
+    },
+    {
+      "id": 61402,
+      "exchange": "kraken",
+      "pair": "nanousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nanousd"
+    },
+    {
+      "id": 61403,
+      "exchange": "kraken",
+      "pair": "nanoeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nanoeur"
+    },
+    {
+      "id": 61404,
+      "exchange": "kraken",
+      "pair": "nanobtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nanobtc"
+    },
+    {
+      "id": 61450,
+      "exchange": "kraken",
+      "pair": "lskeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lskeur"
+    },
+    {
+      "id": 61451,
+      "exchange": "kraken",
+      "pair": "lskbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lskbtc"
+    },
+    {
+      "id": 61452,
+      "exchange": "kraken",
+      "pair": "lskusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lskusd"
+    },
+    {
+      "id": 61453,
+      "exchange": "kraken",
+      "pair": "lsketh",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lsketh"
+    },
+    {
+      "id": 61474,
+      "exchange": "kraken",
+      "pair": "ethdai",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethdai"
+    },
+    {
+      "id": 61475,
+      "exchange": "kraken",
+      "pair": "daiusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/daiusdt"
+    },
+    {
+      "id": 61476,
+      "exchange": "kraken",
+      "pair": "daieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/daieur"
+    },
+    {
+      "id": 61477,
+      "exchange": "kraken",
+      "pair": "daiusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/daiusd"
+    },
+    {
+      "id": 61496,
+      "exchange": "kraken",
+      "pair": "btcchf",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcchf"
+    },
+    {
+      "id": 61497,
+      "exchange": "kraken",
+      "pair": "ethchf",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethchf"
+    },
+    {
+      "id": 61534,
+      "exchange": "kraken",
+      "pair": "dogeusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dogeusd"
+    },
+    {
+      "id": 61535,
+      "exchange": "kraken",
+      "pair": "usdtcad",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdtcad"
+    },
+    {
+      "id": 61536,
+      "exchange": "kraken",
+      "pair": "mlneur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mlneur"
+    },
+    {
+      "id": 61537,
+      "exchange": "kraken",
+      "pair": "mlnusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mlnusd"
+    },
+    {
+      "id": 61538,
+      "exchange": "kraken",
+      "pair": "usdteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdteur"
+    },
+    {
+      "id": 61539,
+      "exchange": "kraken",
+      "pair": "ethusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethusdt"
+    },
+    {
+      "id": 61540,
+      "exchange": "kraken",
+      "pair": "dogeeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dogeeur"
+    },
+    {
+      "id": 61541,
+      "exchange": "kraken",
+      "pair": "btcdai",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcdai"
+    },
+    {
+      "id": 61542,
+      "exchange": "kraken",
+      "pair": "btcusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcusdt"
+    },
+    {
+      "id": 61543,
+      "exchange": "kraken",
+      "pair": "usdtgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdtgbp"
+    },
+    {
+      "id": 61632,
+      "exchange": "kraken",
+      "pair": "ethusdc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethusdc"
+    },
+    {
+      "id": 61633,
+      "exchange": "kraken",
+      "pair": "usdcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdcusd"
+    },
+    {
+      "id": 61634,
+      "exchange": "kraken",
+      "pair": "btcusdc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcusdc"
+    },
+    {
+      "id": 61635,
+      "exchange": "kraken",
+      "pair": "usdceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdceur"
+    },
+    {
+      "id": 61636,
+      "exchange": "kraken",
+      "pair": "eurdoge",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/eurdoge"
+    },
+    {
+      "id": 61637,
+      "exchange": "kraken",
+      "pair": "usdcusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdcusdt"
+    },
+    {
+      "id": 61739,
+      "exchange": "kraken",
+      "pair": "algoeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/algoeur"
+    },
+    {
+      "id": 61740,
+      "exchange": "kraken",
+      "pair": "algoeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/algoeth"
+    },
+    {
+      "id": 61741,
+      "exchange": "kraken",
+      "pair": "algobtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/algobtc"
+    },
+    {
+      "id": 61742,
+      "exchange": "kraken",
+      "pair": "algousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/algousd"
+    },
+    {
+      "id": 61962,
+      "exchange": "kraken",
+      "pair": "trxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/trxeur"
+    },
+    {
+      "id": 61963,
+      "exchange": "kraken",
+      "pair": "trxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/trxusd"
+    },
+    {
+      "id": 61964,
+      "exchange": "kraken",
+      "pair": "trxeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/trxeth"
+    },
+    {
+      "id": 61965,
+      "exchange": "kraken",
+      "pair": "trxbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/trxbtc"
+    },
+    {
+      "id": 61979,
+      "exchange": "kraken",
+      "pair": "eurusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eurusd"
+    },
+    {
+      "id": 61980,
+      "exchange": "kraken",
+      "pair": "eurcad",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eurcad"
+    },
+    {
+      "id": 61981,
+      "exchange": "kraken",
+      "pair": "gbpusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gbpusd"
+    },
+    {
+      "id": 61982,
+      "exchange": "kraken",
+      "pair": "eurjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eurjpy"
+    },
+    {
+      "id": 61983,
+      "exchange": "kraken",
+      "pair": "usdchf",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdchf"
+    },
+    {
+      "id": 61984,
+      "exchange": "kraken",
+      "pair": "eurchf",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eurchf"
+    },
+    {
+      "id": 61985,
+      "exchange": "kraken",
+      "pair": "eurgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eurgbp"
+    },
+    {
+      "id": 61986,
+      "exchange": "kraken",
+      "pair": "usdjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdjpy"
+    },
+    {
+      "id": 61987,
+      "exchange": "kraken",
+      "pair": "usdcad",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdcad"
+    },
+    {
+      "id": 62899,
+      "exchange": "kraken",
+      "pair": "ltcusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltcusdt"
+    },
+    {
+      "id": 62900,
+      "exchange": "kraken",
+      "pair": "usdtjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdtjpy"
+    },
+    {
+      "id": 62901,
+      "exchange": "kraken",
+      "pair": "bchgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bchgbp"
+    },
+    {
+      "id": 62902,
+      "exchange": "kraken",
+      "pair": "usdtchf",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdtchf"
+    },
+    {
+      "id": 62903,
+      "exchange": "kraken",
+      "pair": "xrpeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpeth"
+    },
+    {
+      "id": 62904,
+      "exchange": "kraken",
+      "pair": "bchusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bchusdt"
+    },
+    {
+      "id": 62905,
+      "exchange": "kraken",
+      "pair": "ltcgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltcgbp"
+    },
+    {
+      "id": 62906,
+      "exchange": "kraken",
+      "pair": "xrpusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpusdt"
+    },
+    {
+      "id": 62907,
+      "exchange": "kraken",
+      "pair": "xrpgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpgbp"
+    },
+    {
+      "id": 62908,
+      "exchange": "kraken",
+      "pair": "ltceth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltceth"
+    },
+    {
+      "id": 62909,
+      "exchange": "kraken",
+      "pair": "bcheth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bcheth"
+    },
+    {
+      "id": 63031,
+      "exchange": "kraken",
+      "pair": "oxtbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oxtbtc"
+    },
+    {
+      "id": 63032,
+      "exchange": "kraken",
+      "pair": "oxteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oxteur"
+    },
+    {
+      "id": 63033,
+      "exchange": "kraken",
+      "pair": "oxteth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oxteth"
+    },
+    {
+      "id": 63034,
+      "exchange": "kraken",
+      "pair": "oxtusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oxtusd"
+    },
+    {
+      "id": 63114,
+      "exchange": "kraken",
+      "pair": "usdtaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdtaud"
+    },
+    {
+      "id": 63115,
+      "exchange": "kraken",
+      "pair": "ltcaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltcaud"
+    },
+    {
+      "id": 63116,
+      "exchange": "kraken",
+      "pair": "btcaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcaud"
+    },
+    {
+      "id": 63117,
+      "exchange": "kraken",
+      "pair": "bchaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bchaud"
+    },
+    {
+      "id": 63118,
+      "exchange": "kraken",
+      "pair": "xrpaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrpaud"
+    },
+    {
+      "id": 63119,
+      "exchange": "kraken",
+      "pair": "euraud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/euraud"
+    },
+    {
+      "id": 63120,
+      "exchange": "kraken",
+      "pair": "ethaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethaud"
+    },
+    {
+      "id": 63121,
+      "exchange": "kraken",
+      "pair": "audjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/audjpy"
+    },
+    {
+      "id": 63122,
+      "exchange": "kraken",
+      "pair": "audusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/audusd"
+    },
+    {
+      "id": 63263,
+      "exchange": "kraken",
+      "pair": "kavaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kavaeur"
+    },
+    {
+      "id": 63264,
+      "exchange": "kraken",
+      "pair": "compbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/compbtc"
+    },
+    {
+      "id": 63265,
+      "exchange": "kraken",
+      "pair": "storjeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/storjeur"
+    },
+    {
+      "id": 63266,
+      "exchange": "kraken",
+      "pair": "knceth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/knceth"
+    },
+    {
+      "id": 63267,
+      "exchange": "kraken",
+      "pair": "kavausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kavausd"
+    },
+    {
+      "id": 63268,
+      "exchange": "kraken",
+      "pair": "competh",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/competh"
+    },
+    {
+      "id": 63269,
+      "exchange": "kraken",
+      "pair": "compeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/compeur"
+    },
+    {
+      "id": 63270,
+      "exchange": "kraken",
+      "pair": "storjeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/storjeth"
+    },
+    {
+      "id": 63271,
+      "exchange": "kraken",
+      "pair": "storjusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/storjusd"
+    },
+    {
+      "id": 63272,
+      "exchange": "kraken",
+      "pair": "storjbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/storjbtc"
+    },
+    {
+      "id": 63273,
+      "exchange": "kraken",
+      "pair": "kncbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kncbtc"
+    },
+    {
+      "id": 63274,
+      "exchange": "kraken",
+      "pair": "compusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/compusd"
+    },
+    {
+      "id": 63275,
+      "exchange": "kraken",
+      "pair": "kncusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kncusd"
+    },
+    {
+      "id": 63276,
+      "exchange": "kraken",
+      "pair": "knceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/knceur"
+    },
+    {
+      "id": 63277,
+      "exchange": "kraken",
+      "pair": "kavabtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kavabtc"
+    },
+    {
+      "id": 63278,
+      "exchange": "kraken",
+      "pair": "kavaeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kavaeth"
+    },
+    {
+      "id": 63453,
+      "exchange": "kraken",
+      "pair": "repv2usd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/repv2usd"
+    },
+    {
+      "id": 63454,
+      "exchange": "kraken",
+      "pair": "repv2eur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/repv2eur"
+    },
+    {
+      "id": 63455,
+      "exchange": "kraken",
+      "pair": "repv2btc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/repv2btc"
+    },
+    {
+      "id": 63456,
+      "exchange": "kraken",
+      "pair": "repv2eth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/repv2eth"
+    },
+    {
+      "id": 63657,
+      "exchange": "kraken",
+      "pair": "dotusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dotusd"
+    },
+    {
+      "id": 63658,
+      "exchange": "kraken",
+      "pair": "dotbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dotbtc"
+    },
+    {
+      "id": 63659,
+      "exchange": "kraken",
+      "pair": "doteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/doteur"
+    },
+    {
+      "id": 63660,
+      "exchange": "kraken",
+      "pair": "doteth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/doteth"
+    },
+    {
+      "id": 64781,
+      "exchange": "kraken",
+      "pair": "snxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/snxeur"
+    },
+    {
+      "id": 64782,
+      "exchange": "kraken",
+      "pair": "snxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/snxusd"
+    },
+    {
+      "id": 64783,
+      "exchange": "kraken",
+      "pair": "snxeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/snxeth"
+    },
+    {
+      "id": 64784,
+      "exchange": "kraken",
+      "pair": "ksmeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ksmeur"
+    },
+    {
+      "id": 64785,
+      "exchange": "kraken",
+      "pair": "ksmeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ksmeth"
+    },
+    {
+      "id": 64786,
+      "exchange": "kraken",
+      "pair": "snxbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/snxbtc"
+    },
+    {
+      "id": 64787,
+      "exchange": "kraken",
+      "pair": "crvusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/crvusd"
+    },
+    {
+      "id": 64788,
+      "exchange": "kraken",
+      "pair": "balbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/balbtc"
+    },
+    {
+      "id": 64789,
+      "exchange": "kraken",
+      "pair": "crvbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/crvbtc"
+    },
+    {
+      "id": 64790,
+      "exchange": "kraken",
+      "pair": "crveur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/crveur"
+    },
+    {
+      "id": 64791,
+      "exchange": "kraken",
+      "pair": "baleur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/baleur"
+    },
+    {
+      "id": 64792,
+      "exchange": "kraken",
+      "pair": "balusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/balusd"
+    },
+    {
+      "id": 64793,
+      "exchange": "kraken",
+      "pair": "ksmbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ksmbtc"
+    },
+    {
+      "id": 64794,
+      "exchange": "kraken",
+      "pair": "baleth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/baleth"
+    },
+    {
+      "id": 64795,
+      "exchange": "kraken",
+      "pair": "ksmusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ksmusd"
+    },
+    {
+      "id": 64796,
+      "exchange": "kraken",
+      "pair": "crveth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/crveth"
+    },
+    {
+      "id": 92811,
+      "exchange": "kraken",
+      "pair": "yfiusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/yfiusd"
+    },
+    {
+      "id": 92812,
+      "exchange": "kraken",
+      "pair": "unieth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/unieth"
+    },
+    {
+      "id": 92813,
+      "exchange": "kraken",
+      "pair": "fileur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fileur"
+    },
+    {
+      "id": 92814,
+      "exchange": "kraken",
+      "pair": "adausdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adausdt"
+    },
+    {
+      "id": 92815,
+      "exchange": "kraken",
+      "pair": "dotusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dotusdt"
+    },
+    {
+      "id": 92816,
+      "exchange": "kraken",
+      "pair": "unieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/unieur"
+    },
+    {
+      "id": 92817,
+      "exchange": "kraken",
+      "pair": "eosusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eosusdt"
+    },
+    {
+      "id": 92818,
+      "exchange": "kraken",
+      "pair": "uniusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/uniusd"
+    },
+    {
+      "id": 92819,
+      "exchange": "kraken",
+      "pair": "yfibtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/yfibtc"
+    },
+    {
+      "id": 92820,
+      "exchange": "kraken",
+      "pair": "yfieth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/yfieth"
+    },
+    {
+      "id": 92821,
+      "exchange": "kraken",
+      "pair": "yfieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/yfieur"
+    },
+    {
+      "id": 92822,
+      "exchange": "kraken",
+      "pair": "filusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/filusd"
+    },
+    {
+      "id": 92823,
+      "exchange": "kraken",
+      "pair": "linkusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/linkusdt"
+    },
+    {
+      "id": 92824,
+      "exchange": "kraken",
+      "pair": "filbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/filbtc"
+    },
+    {
+      "id": 92825,
+      "exchange": "kraken",
+      "pair": "fileth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fileth"
+    },
+    {
+      "id": 92826,
+      "exchange": "kraken",
+      "pair": "unibtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/unibtc"
+    },
+    {
+      "id": 136105,
+      "exchange": "kraken",
+      "pair": "bchjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bchjpy"
+    },
+    {
+      "id": 136106,
+      "exchange": "kraken",
+      "pair": "ltcjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ltcjpy"
+    },
+    {
+      "id": 136630,
+      "exchange": "kraken",
+      "pair": "keepeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/keepeur"
+    },
+    {
+      "id": 136631,
+      "exchange": "kraken",
+      "pair": "keepusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/keepusd"
+    },
+    {
+      "id": 136632,
+      "exchange": "kraken",
+      "pair": "anteth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/anteth"
+    },
+    {
+      "id": 136633,
+      "exchange": "kraken",
+      "pair": "keepbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/keepbtc"
+    },
+    {
+      "id": 136634,
+      "exchange": "kraken",
+      "pair": "keepeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/keepeth"
+    },
+    {
+      "id": 136635,
+      "exchange": "kraken",
+      "pair": "antusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/antusd"
+    },
+    {
+      "id": 136636,
+      "exchange": "kraken",
+      "pair": "anteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/anteur"
+    },
+    {
+      "id": 136637,
+      "exchange": "kraken",
+      "pair": "antbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/antbtc"
+    },
+    {
+      "id": 136638,
+      "exchange": "kraken",
+      "pair": "tbtcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tbtcusd"
+    },
+    {
+      "id": 136639,
+      "exchange": "kraken",
+      "pair": "tbtcbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tbtcbtc"
+    },
+    {
+      "id": 136640,
+      "exchange": "kraken",
+      "pair": "tbtceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tbtceur"
+    },
+    {
+      "id": 136641,
+      "exchange": "kraken",
+      "pair": "tbtceth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tbtceth"
+    },
+    {
+      "id": 137209,
+      "exchange": "kraken",
+      "pair": "aaveeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aaveeth"
+    },
+    {
+      "id": 137210,
+      "exchange": "kraken",
+      "pair": "manabtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/manabtc"
+    },
+    {
+      "id": 137211,
+      "exchange": "kraken",
+      "pair": "manaeth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/manaeth"
+    },
+    {
+      "id": 137212,
+      "exchange": "kraken",
+      "pair": "aaveusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aaveusd"
+    },
+    {
+      "id": 137213,
+      "exchange": "kraken",
+      "pair": "manausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/manausd"
+    },
+    {
+      "id": 137214,
+      "exchange": "kraken",
+      "pair": "eth2eth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/eth2eth"
+    },
+    {
+      "id": 137215,
+      "exchange": "kraken",
+      "pair": "aaveeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aaveeur"
+    },
+    {
+      "id": 137216,
+      "exchange": "kraken",
+      "pair": "manaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/manaeur"
+    },
+    {
+      "id": 137217,
+      "exchange": "kraken",
+      "pair": "aavebtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aavebtc"
+    },
+    {
+      "id": 137306,
+      "exchange": "kraken",
+      "pair": "aavegbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aavegbp"
+    },
+    {
+      "id": 137389,
+      "exchange": "kraken",
+      "pair": "grteth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/grteth"
+    },
+    {
+      "id": 137390,
+      "exchange": "kraken",
+      "pair": "grtbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/grtbtc"
+    },
+    {
+      "id": 137391,
+      "exchange": "kraken",
+      "pair": "grtusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/grtusd"
+    },
+    {
+      "id": 137392,
+      "exchange": "kraken",
+      "pair": "grteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/grteur"
+    },
+    {
+      "id": 138061,
+      "exchange": "kraken",
+      "pair": "ksmaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ksmaud"
+    },
+    {
+      "id": 138062,
+      "exchange": "kraken",
+      "pair": "linkaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/linkaud"
+    },
+    {
+      "id": 138063,
+      "exchange": "kraken",
+      "pair": "xtzaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xtzaud"
+    },
+    {
+      "id": 138064,
+      "exchange": "kraken",
+      "pair": "atomgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atomgbp"
+    },
+    {
+      "id": 138065,
+      "exchange": "kraken",
+      "pair": "algogbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/algogbp"
+    },
+    {
+      "id": 138066,
+      "exchange": "kraken",
+      "pair": "ksmgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ksmgbp"
+    },
+    {
+      "id": 138067,
+      "exchange": "kraken",
+      "pair": "grtgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/grtgbp"
+    },
+    {
+      "id": 138068,
+      "exchange": "kraken",
+      "pair": "adaaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adaaud"
+    },
+    {
+      "id": 138069,
+      "exchange": "kraken",
+      "pair": "xlmaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xlmaud"
+    },
+    {
+      "id": 138070,
+      "exchange": "kraken",
+      "pair": "snxaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/snxaud"
+    },
+    {
+      "id": 138071,
+      "exchange": "kraken",
+      "pair": "dotaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dotaud"
+    },
+    {
+      "id": 138072,
+      "exchange": "kraken",
+      "pair": "yfiaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/yfiaud"
+    },
+    {
+      "id": 138073,
+      "exchange": "kraken",
+      "pair": "snxgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/snxgbp"
+    },
+    {
+      "id": 138074,
+      "exchange": "kraken",
+      "pair": "grtaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/grtaud"
+    },
+    {
+      "id": 138075,
+      "exchange": "kraken",
+      "pair": "atomaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atomaud"
+    },
+    {
+      "id": 138076,
+      "exchange": "kraken",
+      "pair": "dotgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dotgbp"
+    },
+    {
+      "id": 138077,
+      "exchange": "kraken",
+      "pair": "adagbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adagbp"
+    },
+    {
+      "id": 138078,
+      "exchange": "kraken",
+      "pair": "filgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/filgbp"
+    },
+    {
+      "id": 138079,
+      "exchange": "kraken",
+      "pair": "aaveaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aaveaud"
+    },
+    {
+      "id": 138080,
+      "exchange": "kraken",
+      "pair": "filaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/filaud"
+    },
+    {
+      "id": 138081,
+      "exchange": "kraken",
+      "pair": "linkgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/linkgbp"
+    },
+    {
+      "id": 138082,
+      "exchange": "kraken",
+      "pair": "usdcaud",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdcaud"
+    },
+    {
+      "id": 138083,
+      "exchange": "kraken",
+      "pair": "yfigbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/yfigbp"
+    },
+    {
+      "id": 138084,
+      "exchange": "kraken",
+      "pair": "xlmgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xlmgbp"
+    },
+    {
+      "id": 138085,
+      "exchange": "kraken",
+      "pair": "usdcgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdcgbp"
+    },
+    {
+      "id": 138086,
+      "exchange": "kraken",
+      "pair": "xtzgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xtzgbp"
+    },
+    {
+      "id": 138209,
+      "exchange": "kraken",
+      "pair": "floweur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/floweur"
+    },
+    {
+      "id": 138210,
+      "exchange": "kraken",
+      "pair": "flowgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/flowgbp"
+    },
+    {
+      "id": 138211,
+      "exchange": "kraken",
+      "pair": "flowusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/flowusd"
+    },
+    {
+      "id": 138212,
+      "exchange": "kraken",
+      "pair": "flowbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/flowbtc"
+    },
+    {
+      "id": 138213,
+      "exchange": "kraken",
+      "pair": "floweth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/floweth"
+    },
+    {
+      "id": 138917,
+      "exchange": "kraken",
+      "pair": "ewtbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ewtbtc"
+    },
+    {
+      "id": 138918,
+      "exchange": "kraken",
+      "pair": "oceaneur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oceaneur"
+    },
+    {
+      "id": 138919,
+      "exchange": "kraken",
+      "pair": "oceanbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oceanbtc"
+    },
+    {
+      "id": 138920,
+      "exchange": "kraken",
+      "pair": "ewtusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ewtusd"
+    },
+    {
+      "id": 138921,
+      "exchange": "kraken",
+      "pair": "ewteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ewteur"
+    },
+    {
+      "id": 138922,
+      "exchange": "kraken",
+      "pair": "ewtgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ewtgbp"
+    },
+    {
+      "id": 138923,
+      "exchange": "kraken",
+      "pair": "oceangbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oceangbp"
+    },
+    {
+      "id": 138924,
+      "exchange": "kraken",
+      "pair": "oceanusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oceanusd"
+    },
+    {
+      "id": 205085,
+      "exchange": "kraken",
+      "pair": "ksmdot",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ksmdot"
+    },
+    {
+      "id": 205086,
+      "exchange": "kraken",
+      "pair": "dogeusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dogeusdt"
+    },
+    {
+      "id": 342747,
+      "exchange": "kraken",
+      "pair": "zrxbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/zrxbtc"
+    },
+    {
+      "id": 342748,
+      "exchange": "kraken",
+      "pair": "rengbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rengbp"
+    },
+    {
+      "id": 342749,
+      "exchange": "kraken",
+      "pair": "zrxgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/zrxgbp"
+    },
+    {
+      "id": 342750,
+      "exchange": "kraken",
+      "pair": "mkrgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mkrgbp"
+    },
+    {
+      "id": 342751,
+      "exchange": "kraken",
+      "pair": "reneur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/reneur"
+    },
+    {
+      "id": 342752,
+      "exchange": "kraken",
+      "pair": "zrxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/zrxusd"
+    },
+    {
+      "id": 342753,
+      "exchange": "kraken",
+      "pair": "mkrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mkrusd"
+    },
+    {
+      "id": 342754,
+      "exchange": "kraken",
+      "pair": "renbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/renbtc"
+    },
+    {
+      "id": 342755,
+      "exchange": "kraken",
+      "pair": "zrxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/zrxeur"
+    },
+    {
+      "id": 342756,
+      "exchange": "kraken",
+      "pair": "mkreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mkreur"
+    },
+    {
+      "id": 342757,
+      "exchange": "kraken",
+      "pair": "mkrbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mkrbtc"
+    },
+    {
+      "id": 342758,
+      "exchange": "kraken",
+      "pair": "renusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/renusd"
+    },
+    {
+      "id": 351402,
+      "exchange": "kraken",
+      "pair": "maticbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/maticbtc"
+    },
+    {
+      "id": 351403,
+      "exchange": "kraken",
+      "pair": "rarieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rarieur"
+    },
+    {
+      "id": 351404,
+      "exchange": "kraken",
+      "pair": "ghstusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ghstusd"
+    },
+    {
+      "id": 351405,
+      "exchange": "kraken",
+      "pair": "ghstbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ghstbtc"
+    },
+    {
+      "id": 351406,
+      "exchange": "kraken",
+      "pair": "maticgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/maticgbp"
+    },
+    {
+      "id": 351407,
+      "exchange": "kraken",
+      "pair": "rarigbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rarigbp"
+    },
+    {
+      "id": 351408,
+      "exchange": "kraken",
+      "pair": "maticeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/maticeur"
+    },
+    {
+      "id": 351409,
+      "exchange": "kraken",
+      "pair": "ghstgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ghstgbp"
+    },
+    {
+      "id": 351410,
+      "exchange": "kraken",
+      "pair": "maticusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/maticusd"
+    },
+    {
+      "id": 351411,
+      "exchange": "kraken",
+      "pair": "ghsteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ghsteur"
+    },
+    {
+      "id": 351412,
+      "exchange": "kraken",
+      "pair": "rariusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rariusd"
+    },
+    {
+      "id": 351413,
+      "exchange": "kraken",
+      "pair": "raribtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/raribtc"
+    },
+    {
+      "id": 360088,
+      "exchange": "kraken",
+      "pair": "lptgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lptgbp"
+    },
+    {
+      "id": 360089,
+      "exchange": "kraken",
+      "pair": "sandgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sandgbp"
+    },
+    {
+      "id": 360090,
+      "exchange": "kraken",
+      "pair": "enjgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/enjgbp"
+    },
+    {
+      "id": 360091,
+      "exchange": "kraken",
+      "pair": "enjeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/enjeur"
+    },
+    {
+      "id": 360092,
+      "exchange": "kraken",
+      "pair": "lptbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lptbtc"
+    },
+    {
+      "id": 360093,
+      "exchange": "kraken",
+      "pair": "sandbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sandbtc"
+    },
+    {
+      "id": 360094,
+      "exchange": "kraken",
+      "pair": "lpteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lpteur"
+    },
+    {
+      "id": 360095,
+      "exchange": "kraken",
+      "pair": "sandusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sandusd"
+    },
+    {
+      "id": 360096,
+      "exchange": "kraken",
+      "pair": "sandeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sandeur"
+    },
+    {
+      "id": 360097,
+      "exchange": "kraken",
+      "pair": "enjusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/enjusd"
+    },
+    {
+      "id": 360098,
+      "exchange": "kraken",
+      "pair": "enjbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/enjbtc"
+    },
+    {
+      "id": 360099,
+      "exchange": "kraken",
+      "pair": "lptusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lptusd"
+    },
+    {
+      "id": 371629,
+      "exchange": "kraken",
+      "pair": "ankrbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ankrbtc"
+    },
+    {
+      "id": 371630,
+      "exchange": "kraken",
+      "pair": "ankreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ankreur"
+    },
+    {
+      "id": 371631,
+      "exchange": "kraken",
+      "pair": "sushibtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sushibtc"
+    },
+    {
+      "id": 371632,
+      "exchange": "kraken",
+      "pair": "ankrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ankrusd"
+    },
+    {
+      "id": 371633,
+      "exchange": "kraken",
+      "pair": "bntusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bntusd"
+    },
+    {
+      "id": 371634,
+      "exchange": "kraken",
+      "pair": "sushigbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sushigbp"
+    },
+    {
+      "id": 371635,
+      "exchange": "kraken",
+      "pair": "sushieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sushieur"
+    },
+    {
+      "id": 371636,
+      "exchange": "kraken",
+      "pair": "ankrgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ankrgbp"
+    },
+    {
+      "id": 371637,
+      "exchange": "kraken",
+      "pair": "bntgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bntgbp"
+    },
+    {
+      "id": 371638,
+      "exchange": "kraken",
+      "pair": "bnteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bnteur"
+    },
+    {
+      "id": 371639,
+      "exchange": "kraken",
+      "pair": "sushiusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sushiusd"
+    },
+    {
+      "id": 371640,
+      "exchange": "kraken",
+      "pair": "bntbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bntbtc"
+    },
+    {
+      "id": 410821,
+      "exchange": "kraken",
+      "pair": "minaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/minaeur"
+    },
+    {
+      "id": 410822,
+      "exchange": "kraken",
+      "pair": "minausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/minausd"
+    },
+    {
+      "id": 410823,
+      "exchange": "kraken",
+      "pair": "minabtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/minabtc"
+    },
+    {
+      "id": 410824,
+      "exchange": "kraken",
+      "pair": "minagbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/minagbp"
+    },
+    {
+      "id": 504558,
+      "exchange": "kraken",
+      "pair": "solgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/solgbp"
+    },
+    {
+      "id": 504559,
+      "exchange": "kraken",
+      "pair": "srmeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/srmeur"
+    },
+    {
+      "id": 504560,
+      "exchange": "kraken",
+      "pair": "solusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/solusd"
+    },
+    {
+      "id": 504561,
+      "exchange": "kraken",
+      "pair": "srmgbp",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/srmgbp"
+    },
+    {
+      "id": 504562,
+      "exchange": "kraken",
+      "pair": "solbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/solbtc"
+    },
+    {
+      "id": 504563,
+      "exchange": "kraken",
+      "pair": "srmusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/srmusd"
+    },
+    {
+      "id": 504564,
+      "exchange": "kraken",
+      "pair": "soleur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/soleur"
+    },
+    {
+      "id": 504565,
+      "exchange": "kraken",
+      "pair": "srmbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/srmbtc"
+    },
+    {
+      "id": 582358,
+      "exchange": "kraken",
+      "pair": "cqtusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cqtusd"
+    },
+    {
+      "id": 582359,
+      "exchange": "kraken",
+      "pair": "cqteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cqteur"
+    },
+    {
+      "id": 602751,
+      "exchange": "kraken",
+      "pair": "perpeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/perpeur"
+    },
+    {
+      "id": 602752,
+      "exchange": "kraken",
+      "pair": "chzusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/chzusd"
+    },
+    {
+      "id": 602753,
+      "exchange": "kraken",
+      "pair": "axseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/axseur"
+    },
+    {
+      "id": 602754,
+      "exchange": "kraken",
+      "pair": "ogneur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ogneur"
+    },
+    {
+      "id": 602755,
+      "exchange": "kraken",
+      "pair": "chzeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/chzeur"
+    },
+    {
+      "id": 602756,
+      "exchange": "kraken",
+      "pair": "axsusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/axsusd"
+    },
+    {
+      "id": 602757,
+      "exchange": "kraken",
+      "pair": "perpusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/perpusd"
+    },
+    {
+      "id": 602758,
+      "exchange": "kraken",
+      "pair": "ognusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ognusd"
+    },
+    {
+      "id": 622984,
+      "exchange": "kraken",
+      "pair": "kareur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kareur"
+    },
+    {
+      "id": 622985,
+      "exchange": "kraken",
+      "pair": "karusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/karusd"
+    },
+    {
+      "id": 663345,
+      "exchange": "kraken",
+      "pair": "ctsiusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ctsiusd"
+    },
+    {
+      "id": 663346,
+      "exchange": "kraken",
+      "pair": "wbtcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/wbtcusd"
+    },
+    {
+      "id": 663347,
+      "exchange": "kraken",
+      "pair": "lrcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lrcusd"
+    },
+    {
+      "id": 663348,
+      "exchange": "kraken",
+      "pair": "wbtceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/wbtceur"
+    },
+    {
+      "id": 663349,
+      "exchange": "kraken",
+      "pair": "badgereur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/badgereur"
+    },
+    {
+      "id": 663350,
+      "exchange": "kraken",
+      "pair": "lrceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lrceur"
+    },
+    {
+      "id": 663351,
+      "exchange": "kraken",
+      "pair": "badgerusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/badgerusd"
+    },
+    {
+      "id": 663352,
+      "exchange": "kraken",
+      "pair": "ctsieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ctsieur"
+    },
+    {
+      "id": 683581,
+      "exchange": "kraken",
+      "pair": "bandusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bandusd"
+    },
+    {
+      "id": 683582,
+      "exchange": "kraken",
+      "pair": "mireur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mireur"
+    },
+    {
+      "id": 683583,
+      "exchange": "kraken",
+      "pair": "injusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/injusd"
+    },
+    {
+      "id": 683584,
+      "exchange": "kraken",
+      "pair": "1incheur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/1incheur"
+    },
+    {
+      "id": 683585,
+      "exchange": "kraken",
+      "pair": "bandeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bandeur"
+    },
+    {
+      "id": 683586,
+      "exchange": "kraken",
+      "pair": "injeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/injeur"
+    },
+    {
+      "id": 683587,
+      "exchange": "kraken",
+      "pair": "1inchusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/1inchusd"
+    },
+    {
+      "id": 683588,
+      "exchange": "kraken",
+      "pair": "mirusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mirusd"
+    },
+    {
+      "id": 724840,
+      "exchange": "kraken",
+      "pair": "wbtcbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/wbtcbtc"
+    },
+    {
+      "id": 730156,
+      "exchange": "kraken",
+      "pair": "movreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/movreur"
+    },
+    {
+      "id": 730157,
+      "exchange": "kraken",
+      "pair": "movrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/movrusd"
+    },
+    {
+      "id": 750073,
+      "exchange": "kraken",
+      "pair": "sdneur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sdneur"
+    },
+    {
+      "id": 750074,
+      "exchange": "kraken",
+      "pair": "sdnusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sdnusd"
+    },
+    {
+      "id": 784662,
+      "exchange": "kraken",
+      "pair": "dydxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dydxeur"
+    },
+    {
+      "id": 784663,
+      "exchange": "kraken",
+      "pair": "dydxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dydxusd"
+    },
+    {
+      "id": 826093,
+      "exchange": "kraken",
+      "pair": "rayusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rayusd"
+    },
+    {
+      "id": 826094,
+      "exchange": "kraken",
+      "pair": "oxyeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oxyeur"
+    },
+    {
+      "id": 826095,
+      "exchange": "kraken",
+      "pair": "oxyusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/oxyusd"
+    },
+    {
+      "id": 826096,
+      "exchange": "kraken",
+      "pair": "rayeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rayeur"
+    },
+    {
+      "id": 855853,
+      "exchange": "kraken",
+      "pair": "phausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/phausd"
+    },
+    {
+      "id": 855854,
+      "exchange": "kraken",
+      "pair": "phaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/phaeur"
+    },
+    {
+      "id": 907626,
+      "exchange": "kraken",
+      "pair": "bnceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bnceur"
+    },
+    {
+      "id": 907627,
+      "exchange": "kraken",
+      "pair": "bncusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bncusd"
+    },
+    {
+      "id": 1014120,
+      "exchange": "kraken",
+      "pair": "shibusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/shibusd"
+    },
+    {
+      "id": 1014121,
+      "exchange": "kraken",
+      "pair": "shibeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/shibeur"
+    },
+    {
+      "id": 1014604,
+      "exchange": "kraken",
+      "pair": "kiltusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kiltusd"
+    },
+    {
+      "id": 1014605,
+      "exchange": "kraken",
+      "pair": "kilteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kilteur"
+    },
+    {
+      "id": 1060568,
+      "exchange": "kraken",
+      "pair": "lunausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lunausd"
+    },
+    {
+      "id": 1060569,
+      "exchange": "kraken",
+      "pair": "lunaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lunaeur"
+    },
+    {
+      "id": 1075330,
+      "exchange": "kraken",
+      "pair": "avaxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/avaxeur"
+    },
+    {
+      "id": 1075331,
+      "exchange": "kraken",
+      "pair": "avaxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/avaxusd"
+    },
+    {
+      "id": 2186650,
+      "exchange": "kraken",
+      "pair": "kinteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kinteur"
+    },
+    {
+      "id": 2186651,
+      "exchange": "kraken",
+      "pair": "kintusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kintusd"
+    },
+    {
+      "id": 2525039,
+      "exchange": "kraken",
+      "pair": "linkjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/linkjpy"
+    },
+    {
+      "id": 2525040,
+      "exchange": "kraken",
+      "pair": "batjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/batjpy"
+    },
+    {
+      "id": 2525041,
+      "exchange": "kraken",
+      "pair": "omgjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/omgjpy"
+    },
+    {
+      "id": 2535601,
+      "exchange": "kraken",
+      "pair": "glmreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/glmreur"
+    },
+    {
+      "id": 2535602,
+      "exchange": "kraken",
+      "pair": "glmrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/glmrusd"
+    },
+    {
+      "id": 2605648,
+      "exchange": "kraken",
+      "pair": "astreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/astreur"
+    },
+    {
+      "id": 2605649,
+      "exchange": "kraken",
+      "pair": "astrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/astrusd"
+    },
+    {
+      "id": 2629575,
+      "exchange": "kraken",
+      "pair": "acausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/acausd"
+    },
+    {
+      "id": 2629576,
+      "exchange": "kraken",
+      "pair": "acaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/acaeur"
+    },
+    {
+      "id": 2634894,
+      "exchange": "kraken",
+      "pair": "atlaseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atlaseur"
+    },
+    {
+      "id": 2634895,
+      "exchange": "kraken",
+      "pair": "kinusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kinusd"
+    },
+    {
+      "id": 2634896,
+      "exchange": "kraken",
+      "pair": "sbrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sbrusd"
+    },
+    {
+      "id": 2634897,
+      "exchange": "kraken",
+      "pair": "mngoeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mngoeur"
+    },
+    {
+      "id": 2634898,
+      "exchange": "kraken",
+      "pair": "fidaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fidaeur"
+    },
+    {
+      "id": 2634899,
+      "exchange": "kraken",
+      "pair": "kineur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kineur"
+    },
+    {
+      "id": 2634900,
+      "exchange": "kraken",
+      "pair": "orcaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/orcaeur"
+    },
+    {
+      "id": 2634901,
+      "exchange": "kraken",
+      "pair": "polisusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/polisusd"
+    },
+    {
+      "id": 2634902,
+      "exchange": "kraken",
+      "pair": "sbreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sbreur"
+    },
+    {
+      "id": 2634903,
+      "exchange": "kraken",
+      "pair": "poliseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/poliseur"
+    },
+    {
+      "id": 2634904,
+      "exchange": "kraken",
+      "pair": "mngousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mngousd"
+    },
+    {
+      "id": 2634905,
+      "exchange": "kraken",
+      "pair": "atlasusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atlasusd"
+    },
+    {
+      "id": 2634906,
+      "exchange": "kraken",
+      "pair": "fidausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fidausd"
+    },
+    {
+      "id": 2634907,
+      "exchange": "kraken",
+      "pair": "stepeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/stepeur"
+    },
+    {
+      "id": 2634908,
+      "exchange": "kraken",
+      "pair": "stepusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/stepusd"
+    },
+    {
+      "id": 2634909,
+      "exchange": "kraken",
+      "pair": "orcausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/orcausd"
+    },
+    {
+      "id": 2648353,
+      "exchange": "kraken",
+      "pair": "aktusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aktusd"
+    },
+    {
+      "id": 2648354,
+      "exchange": "kraken",
+      "pair": "akteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/akteur"
+    },
+    {
+      "id": 2658796,
+      "exchange": "kraken",
+      "pair": "aireur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aireur"
+    },
+    {
+      "id": 2658797,
+      "exchange": "kraken",
+      "pair": "airusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/airusd"
+    },
+    {
+      "id": 2673816,
+      "exchange": "kraken",
+      "pair": "usteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usteur"
+    },
+    {
+      "id": 2673817,
+      "exchange": "kraken",
+      "pair": "ustusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ustusdt"
+    },
+    {
+      "id": 2673818,
+      "exchange": "kraken",
+      "pair": "ustusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ustusd"
+    },
+    {
+      "id": 2673819,
+      "exchange": "kraken",
+      "pair": "ustusdc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ustusdc"
+    },
+    {
+      "id": 2692069,
+      "exchange": "kraken",
+      "pair": "sgbusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sgbusd"
+    },
+    {
+      "id": 2692070,
+      "exchange": "kraken",
+      "pair": "sgbeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/sgbeur"
+    },
+    {
+      "id": 2698255,
+      "exchange": "kraken",
+      "pair": "pstakeeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/pstakeeur"
+    },
+    {
+      "id": 2698256,
+      "exchange": "kraken",
+      "pair": "pstakeusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/pstakeusd"
+    },
+    {
+      "id": 2702091,
+      "exchange": "kraken",
+      "pair": "enseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/enseur"
+    },
+    {
+      "id": 2702092,
+      "exchange": "kraken",
+      "pair": "audioeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/audioeur"
+    },
+    {
+      "id": 2702093,
+      "exchange": "kraken",
+      "pair": "ensusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ensusd"
+    },
+    {
+      "id": 2702095,
+      "exchange": "kraken",
+      "pair": "bicoeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bicoeur"
+    },
+    {
+      "id": 2702096,
+      "exchange": "kraken",
+      "pair": "audiousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/audiousd"
+    },
+    {
+      "id": 2702098,
+      "exchange": "kraken",
+      "pair": "aliceusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aliceusd"
+    },
+    {
+      "id": 2702099,
+      "exchange": "kraken",
+      "pair": "mcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mcusd"
+    },
+    {
+      "id": 2702100,
+      "exchange": "kraken",
+      "pair": "woousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/woousd"
+    },
+    {
+      "id": 2702101,
+      "exchange": "kraken",
+      "pair": "galausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/galausd"
+    },
+    {
+      "id": 2702102,
+      "exchange": "kraken",
+      "pair": "galaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/galaeur"
+    },
+    {
+      "id": 2702103,
+      "exchange": "kraken",
+      "pair": "aliceeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aliceeur"
+    },
+    {
+      "id": 2702104,
+      "exchange": "kraken",
+      "pair": "mceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mceur"
+    },
+    {
+      "id": 2702105,
+      "exchange": "kraken",
+      "pair": "bicousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bicousd"
+    },
+    {
+      "id": 2702106,
+      "exchange": "kraken",
+      "pair": "yggeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/yggeur"
+    },
+    {
+      "id": 2702107,
+      "exchange": "kraken",
+      "pair": "wooeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/wooeur"
+    },
+    {
+      "id": 2702108,
+      "exchange": "kraken",
+      "pair": "yggusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/yggusd"
+    },
+    {
+      "id": 2702109,
+      "exchange": "kraken",
+      "pair": "kp3reur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kp3reur"
+    },
+    {
+      "id": 2702110,
+      "exchange": "kraken",
+      "pair": "kp3rusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/kp3rusd"
+    },
+    {
+      "id": 2702221,
+      "exchange": "kraken",
+      "pair": "imxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/imxeur"
+    },
+    {
+      "id": 2702222,
+      "exchange": "kraken",
+      "pair": "imxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/imxusd"
+    },
+    {
+      "id": 2772905,
+      "exchange": "kraken",
+      "pair": "apeusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/apeusd"
+    },
+    {
+      "id": 2772906,
+      "exchange": "kraken",
+      "pair": "apeeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/apeeur"
+    },
+    {
+      "id": 2776758,
+      "exchange": "kraken",
+      "pair": "icpeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/icpeur"
+    },
+    {
+      "id": 2776759,
+      "exchange": "kraken",
+      "pair": "icpusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/icpusd"
+    },
+    {
+      "id": 2798836,
+      "exchange": "kraken",
+      "pair": "xrtusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrtusd"
+    },
+    {
+      "id": 2798837,
+      "exchange": "kraken",
+      "pair": "xrteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xrteur"
+    },
+    {
+      "id": 2816167,
+      "exchange": "kraken",
+      "pair": "powrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/powrusd"
+    },
+    {
+      "id": 2816168,
+      "exchange": "kraken",
+      "pair": "rbcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rbcusd"
+    },
+    {
+      "id": 2816169,
+      "exchange": "kraken",
+      "pair": "rareeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rareeur"
+    },
+    {
+      "id": 2816170,
+      "exchange": "kraken",
+      "pair": "cvxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cvxusd"
+    },
+    {
+      "id": 2816171,
+      "exchange": "kraken",
+      "pair": "tokeeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tokeeur"
+    },
+    {
+      "id": 2816172,
+      "exchange": "kraken",
+      "pair": "fxseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fxseur"
+    },
+    {
+      "id": 2816173,
+      "exchange": "kraken",
+      "pair": "tokeusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tokeusd"
+    },
+    {
+      "id": 2816174,
+      "exchange": "kraken",
+      "pair": "fxsusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fxsusd"
+    },
+    {
+      "id": 2816175,
+      "exchange": "kraken",
+      "pair": "multiusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/multiusd"
+    },
+    {
+      "id": 2816176,
+      "exchange": "kraken",
+      "pair": "rbceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rbceur"
+    },
+    {
+      "id": 2816177,
+      "exchange": "kraken",
+      "pair": "qntusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/qntusd"
+    },
+    {
+      "id": 2816178,
+      "exchange": "kraken",
+      "pair": "powreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/powreur"
+    },
+    {
+      "id": 2816179,
+      "exchange": "kraken",
+      "pair": "plaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/plaeur"
+    },
+    {
+      "id": 2816180,
+      "exchange": "kraken",
+      "pair": "rareusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rareusd"
+    },
+    {
+      "id": 2816181,
+      "exchange": "kraken",
+      "pair": "cvxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cvxeur"
+    },
+    {
+      "id": 2816182,
+      "exchange": "kraken",
+      "pair": "qnteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/qnteur"
+    },
+    {
+      "id": 2816183,
+      "exchange": "kraken",
+      "pair": "plausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/plausd"
+    },
+    {
+      "id": 2816184,
+      "exchange": "kraken",
+      "pair": "multieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/multieur"
+    },
+    {
+      "id": 2826702,
+      "exchange": "kraken",
+      "pair": "bondeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bondeur"
+    },
+    {
+      "id": 2826703,
+      "exchange": "kraken",
+      "pair": "alcxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/alcxeur"
+    },
+    {
+      "id": 2826704,
+      "exchange": "kraken",
+      "pair": "tribeusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tribeusd"
+    },
+    {
+      "id": 2826705,
+      "exchange": "kraken",
+      "pair": "tribeeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tribeeur"
+    },
+    {
+      "id": 2826706,
+      "exchange": "kraken",
+      "pair": "maskeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/maskeur"
+    },
+    {
+      "id": 2826707,
+      "exchange": "kraken",
+      "pair": "maskusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/maskusd"
+    },
+    {
+      "id": 2826708,
+      "exchange": "kraken",
+      "pair": "umaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/umaeur"
+    },
+    {
+      "id": 2826709,
+      "exchange": "kraken",
+      "pair": "spellusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/spellusd"
+    },
+    {
+      "id": 2826710,
+      "exchange": "kraken",
+      "pair": "rndrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rndrusd"
+    },
+    {
+      "id": 2826711,
+      "exchange": "kraken",
+      "pair": "jasmyeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/jasmyeur"
+    },
+    {
+      "id": 2826712,
+      "exchange": "kraken",
+      "pair": "bondusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bondusd"
+    },
+    {
+      "id": 2826713,
+      "exchange": "kraken",
+      "pair": "jasmyusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/jasmyusd"
+    },
+    {
+      "id": 2826714,
+      "exchange": "kraken",
+      "pair": "spelleur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/spelleur"
+    },
+    {
+      "id": 2826715,
+      "exchange": "kraken",
+      "pair": "alcxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/alcxusd"
+    },
+    {
+      "id": 2826716,
+      "exchange": "kraken",
+      "pair": "rndreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rndreur"
+    },
+    {
+      "id": 2826717,
+      "exchange": "kraken",
+      "pair": "umausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/umausd"
+    },
+    {
+      "id": 2826985,
+      "exchange": "kraken",
+      "pair": "scrtusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/scrtusd"
+    },
+    {
+      "id": 2826986,
+      "exchange": "kraken",
+      "pair": "scrteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/scrteur"
+    },
+    {
+      "id": 2896527,
+      "exchange": "kraken",
+      "pair": "dotjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dotjpy"
+    },
+    {
+      "id": 2913928,
+      "exchange": "kraken",
+      "pair": "enjjpy",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/enjjpy"
+    },
+    {
+      "id": 2921977,
+      "exchange": "kraken",
+      "pair": "samousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/samousd"
+    },
+    {
+      "id": 2921978,
+      "exchange": "kraken",
+      "pair": "cfgusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cfgusd"
+    },
+    {
+      "id": 2921979,
+      "exchange": "kraken",
+      "pair": "gmteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gmteur"
+    },
+    {
+      "id": 2921980,
+      "exchange": "kraken",
+      "pair": "garieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/garieur"
+    },
+    {
+      "id": 2921981,
+      "exchange": "kraken",
+      "pair": "cfgeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cfgeur"
+    },
+    {
+      "id": 2921982,
+      "exchange": "kraken",
+      "pair": "msoleur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/msoleur"
+    },
+    {
+      "id": 2921983,
+      "exchange": "kraken",
+      "pair": "gariusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gariusd"
+    },
+    {
+      "id": 2921984,
+      "exchange": "kraken",
+      "pair": "msolusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/msolusd"
+    },
+    {
+      "id": 2921985,
+      "exchange": "kraken",
+      "pair": "gmtusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gmtusd"
+    },
+    {
+      "id": 2921986,
+      "exchange": "kraken",
+      "pair": "samoeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/samoeur"
+    },
+    {
+      "id": 2922186,
+      "exchange": "kraken",
+      "pair": "gsteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gsteur"
+    },
+    {
+      "id": 2922187,
+      "exchange": "kraken",
+      "pair": "gstusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gstusd"
+    },
+    {
+      "id": 2935667,
+      "exchange": "kraken",
+      "pair": "nymusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nymusd"
+    },
+    {
+      "id": 2935668,
+      "exchange": "kraken",
+      "pair": "nymeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nymeur"
+    },
+    {
+      "id": 2937981,
+      "exchange": "kraken",
+      "pair": "agldusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/agldusd"
+    },
+    {
+      "id": 2937982,
+      "exchange": "kraken",
+      "pair": "ldousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ldousd"
+    },
+    {
+      "id": 2937983,
+      "exchange": "kraken",
+      "pair": "rookeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rookeur"
+    },
+    {
+      "id": 2937984,
+      "exchange": "kraken",
+      "pair": "nmrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nmrusd"
+    },
+    {
+      "id": 2937985,
+      "exchange": "kraken",
+      "pair": "ldoeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ldoeur"
+    },
+    {
+      "id": 2937986,
+      "exchange": "kraken",
+      "pair": "api3eur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/api3eur"
+    },
+    {
+      "id": 2937987,
+      "exchange": "kraken",
+      "pair": "agldeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/agldeur"
+    },
+    {
+      "id": 2937988,
+      "exchange": "kraken",
+      "pair": "teur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/teur"
+    },
+    {
+      "id": 2937989,
+      "exchange": "kraken",
+      "pair": "nmreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nmreur"
+    },
+    {
+      "id": 2937990,
+      "exchange": "kraken",
+      "pair": "rookusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rookusd"
+    },
+    {
+      "id": 2937991,
+      "exchange": "kraken",
+      "pair": "rlcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rlcusd"
+    },
+    {
+      "id": 2937992,
+      "exchange": "kraken",
+      "pair": "api3usd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/api3usd"
+    },
+    {
+      "id": 2937993,
+      "exchange": "kraken",
+      "pair": "rlceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rlceur"
+    },
+    {
+      "id": 2937994,
+      "exchange": "kraken",
+      "pair": "tusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tusd"
+    },
+    {
+      "id": 2940739,
+      "exchange": "kraken",
+      "pair": "runeeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/runeeur"
+    },
+    {
+      "id": 2940740,
+      "exchange": "kraken",
+      "pair": "feteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/feteur"
+    },
+    {
+      "id": 2940741,
+      "exchange": "kraken",
+      "pair": "fetusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fetusd"
+    },
+    {
+      "id": 2940742,
+      "exchange": "kraken",
+      "pair": "runeusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/runeusd"
+    },
+    {
+      "id": 2961779,
+      "exchange": "kraken",
+      "pair": "radusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/radusd"
+    },
+    {
+      "id": 2961780,
+      "exchange": "kraken",
+      "pair": "supereur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/supereur"
+    },
+    {
+      "id": 2961781,
+      "exchange": "kraken",
+      "pair": "cvcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cvcusd"
+    },
+    {
+      "id": 2961782,
+      "exchange": "kraken",
+      "pair": "superusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/superusd"
+    },
+    {
+      "id": 2961783,
+      "exchange": "kraken",
+      "pair": "cvceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cvceur"
+    },
+    {
+      "id": 2961784,
+      "exchange": "kraken",
+      "pair": "radeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/radeur"
+    },
+    {
+      "id": 2988066,
+      "exchange": "kraken",
+      "pair": "luna2usd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/luna2usd"
+    },
+    {
+      "id": 2988067,
+      "exchange": "kraken",
+      "pair": "luna2eur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/luna2eur"
+    },
+    {
+      "id": 2997590,
+      "exchange": "kraken",
+      "pair": "achusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/achusd"
+    },
+    {
+      "id": 2997591,
+      "exchange": "kraken",
+      "pair": "reqeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/reqeur"
+    },
+    {
+      "id": 2997592,
+      "exchange": "kraken",
+      "pair": "requsd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/requsd"
+    },
+    {
+      "id": 2997593,
+      "exchange": "kraken",
+      "pair": "idexeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/idexeur"
+    },
+    {
+      "id": 2997594,
+      "exchange": "kraken",
+      "pair": "idexusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/idexusd"
+    },
+    {
+      "id": 2997595,
+      "exchange": "kraken",
+      "pair": "acheur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/acheur"
+    },
+    {
+      "id": 3003535,
+      "exchange": "kraken",
+      "pair": "ftmusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ftmusd"
+    },
+    {
+      "id": 3003536,
+      "exchange": "kraken",
+      "pair": "ftmeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ftmeur"
+    },
+    {
+      "id": 3020051,
+      "exchange": "kraken",
+      "pair": "cotiusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cotiusd"
+    },
+    {
+      "id": 3020052,
+      "exchange": "kraken",
+      "pair": "adxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adxusd"
+    },
+    {
+      "id": 3020053,
+      "exchange": "kraken",
+      "pair": "chreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/chreur"
+    },
+    {
+      "id": 3020054,
+      "exchange": "kraken",
+      "pair": "tvkeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tvkeur"
+    },
+    {
+      "id": 3020055,
+      "exchange": "kraken",
+      "pair": "mveur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mveur"
+    },
+    {
+      "id": 3020056,
+      "exchange": "kraken",
+      "pair": "adxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/adxeur"
+    },
+    {
+      "id": 3020057,
+      "exchange": "kraken",
+      "pair": "tlmusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tlmusd"
+    },
+    {
+      "id": 3020058,
+      "exchange": "kraken",
+      "pair": "tlmeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tlmeur"
+    },
+    {
+      "id": 3020059,
+      "exchange": "kraken",
+      "pair": "cotieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/cotieur"
+    },
+    {
+      "id": 3020060,
+      "exchange": "kraken",
+      "pair": "mvusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mvusd"
+    },
+    {
+      "id": 3020061,
+      "exchange": "kraken",
+      "pair": "tvkusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/tvkusd"
+    },
+    {
+      "id": 3020062,
+      "exchange": "kraken",
+      "pair": "chrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/chrusd"
+    },
+    {
+      "id": 3020121,
+      "exchange": "kraken",
+      "pair": "bitusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bitusd"
+    },
+    {
+      "id": 3020122,
+      "exchange": "kraken",
+      "pair": "biteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/biteur"
+    },
+    {
+      "id": 3025658,
+      "exchange": "kraken",
+      "pair": "nearusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nearusd"
+    },
+    {
+      "id": 3025659,
+      "exchange": "kraken",
+      "pair": "forthusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/forthusd"
+    },
+    {
+      "id": 3025660,
+      "exchange": "kraken",
+      "pair": "egldeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/egldeur"
+    },
+    {
+      "id": 3025661,
+      "exchange": "kraken",
+      "pair": "egldusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/egldusd"
+    },
+    {
+      "id": 3025662,
+      "exchange": "kraken",
+      "pair": "fisusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fisusd"
+    },
+    {
+      "id": 3025663,
+      "exchange": "kraken",
+      "pair": "mxceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mxceur"
+    },
+    {
+      "id": 3025664,
+      "exchange": "kraken",
+      "pair": "neareur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/neareur"
+    },
+    {
+      "id": 3025665,
+      "exchange": "kraken",
+      "pair": "farmusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/farmusd"
+    },
+    {
+      "id": 3025666,
+      "exchange": "kraken",
+      "pair": "gtceur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gtceur"
+    },
+    {
+      "id": 3025667,
+      "exchange": "kraken",
+      "pair": "farmeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/farmeur"
+    },
+    {
+      "id": 3025668,
+      "exchange": "kraken",
+      "pair": "mxcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/mxcusd"
+    },
+    {
+      "id": 3025669,
+      "exchange": "kraken",
+      "pair": "gtcusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/gtcusd"
+    },
+    {
+      "id": 3025670,
+      "exchange": "kraken",
+      "pair": "lcxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lcxusd"
+    },
+    {
+      "id": 3025671,
+      "exchange": "kraken",
+      "pair": "fortheur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fortheur"
+    },
+    {
+      "id": 3025672,
+      "exchange": "kraken",
+      "pair": "fiseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/fiseur"
+    },
+    {
+      "id": 3025673,
+      "exchange": "kraken",
+      "pair": "lcxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/lcxeur"
+    },
+    {
+      "id": 3025796,
+      "exchange": "kraken",
+      "pair": "teerusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/teerusd"
+    },
+    {
+      "id": 3025797,
+      "exchange": "kraken",
+      "pair": "teereur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/teereur"
+    },
+    {
+      "id": 3036842,
+      "exchange": "kraken",
+      "pair": "intrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/intrusd"
+    },
+    {
+      "id": 3036843,
+      "exchange": "kraken",
+      "pair": "intreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/intreur"
+    },
+    {
+      "id": 3037296,
+      "exchange": "kraken",
+      "pair": "unfieur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/unfieur"
+    },
+    {
+      "id": 3037297,
+      "exchange": "kraken",
+      "pair": "unfiusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/unfiusd"
+    },
+    {
+      "id": 3037298,
+      "exchange": "kraken",
+      "pair": "keyusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/keyusd"
+    },
+    {
+      "id": 3037299,
+      "exchange": "kraken",
+      "pair": "bttusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bttusd"
+    },
+    {
+      "id": 3037300,
+      "exchange": "kraken",
+      "pair": "keyeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/keyeur"
+    },
+    {
+      "id": 3037301,
+      "exchange": "kraken",
+      "pair": "dentusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/dentusd"
+    },
+    {
+      "id": 3037302,
+      "exchange": "kraken",
+      "pair": "btteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btteur"
+    },
+    {
+      "id": 3037303,
+      "exchange": "kraken",
+      "pair": "denteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/denteur"
+    },
+    {
+      "id": 3052164,
+      "exchange": "kraken",
+      "pair": "csmeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/csmeur"
+    },
+    {
+      "id": 3052165,
+      "exchange": "kraken",
+      "pair": "csmusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/csmusd"
+    },
+    {
+      "id": 3052616,
+      "exchange": "kraken",
+      "pair": "arpaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/arpaeur"
+    },
+    {
+      "id": 3052617,
+      "exchange": "kraken",
+      "pair": "arpausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/arpausd"
+    },
+    {
+      "id": 3070380,
+      "exchange": "kraken",
+      "pair": "junousd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/junousd"
+    },
+    {
+      "id": 3070381,
+      "exchange": "kraken",
+      "pair": "junoeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/junoeur"
+    },
+    {
+      "id": 3086763,
+      "exchange": "kraken",
+      "pair": "ethaed",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethaed"
+    },
+    {
+      "id": 3086764,
+      "exchange": "kraken",
+      "pair": "usdaed",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdaed"
+    },
+    {
+      "id": 3086765,
+      "exchange": "kraken",
+      "pair": "btcaed",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/btcaed"
+    },
+    {
+      "id": 3097410,
+      "exchange": "kraken",
+      "pair": "bsxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bsxeur"
+    },
+    {
+      "id": 3097411,
+      "exchange": "kraken",
+      "pair": "bsxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bsxusd"
+    },
+    {
+      "id": 3144141,
+      "exchange": "kraken",
+      "pair": "strkeur",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/strkeur"
+    },
+    {
+      "id": 3144142,
+      "exchange": "kraken",
+      "pair": "fronteur",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/fronteur"
+    },
+    {
+      "id": 3144143,
+      "exchange": "kraken",
+      "pair": "strkusd",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/strkusd"
+    },
+    {
+      "id": 3144144,
+      "exchange": "kraken",
+      "pair": "frontusd",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/frontusd"
+    },
+    {
+      "id": 3144145,
+      "exchange": "kraken",
+      "pair": "stxusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/stxusd"
+    },
+    {
+      "id": 3144146,
+      "exchange": "kraken",
+      "pair": "stxeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/stxeur"
+    },
+    {
+      "id": 3144147,
+      "exchange": "kraken",
+      "pair": "betausd",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/betausd"
+    },
+    {
+      "id": 3144148,
+      "exchange": "kraken",
+      "pair": "betaeur",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/betaeur"
+    },
+    {
+      "id": 3148159,
+      "exchange": "kraken",
+      "pair": "nymbtc",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nymbtc"
+    },
+    {
+      "id": 3160490,
+      "exchange": "kraken",
+      "pair": "nodlusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nodlusd"
+    },
+    {
+      "id": 3160491,
+      "exchange": "kraken",
+      "pair": "blzeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/blzeur"
+    },
+    {
+      "id": 3160492,
+      "exchange": "kraken",
+      "pair": "polseur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/polseur"
+    },
+    {
+      "id": 3160493,
+      "exchange": "kraken",
+      "pair": "blzusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/blzusd"
+    },
+    {
+      "id": 3160494,
+      "exchange": "kraken",
+      "pair": "trueur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/trueur"
+    },
+    {
+      "id": 3160495,
+      "exchange": "kraken",
+      "pair": "truusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/truusd"
+    },
+    {
+      "id": 3160496,
+      "exchange": "kraken",
+      "pair": "alphausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/alphausd"
+    },
+    {
+      "id": 3160497,
+      "exchange": "kraken",
+      "pair": "xcneur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xcneur"
+    },
+    {
+      "id": 3160498,
+      "exchange": "kraken",
+      "pair": "pondusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/pondusd"
+    },
+    {
+      "id": 3160499,
+      "exchange": "kraken",
+      "pair": "pondeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/pondeur"
+    },
+    {
+      "id": 3160500,
+      "exchange": "kraken",
+      "pair": "bobausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bobausd"
+    },
+    {
+      "id": 3160501,
+      "exchange": "kraken",
+      "pair": "alphaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/alphaeur"
+    },
+    {
+      "id": 3160502,
+      "exchange": "kraken",
+      "pair": "celrusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/celrusd"
+    },
+    {
+      "id": 3160503,
+      "exchange": "kraken",
+      "pair": "bobaeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/bobaeur"
+    },
+    {
+      "id": 3160504,
+      "exchange": "kraken",
+      "pair": "nodleur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/nodleur"
+    },
+    {
+      "id": 3160505,
+      "exchange": "kraken",
+      "pair": "celreur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/celreur"
+    },
+    {
+      "id": 3160506,
+      "exchange": "kraken",
+      "pair": "xcnusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xcnusd"
+    },
+    {
+      "id": 3160507,
+      "exchange": "kraken",
+      "pair": "polsusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/polsusd"
+    },
+    {
+      "id": 3206130,
+      "exchange": "kraken",
+      "pair": "paraeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/paraeur"
+    },
+    {
+      "id": 3206131,
+      "exchange": "kraken",
+      "pair": "parausd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/parausd"
+    },
+    {
+      "id": 3233070,
+      "exchange": "kraken",
+      "pair": "ethweth",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethweth"
+    },
+    {
+      "id": 3233071,
+      "exchange": "kraken",
+      "pair": "ethweur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethweur"
+    },
+    {
+      "id": 3233072,
+      "exchange": "kraken",
+      "pair": "ethwusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/ethwusd"
+    },
+    {
+      "id": 3272033,
+      "exchange": "kraken",
+      "pair": "galeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/galeur"
+    },
+    {
+      "id": 3272034,
+      "exchange": "kraken",
+      "pair": "galusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/galusd"
+    },
+    {
+      "id": 3272035,
+      "exchange": "kraken",
+      "pair": "rplusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rplusd"
+    },
+    {
+      "id": 3272036,
+      "exchange": "kraken",
+      "pair": "stgusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/stgusd"
+    },
+    {
+      "id": 3272037,
+      "exchange": "kraken",
+      "pair": "c98eur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/c98eur"
+    },
+    {
+      "id": 3272038,
+      "exchange": "kraken",
+      "pair": "c98usd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/c98usd"
+    },
+    {
+      "id": 3272039,
+      "exchange": "kraken",
+      "pair": "synusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/synusd"
+    },
+    {
+      "id": 3272040,
+      "exchange": "kraken",
+      "pair": "rpleur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/rpleur"
+    },
+    {
+      "id": 3272041,
+      "exchange": "kraken",
+      "pair": "stgeur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/stgeur"
+    },
+    {
+      "id": 3272042,
+      "exchange": "kraken",
+      "pair": "syneur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/syneur"
+    },
+    {
+      "id": 3305944,
+      "exchange": "kraken",
+      "pair": "shibusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/shibusdt"
+    },
+    {
+      "id": 3305945,
+      "exchange": "kraken",
+      "pair": "solusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/solusdt"
+    },
+    {
+      "id": 3305946,
+      "exchange": "kraken",
+      "pair": "atomusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/atomusdt"
+    },
+    {
+      "id": 3305947,
+      "exchange": "kraken",
+      "pair": "avaxusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/avaxusdt"
+    },
+    {
+      "id": 3305948,
+      "exchange": "kraken",
+      "pair": "algousdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/algousdt"
+    },
+    {
+      "id": 3305949,
+      "exchange": "kraken",
+      "pair": "maticusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/maticusdt"
+    },
+    {
+      "id": 3305950,
+      "exchange": "kraken",
+      "pair": "manausdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/manausdt"
+    },
+    {
+      "id": 3305951,
+      "exchange": "kraken",
+      "pair": "xtzusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xtzusdt"
+    },
+    {
+      "id": 3305952,
+      "exchange": "kraken",
+      "pair": "xmrusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/xmrusdt"
+    },
+    {
+      "id": 3305953,
+      "exchange": "kraken",
+      "pair": "apeusdt",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/apeusdt"
+    },
+    {
+      "id": 3324495,
+      "exchange": "kraken",
+      "pair": "apteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/apteur"
+    },
+    {
+      "id": 3324496,
+      "exchange": "kraken",
+      "pair": "aptusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/aptusd"
+    },
+    {
+      "id": 3345162,
+      "exchange": "kraken",
+      "pair": "metausd",
+      "active": false,
+      "route": "https://api.cryptowat.ch/markets/kraken/metausd"
+    },
+    {
+      "id": 3401658,
+      "exchange": "kraken",
+      "pair": "hftusd",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/hftusd"
+    },
+    {
+      "id": 3401660,
+      "exchange": "kraken",
+      "pair": "hfteur",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/hfteur"
+    },
+    {
+      "id": 3434532,
+      "exchange": "kraken",
+      "pair": "usdccad",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdccad"
+    },
+    {
+      "id": 3434533,
+      "exchange": "kraken",
+      "pair": "usdcchf",
+      "active": true,
+      "route": "https://api.cryptowat.ch/markets/kraken/usdcchf"
+    }
+  ],
+  "allowance": {
+    "cost": 0.002,
+    "remaining": 9.52,
+    "upgrade": "For unlimited API access, create an account at https://cryptowat.ch"
+  }
+}

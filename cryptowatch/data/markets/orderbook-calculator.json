@@ -1,0 +1,27 @@
+{
+  "result": {
+    "buy": {
+      "avgPrice": "9332.579931965516",
+      "avgDelta": "-6928.220068034484",
+      "avgDeltaBps": "-4261",
+      "reachPrice": "18952",
+      "reachDelta": "2691.2",
+      "reachDeltaBps": "1655",
+      "spend": "9332579.931965516"
+    },
+    "sell": {
+      "avgPrice": "7545.778397950332",
+      "avgDelta": "-8714.921602049668",
+      "avgDeltaBps": "-5360",
+      "reachPrice": "15441.1",
+      "reachDelta": "-819.6",
+      "reachDeltaBps": "-505",
+      "receive": "7545778.397950332"
+    }
+  },
+  "allowance": {
+    "cost": 0.015,
+    "remaining": 9.541,
+    "upgrade": "For unlimited API access, create an account at https://cryptowat.ch"
+  }
+}

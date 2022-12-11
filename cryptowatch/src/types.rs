@@ -1,6 +1,5 @@
-use chrono::{serde::ts_seconds, DateTime, Utc};
 use serde::{Deserialize, Serialize};
-use std::{borrow::Cow, collections::HashMap};
+use std::borrow::Cow;
 
 mod assets;
 mod exchanges;
@@ -16,6 +15,8 @@ pub use pairs::*;
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Response<T> {
 	result: T,
+	#[serde(default)]
+	cursor: Cursor,
 	allowance: ApiAllowance<'static>,
 }
 
@@ -23,6 +24,19 @@ impl<T> Response<T> {
 	/// unpack the `[Response]` yeilding its associated body, `T`.
 	pub fn unpack(self) -> T {
 		self.result
+	}
+}
+
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Cursor {
+	last: Option<String>,
+	#[serde(rename = "hasMore")]
+	has_more: bool,
+}
+
+impl Default for Cursor {
+	fn default() -> Self {
+		Cursor { last: None, has_more: false }
 	}
 }
 

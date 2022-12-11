@@ -1,0 +1,345 @@
+{
+  "result": [
+    {
+      "id": 1,
+      "symbol": "bitfinex",
+      "name": "Bitfinex",
+      "route": "https://api.cryptowat.ch/exchanges/bitfinex",
+      "active": true
+    },
+    {
+      "id": 2,
+      "symbol": "coinbase-pro",
+      "name": "Coinbase Pro",
+      "route": "https://api.cryptowat.ch/exchanges/coinbase-pro",
+      "active": true
+    },
+    {
+      "id": 3,
+      "symbol": "bitstamp",
+      "name": "Bitstamp",
+      "route": "https://api.cryptowat.ch/exchanges/bitstamp",
+      "active": true
+    },
+    {
+      "id": 4,
+      "symbol": "kraken",
+      "name": "Kraken",
+      "route": "https://api.cryptowat.ch/exchanges/kraken",
+      "active": true
+    },
+    {
+      "id": 5,
+      "symbol": "wex",
+      "name": "WEX",
+      "route": "https://api.cryptowat.ch/exchanges/wex",
+      "active": false
+    },
+    {
+      "id": 6,
+      "symbol": "cryptsy",
+      "name": "Cryptsy",
+      "route": "https://api.cryptowat.ch/exchanges/cryptsy",
+      "active": false
+    },
+    {
+      "id": 7,
+      "symbol": "cexio",
+      "name": "CEX.IO",
+      "route": "https://api.cryptowat.ch/exchanges/cexio",
+      "active": true
+    },
+    {
+      "id": 8,
+      "symbol": "gemini",
+      "name": "Gemini",
+      "route": "https://api.cryptowat.ch/exchanges/gemini",
+      "active": true
+    },
+    {
+      "id": 9,
+      "symbol": "quoine",
+      "name": "Quoine",
+      "route": "https://api.cryptowat.ch/exchanges/quoine",
+      "active": false
+    },
+    {
+      "id": 10,
+      "symbol": "liquid",
+      "name": "Liquid",
+      "route": "https://api.cryptowat.ch/exchanges/liquid",
+      "active": true
+    },
+    {
+      "id": 11,
+      "symbol": "bitflyer",
+      "name": "bitFlyer",
+      "route": "https://api.cryptowat.ch/exchanges/bitflyer",
+      "active": true
+    },
+    {
+      "id": 12,
+      "symbol": "okcoin",
+      "name": "OKCoin",
+      "route": "https://api.cryptowat.ch/exchanges/okcoin",
+      "active": true
+    },
+    {
+      "id": 13,
+      "symbol": "796",
+      "name": "796",
+      "route": "https://api.cryptowat.ch/exchanges/796",
+      "active": false
+    },
+    {
+      "id": 14,
+      "symbol": "bitvc",
+      "name": "BitVC",
+      "route": "https://api.cryptowat.ch/exchanges/bitvc",
+      "active": false
+    },
+    {
+      "id": 15,
+      "symbol": "btc-china",
+      "name": "BTC China",
+      "route": "https://api.cryptowat.ch/exchanges/btc-china",
+      "active": false
+    },
+    {
+      "id": 16,
+      "symbol": "bitmex",
+      "name": "BitMEX",
+      "route": "https://api.cryptowat.ch/exchanges/bitmex",
+      "active": true
+    },
+    {
+      "id": 17,
+      "symbol": "mexbt",
+      "name": "meXBT",
+      "route": "https://api.cryptowat.ch/exchanges/mexbt",
+      "active": false
+    },
+    {
+      "id": 18,
+      "symbol": "huobi",
+      "name": "Huobi",
+      "route": "https://api.cryptowat.ch/exchanges/huobi",
+      "active": true
+    },
+    {
+      "id": 19,
+      "symbol": "vault-of-satoshi",
+      "name": "Vault of Satoshi",
+      "route": "https://api.cryptowat.ch/exchanges/vault-of-satoshi",
+      "active": false
+    },
+    {
+      "id": 20,
+      "symbol": "luno",
+      "name": "Luno",
+      "route": "https://api.cryptowat.ch/exchanges/luno",
+      "active": true
+    },
+    {
+      "id": 21,
+      "symbol": "poloniex",
+      "name": "Poloniex",
+      "route": "https://api.cryptowat.ch/exchanges/poloniex",
+      "active": true
+    },
+    {
+      "id": 22,
+      "symbol": "mtgox",
+      "name": "Mt. Gox",
+      "route": "https://api.cryptowat.ch/exchanges/mtgox",
+      "active": false
+    },
+    {
+      "id": 23,
+      "symbol": "bisq",
+      "name": "Bisq",
+      "route": "https://api.cryptowat.ch/exchanges/bisq",
+      "active": true
+    },
+    {
+      "id": 24,
+      "symbol": "bithumb",
+      "name": "Bithumb",
+      "route": "https://api.cryptowat.ch/exchanges/bithumb",
+      "active": true
+    },
+    {
+      "id": 25,
+      "symbol": "bittrex",
+      "name": "Bittrex",
+      "route": "https://api.cryptowat.ch/exchanges/bittrex",
+      "active": true
+    },
+    {
+      "id": 26,
+      "symbol": "quadriga",
+      "name": "QuadrigaCX",
+      "route": "https://api.cryptowat.ch/exchanges/quadriga",
+      "active": false
+    },
+    {
+      "id": 27,
+      "symbol": "binance",
+      "name": "Binance",
+      "route": "https://api.cryptowat.ch/exchanges/binance",
+      "active": true
+    },
+    {
+      "id": 28,
+      "symbol": "zonda",
+      "name": "Zonda",
+      "route": "https://api.cryptowat.ch/exchanges/zonda",
+      "active": true
+    },
+    {
+      "id": 61,
+      "symbol": "okx",
+      "name": "OKX",
+      "route": "https://api.cryptowat.ch/exchanges/okx",
+      "active": true
+    },
+    {
+      "id": 62,
+      "symbol": "coinone",
+      "name": "Coinone",
+      "route": "https://api.cryptowat.ch/exchanges/coinone",
+      "active": true
+    },
+    {
+      "id": 63,
+      "symbol": "hitbtc",
+      "name": "HitBTC",
+      "route": "https://api.cryptowat.ch/exchanges/hitbtc",
+      "active": true
+    },
+    {
+      "id": 65,
+      "symbol": "bitz",
+      "name": "Bit-Z",
+      "route": "https://api.cryptowat.ch/exchanges/bitz",
+      "active": false
+    },
+    {
+      "id": 66,
+      "symbol": "gateio",
+      "name": "Gate.io",
+      "route": "https://api.cryptowat.ch/exchanges/gateio",
+      "active": true
+    },
+    {
+      "id": 67,
+      "symbol": "binance-us",
+      "name": "Binance.US",
+      "route": "https://api.cryptowat.ch/exchanges/binance-us",
+      "active": true
+    },
+    {
+      "id": 94,
+      "symbol": "kraken-futures",
+      "name": "Kraken Futures",
+      "route": "https://api.cryptowat.ch/exchanges/kraken-futures",
+      "active": true
+    },
+    {
+      "id": 95,
+      "symbol": "dex-aggregated",
+      "name": "DEX (aggregated)",
+      "route": "https://api.cryptowat.ch/exchanges/dex-aggregated",
+      "active": false
+    },
+    {
+      "id": 96,
+      "symbol": "ftx",
+      "name": "FTX",
+      "route": "https://api.cryptowat.ch/exchanges/ftx",
+      "active": true
+    },
+    {
+      "id": 97,
+      "symbol": "deribit",
+      "name": "Deribit",
+      "route": "https://api.cryptowat.ch/exchanges/deribit",
+      "active": true
+    },
+    {
+      "id": 99,
+      "symbol": "cme",
+      "name": "CME (Beta)",
+      "route": "https://api.cryptowat.ch/exchanges/cme",
+      "active": true
+    },
+    {
+      "id": 103,
+      "symbol": "uniswap-v2",
+      "name": "Uniswap V2",
+      "route": "https://api.cryptowat.ch/exchanges/uniswap-v2",
+      "active": true
+    },
+    {
+      "id": 107,
+      "symbol": "ftx-us",
+      "name": "FTX.US",
+      "route": "https://api.cryptowat.ch/exchanges/ftx-us",
+      "active": true
+    },
+    {
+      "id": 110,
+      "symbol": "cbot",
+      "name": "CBOT",
+      "route": "https://api.cryptowat.ch/exchanges/cbot",
+      "active": false
+    },
+    {
+      "id": 111,
+      "symbol": "comex",
+      "name": "COMEX (Beta)",
+      "route": "https://api.cryptowat.ch/exchanges/comex",
+      "active": true
+    },
+    {
+      "id": 112,
+      "symbol": "nymex",
+      "name": "NYMEX (Beta)",
+      "route": "https://api.cryptowat.ch/exchanges/nymex",
+      "active": true
+    },
+    {
+      "id": 116,
+      "symbol": "kucoin",
+      "name": "KuCoin",
+      "route": "https://api.cryptowat.ch/exchanges/kucoin",
+      "active": true
+    },
+    {
+      "id": 117,
+      "symbol": "kucoin-futures",
+      "name": "KuCoin Futures",
+      "route": "https://api.cryptowat.ch/exchanges/kucoin-futures",
+      "active": false
+    },
+    {
+      "id": 118,
+      "symbol": "bybit",
+      "name": "Bybit",
+      "route": "https://api.cryptowat.ch/exchanges/bybit",
+      "active": true
+    },
+    {
+      "id": 123,
+      "symbol": "crypto-com",
+      "name": "Crypto.com",
+      "route": "https://api.cryptowat.ch/exchanges/crypto-com",
+      "active": true
+    }
+  ],
+  "allowance": {
+    "cost": 0.002,
+    "remaining": 9.524,
+    "upgrade": "For unlimited API access, create an account at https://cryptowat.ch"
+  }
+}

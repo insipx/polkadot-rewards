@@ -1,0 +1,20 @@
+{
+  "result": {
+    "price": {
+      "last": 16260.7,
+      "high": 16336.4,
+      "low": 16220.4,
+      "change": {
+        "percentage": -0.0014308523704249124,
+        "absolute": -23.299999999999272
+      }
+    },
+    "volume": 218.48590514995075,
+    "volumeQuote": 3557226.754068739
+  },
+  "allowance": {
+    "cost": 0.005,
+    "remaining": 9.586,
+    "upgrade": "For unlimited API access, create an account at https://cryptowat.ch"
+  }
+}

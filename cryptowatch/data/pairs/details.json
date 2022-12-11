@@ -1,0 +1,177 @@
+{
+  "result": {
+    "id": 232,
+    "symbol": "btceur",
+    "base": {
+      "id": 60,
+      "sid": "bitcoin",
+      "symbol": "btc",
+      "name": "Bitcoin",
+      "fiat": false,
+      "route": "https://api.cryptowat.ch/assets/btc"
+    },
+    "quote": {
+      "id": 108,
+      "sid": "euro",
+      "symbol": "eur",
+      "name": "Euro",
+      "fiat": true,
+      "route": "https://api.cryptowat.ch/assets/eur"
+    },
+    "route": "https://api.cryptowat.ch/pairs/btceur",
+    "markets": [
+      {
+        "id": 66,
+        "exchange": "coinbase-pro",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/coinbase-pro/btceur"
+      },
+      {
+        "id": 75,
+        "exchange": "bitstamp",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/bitstamp/btceur"
+      },
+      {
+        "id": 86,
+        "exchange": "kraken",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/kraken/btceur"
+      },
+      {
+        "id": 149,
+        "exchange": "wex",
+        "pair": "btceur",
+        "active": false,
+        "route": "https://api.cryptowat.ch/markets/wex/btceur"
+      },
+      {
+        "id": 167,
+        "exchange": "cryptsy",
+        "pair": "btceur",
+        "active": false,
+        "route": "https://api.cryptowat.ch/markets/cryptsy/btceur"
+      },
+      {
+        "id": 175,
+        "exchange": "cexio",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/cexio/btceur"
+      },
+      {
+        "id": 186,
+        "exchange": "quoine",
+        "pair": "btceur",
+        "active": false,
+        "route": "https://api.cryptowat.ch/markets/quoine/btceur"
+      },
+      {
+        "id": 367,
+        "exchange": "bisq",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/bisq/btceur"
+      },
+      {
+        "id": 415,
+        "exchange": "bitfinex",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/bitfinex/btceur"
+      },
+      {
+        "id": 534,
+        "exchange": "bitflyer",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/bitflyer/btceur"
+      },
+      {
+        "id": 670,
+        "exchange": "zonda",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/zonda/btceur"
+      },
+      {
+        "id": 5804,
+        "exchange": "liquid",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/liquid/btceur"
+      },
+      {
+        "id": 61599,
+        "exchange": "binance",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/binance/btceur"
+      },
+      {
+        "id": 62082,
+        "exchange": "okcoin",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/okcoin/btceur"
+      },
+      {
+        "id": 62458,
+        "exchange": "bittrex",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/bittrex/btceur"
+      },
+      {
+        "id": 136196,
+        "exchange": "luno",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/luno/btceur"
+      },
+      {
+        "id": 137620,
+        "exchange": "ftx",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/ftx/btceur"
+      },
+      {
+        "id": 138101,
+        "exchange": "ftx-us",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/ftx-us/btceur"
+      },
+      {
+        "id": 139213,
+        "exchange": "gemini",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/gemini/btceur"
+      },
+      {
+        "id": 2975874,
+        "exchange": "huobi",
+        "pair": "btceur",
+        "active": true,
+        "route": "https://api.cryptowat.ch/markets/huobi/btceur"
+      },
+      {
+        "id": 3035436,
+        "exchange": "kucoin",
+        "pair": "btceur",
+        "active": false,
+        "route": "https://api.cryptowat.ch/markets/kucoin/btceur"
+      }
+    ]
+  },
+  "allowance": {
+    "cost": 0.002,
+    "remaining": 9.626,
+    "upgrade": "For unlimited API access, create an account at https://cryptowat.ch"
+  }
+}
