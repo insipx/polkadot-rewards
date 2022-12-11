@@ -1,7 +1,6 @@
-use std::{str::FromStr, borrow::Cow};
+use std::{borrow::Cow, str::FromStr};
 
 use crate::types::*;
-
 
 impl FromStr for Pair<'_> {
 	type Err = ();
