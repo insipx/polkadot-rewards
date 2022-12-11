@@ -1,4 +1,6 @@
 //! Types and Utilities for Tests
+mod client;
+mod mock;
 
 pub mod test_prelude {
 	pub use assert_ok::assert_ok;
