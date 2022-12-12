@@ -36,8 +36,31 @@ pub struct ApiAllowance<'a> {
 	pub(crate) upgrade: Cow<'a, str>,
 }
 
+/// A route to other APIs associated with this call.
 #[derive(Debug, Clone, PartialEq, Eq)]
 pub struct Route(pub Uri);
+
+/// Wrapper around a f64 to represent a price.
+#[derive(Serialize, Deserialize, Debug)]
+pub struct Price {
+	price: f64,
+}
+
+#[derive(Serialize, Deserialize, PartialEq, Eq, Clone, Copy, Debug, Hash)]
+pub enum RouteType {
+	#[serde(rename = "price")]
+	Price,
+	#[serde(rename = "summary")]
+	Summary,
+	#[serde(rename = "orderbook")]
+	Orderbook,
+	#[serde(rename = "trades")]
+	Trades,
+	#[serde(rename = "ohlc")]
+	OHLC,
+	#[serde(rename = "markets")]
+	Markets,
+}
 
 #[cfg(test)]
 mod tests {

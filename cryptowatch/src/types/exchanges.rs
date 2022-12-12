@@ -2,7 +2,7 @@ use super::*;
 use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, collections::HashMap};
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Exchange {
 	#[serde(rename = "bitflyer")]
 	BitFlyer,
@@ -62,7 +62,18 @@ pub enum Exchange {
 	Ftx,
 	#[serde(rename = "uniswap-v2")]
 	UniswapV2,
-	Unknown(String),
+	#[serde(rename = "bybit")]
+	Bybit,
+	#[serde(rename = "crypto-com")]
+	CryptoCom,
+	#[serde(rename = "deribit")]
+	Deribit,
+	#[serde(rename = "kucoin")]
+	KuCoin,
+	#[serde(rename = "okx")]
+	Okx,
+	#[serde(rename = "zonda")]
+	Zonda,
 }
 
 #[derive(Serialize, Deserialize, Debug)]

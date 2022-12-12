@@ -4,4 +4,8 @@ use thiserror::Error;
 pub enum Error {
 	#[error("The String `{0}` is not valid in this context")]
 	InvalidString(String),
+	#[error(
+		"The exchange `{0}` is not currently supported. Please open an issue on GitHub if you think it should be."
+	)]
+	UnsupportedExchange(String),
 }

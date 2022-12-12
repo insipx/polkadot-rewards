@@ -4,19 +4,19 @@ use crate::{error::Error, types::*};
 use serde::de::{self, Visitor};
 use std::{collections::HashMap, str::FromStr};
 
-struct PriceVisitor;
-impl<'de> Visitor<'de> for PriceVisitor {
-	type Value = PriceAndInfo;
+struct PriceMapVisitor;
+impl<'de> Visitor<'de> for PriceMapVisitor {
+	type Value = PriceMap;
 
 	fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
-		formatter.write_str("a string representing a price")
+		formatter.write_str("a map representing a market, exchange, pair with the key as the price")
 	}
 
 	fn visit_map<M>(self, mut map: M) -> Result<Self::Value, M::Error>
 	where
 		M: de::MapAccess<'de>,
 	{
-		let mut price_and_info = vec![];
+		let mut price_map = HashMap::new();
 		while let Some((key, value)) = map.next_entry::<String, f64>()? {
 			let mut key = key.split(':');
 			let investment_vehicle = key
@@ -24,21 +24,21 @@ impl<'de> Visitor<'de> for PriceVisitor {
 				.expect("investment vehicle")
 				.try_into()
 				.expect("`InvestmentVehicle` should be in correct format");
-			let exchange = key.next().expect("exchange").into();
+			let exchange = key.next().expect("exchange").try_into().map_err(|e| de::Error::custom(e))?;
 			let pair = key.next().expect("pair").to_string();
 			let price = value;
-			price_and_info.push(PriceAndInfoInner { investment_vehicle, exchange, pair, price });
+			price_map.insert((investment_vehicle, exchange, pair), price);
 		}
-		Ok(PriceAndInfo { inner: price_and_info })
+		Ok(PriceMap(price_map))
 	}
 }
 
-impl<'de> de::Deserialize<'de> for PriceAndInfo {
-	fn deserialize<D>(deserializer: D) -> Result<PriceAndInfo, D::Error>
+impl<'de> de::Deserialize<'de> for PriceMap {
+	fn deserialize<D>(deserializer: D) -> Result<PriceMap, D::Error>
 	where
 		D: de::Deserializer<'de>,
 	{
-		deserializer.deserialize_map(PriceVisitor)
+		deserializer.deserialize_map(PriceMapVisitor)
 	}
 }
 
@@ -57,7 +57,7 @@ impl<'de> Visitor<'de> for MarketSummaryVisitor {
 		let mut market_summaries = HashMap::new();
 		while let Some((key, value)) = map.next_entry::<String, MarketSummary>()? {
 			let mut key = key.split(':');
-			let exchange = key.next().expect("exchange").into();
+			let exchange = key.next().expect("exchange").try_into().map_err(|e| de::Error::custom(e))?;
 			let pair: Pair = key.next().expect("pair").into();
 			market_summaries.insert((exchange, pair.into_owned()), value);
 		}

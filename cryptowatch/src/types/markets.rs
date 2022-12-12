@@ -12,7 +12,6 @@ pub struct MarketAsset<'a> {
 	exchange: Cow<'a, str>,
 	pair: Cow<'a, str>,
 	active: bool,
-	// TODO: Maybe accept a URL type for Route
 	route: Route,
 }
 
@@ -23,46 +22,18 @@ pub struct MarketAssetDetails<'a> {
 	#[serde(borrow)]
 	pair: Pair<'a>,
 	active: bool,
-	#[serde(borrow)]
-	routes: MarketRoutes<'a>,
+	routes: HashMap<RouteType, Route>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct MarketRoutes<'a> {
-	#[serde(borrow)]
-	price: Cow<'a, str>,
-	#[serde(borrow)]
-	summary: Cow<'a, str>,
-	#[serde(borrow)]
-	orderbook: Cow<'a, str>,
-	#[serde(borrow)]
-	trades: Cow<'a, str>,
-	#[serde(borrow)]
-	ohlc: Cow<'a, str>,
-}
-
-#[derive(Serialize, Deserialize, Debug)]
+/// How the investment was made. Either through a Market or Index.
+#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum InvestmentVehicle {
 	Market,
 	Index,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub struct UnitPrice {
-	price: f64,
-}
-
-#[derive(Debug)]
-pub struct PriceAndInfoInner {
-	pub investment_vehicle: InvestmentVehicle,
-	pub exchange: Exchange,
-	pub pair: String,
-	pub price: f64,
-}
-
-pub struct PriceAndInfo {
-	pub inner: Vec<PriceAndInfoInner>,
-}
+/// A mapping of investment vehicle, exchange, and pair to a price.
+pub struct PriceMap(pub HashMap<(InvestmentVehicle, Exchange, String), f64>);
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Trade {
@@ -279,13 +250,13 @@ mod tests {
 	#[test]
 	fn test_market_price_deserialization() {
 		let price = load_test_data(Call::Markets(Market::Price(OneOrAllMarkets::One)));
-		let _: Response<UnitPrice> = assert_ok!(serde_json::from_slice(price.as_slice()));
+		let _: Response<Price> = assert_ok!(serde_json::from_slice(price.as_slice()));
 	}
 
 	#[test]
 	fn test_all_market_price_deserialization() {
 		let price = load_test_data(Call::Markets(Market::Price(OneOrAllMarkets::All)));
-		let _: Response<PriceAndInfo> = assert_ok!(serde_json::from_slice(price.as_slice()));
+		let _: Response<PriceMap> = assert_ok!(serde_json::from_slice(price.as_slice()));
 	}
 
 	#[test]

@@ -1,8 +1,9 @@
 //! Implementations for general types.
 
-use crate::types::*;
+use crate::{error::Error, types::*};
 use hyper::Uri;
 use serde::{de, ser};
+use std::str::FromStr;
 
 mod exchanges;
 mod markets;
@@ -58,5 +59,33 @@ impl ser::Serialize for Route {
 		S: ser::Serializer,
 	{
 		serializer.serialize_str(&self.0.to_string())
+	}
+}
+
+impl FromStr for RouteType {
+	type Err = Error;
+	fn from_str(s: &str) -> Result<Self, Self::Err> {
+		match s {
+			"price" => Ok(RouteType::Price),
+			"summary" => Ok(RouteType::Summary),
+			"orderbook" => Ok(RouteType::Orderbook),
+			"trades" => Ok(RouteType::Trades),
+			"ohlc" => Ok(RouteType::OHLC),
+			"markets" => Ok(RouteType::Markets),
+			_ => Err(Error::InvalidString(s.to_string())),
+		}
+	}
+}
+
+impl ToString for RouteType {
+	fn to_string(&self) -> String {
+		match self {
+			RouteType::Price => "price".to_string(),
+			RouteType::Summary => "summary".to_string(),
+			RouteType::Orderbook => "orderbook".to_string(),
+			RouteType::Trades => "trades".to_string(),
+			RouteType::OHLC => "ohlc".to_string(),
+			RouteType::Markets => "markets".to_string(),
+		}
 	}
 }
