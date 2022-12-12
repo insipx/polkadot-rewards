@@ -13,7 +13,7 @@ pub struct MarketAsset<'a> {
 	pair: Cow<'a, str>,
 	active: bool,
 	// TODO: Maybe accept a URL type for Route
-	route: Cow<'a, str>,
+	route: Route,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -144,16 +144,16 @@ pub struct LiquiditySums {
 #[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, serde_repr::Serialize_repr, serde_repr::Deserialize_repr)]
 #[repr(u64)]
 pub enum BasisPointLevel {
-	TwentyFive = 25u64,
-	Fifty = 50u64,
-	SeventyFive = 75u64,
-	OneHundred = 100u64,
-	OneHundredFifty = 150u64,
-	TwoHundred = 200u64,
-	TwoHundredFifty = 250u64,
-	ThreeHundred = 300u64,
-	FourHundred = 400u64,
-	FiveHundred = 500u64,
+	N25 = 25u64,
+	N50 = 50u64,
+	N75 = 75u64,
+	N100 = 100u64,
+	N150 = 150u64,
+	N200 = 200u64,
+	N250 = 250u64,
+	N300 = 300u64,
+	N400 = 400u64,
+	N500 = 500u64,
 }
 
 /// Liquidity sums at several basis point levels in the order book.
@@ -217,33 +217,33 @@ pub struct PeriodMap(HashMap<Period, Vec<OHLC>>);
 #[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Hash)]
 pub enum Period {
 	#[serde(rename = "60")]
-	P60,
+	N60,
 	#[serde(rename = "180")]
-	P180,
+	N180,
 	#[serde(rename = "300")]
-	P300,
+	N300,
 	#[serde(rename = "900")]
-	P900,
+	N900,
 	#[serde(rename = "1800")]
-	P1800,
+	N1800,
 	#[serde(rename = "3600")]
-	P3600,
+	N3600,
 	#[serde(rename = "7200")]
-	P7200,
+	N7200,
 	#[serde(rename = "14400")]
-	P14400,
+	N14400,
 	#[serde(rename = "21600")]
-	P21600,
+	N21600,
 	#[serde(rename = "43200")]
-	P43200,
+	N43200,
 	#[serde(rename = "86400")]
-	P86400,
+	N86400,
 	#[serde(rename = "259200")]
-	P259200,
+	N259200,
 	#[serde(rename = "604800")]
-	P604800,
+	N604800,
 	#[serde(rename = "604800_Monday")]
-	P604800Monday,
+	N604800Monday,
 }
 
 /// "OHLC" data for a period of time. "OHLC" stands for "Open-High-Low-Close"

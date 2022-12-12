@@ -1,3 +1,4 @@
+use super::*;
 use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, collections::HashMap};
 
@@ -79,18 +80,17 @@ pub struct ExchangeDetails<'a> {
 
 #[derive(Serialize, Deserialize, Debug)]
 pub enum SingleOrMultipleRoutes<'a> {
-	#[serde(borrow)]
 	#[serde(rename = "route")]
-	Single(Cow<'a, str>),
+	Single(Cow<'a, Route>),
 	#[serde(borrow)]
 	#[serde(rename = "routes")]
-	Multiple(HashMap<Cow<'a, str>, Cow<'a, str>>),
+	Multiple(HashMap<Cow<'a, str>, Cow<'a, Route>>),
 }
 
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::{tests::test_prelude::*, types::*};
+	use crate::tests::test_prelude::*;
 
 	#[test]
 	fn test_exchange_list_deserialization() {

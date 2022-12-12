@@ -20,8 +20,7 @@ pub struct PairInfo<'a> {
 	base: Asset<'a>,
 	#[serde(borrow)]
 	quote: Asset<'a>,
-	#[serde(borrow)]
-	route: Cow<'a, str>,
+	route: Route,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
@@ -31,7 +30,7 @@ pub struct PairDetails<'a> {
 	symbol: Cow<'a, str>,
 	base: Asset<'a>,
 	quote: Asset<'a>,
-	route: Cow<'a, str>,
+	route: Route,
 	markets: Vec<MarketAsset<'a>>,
 }
 

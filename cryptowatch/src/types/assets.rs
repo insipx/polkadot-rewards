@@ -14,8 +14,7 @@ pub struct Asset<'a> {
 	#[serde(borrow)]
 	name: Cow<'a, str>,
 	fiat: bool,
-	#[serde(borrow)]
-	route: Cow<'a, str>,
+	route: Route,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
