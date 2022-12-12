@@ -47,21 +47,6 @@ pub enum InvestmentVehicle {
 	Index,
 }
 
-#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Hash)]
-pub enum Exchange {
-	#[serde(rename = "kraken")]
-	Kraken,
-	#[serde(rename = "kraken-futures")]
-	KrakenFutures,
-	#[serde(rename = "binance-us")]
-	BinanceUS,
-	#[serde(rename = "binance")]
-	BinanceIntl,
-	#[serde(rename = "coinbase-pro")]
-	Coinbase,
-	Other(String),
-}
-
 #[derive(Serialize, Deserialize, Debug)]
 pub struct UnitPrice {
 	price: f64,

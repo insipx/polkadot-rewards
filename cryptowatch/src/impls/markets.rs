@@ -176,29 +176,3 @@ impl<'a> TryFrom<&'a str> for InvestmentVehicle {
 		InvestmentVehicle::from_str(s)
 	}
 }
-
-impl From<String> for Exchange {
-	fn from(s: String) -> Self {
-		match s.as_str() {
-			"kraken" => Exchange::Kraken,
-			"kraken-futures" => Exchange::KrakenFutures,
-			"binance-us" => Exchange::BinanceUS,
-			"binance" => Exchange::BinanceIntl,
-			"coinbase-pro" => Exchange::Coinbase,
-			_ => Exchange::Other(s),
-		}
-	}
-}
-
-impl<'a> From<&'a str> for Exchange {
-	fn from(s: &'a str) -> Self {
-		match s {
-			"kraken" => Exchange::Kraken,
-			"kraken-futures" => Exchange::KrakenFutures,
-			"binance-us" => Exchange::BinanceUS,
-			"binance" => Exchange::BinanceIntl,
-			"coinbase-pro" => Exchange::Coinbase,
-			_ => Exchange::Other(s.to_string()),
-		}
-	}
-}

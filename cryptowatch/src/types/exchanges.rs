@@ -1,6 +1,69 @@
 use serde::{Deserialize, Serialize};
 use std::{borrow::Cow, collections::HashMap};
 
+#[derive(Serialize, Deserialize, Debug, PartialEq, Eq, Hash)]
+pub enum Exchange {
+	#[serde(rename = "bitflyer")]
+	BitFlyer,
+	#[serde(rename = "bittrex")]
+	Bittrex,
+	#[serde(rename = "gemini")]
+	Gemini,
+	#[serde(rename = "luno")]
+	Luno,
+	#[serde(rename = "gateio")]
+	Gateio,
+	#[serde(rename = "bitfinex")]
+	Bitfinex,
+	#[serde(rename = "kraken")]
+	Kraken,
+	#[serde(rename = "cexio")]
+	Cexio,
+	#[serde(rename = "bisq")]
+	Bisq,
+	#[serde(rename = "bitmex")]
+	BitMEX,
+	#[serde(rename = "okex")]
+	Okex,
+	#[serde(rename = "kraken-futures")]
+	KrakenFutures,
+	#[serde(rename = "liquid")]
+	Liquid,
+	#[serde(rename = "quoine")]
+	Quoine,
+	#[serde(rename = "bitbay")]
+	BitBay,
+	#[serde(rename = "hitbtc")]
+	HitBTC,
+	#[serde(rename = "binance")]
+	Binance,
+	#[serde(rename = "binance-us")]
+	BinanceUS,
+	#[serde(rename = "huobi")]
+	Huobi,
+	#[serde(rename = "poloniex")]
+	Poloniex,
+	#[serde(rename = "coinbase-pro")]
+	CoinbasePro,
+	#[serde(rename = "bitstamp")]
+	Bitstamp,
+	#[serde(rename = "bitz")]
+	BitZ,
+	#[serde(rename = "bithumb")]
+	Bithumb,
+	#[serde(rename = "coinone")]
+	Coinone,
+	#[serde(rename = "dex-aggregated")]
+	DexAggregated,
+	#[serde(rename = "okcoin")]
+	OkCoin,
+	#[serde(rename = "ftx")]
+	Ftx,
+	#[serde(rename = "uniswap-v2")]
+	UniswapV2,
+	Unknown(String),
+}
+
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ExchangeDetails<'a> {
 	id: u64,
