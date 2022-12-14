@@ -126,6 +126,14 @@ impl<'de> de::Deserialize<'de> for F64 {
 	}
 }
 
+impl std::ops::Deref for F64 {
+	type Target = f64;
+
+	fn deref(&self) -> &Self::Target {
+		&self.0
+	}
+}
+
 // -------------------------- Conversions
 
 impl FromStr for F64 {

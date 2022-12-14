@@ -17,6 +17,7 @@ pub struct Asset<'a> {
 	route: Route,
 }
 
+/// Details about an asset.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AssetDetails<'a> {
 	id: u64,

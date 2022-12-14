@@ -15,6 +15,7 @@ pub struct MarketAsset<'a> {
 	route: Route,
 }
 
+/// Details about a single asset belonging to one particular exchange.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct MarketAssetDetails<'a> {
 	id: u64,
@@ -35,6 +36,7 @@ pub enum InvestmentVehicle {
 /// A mapping of investment vehicle, exchange, and pair to a price.
 pub struct PriceMap(pub HashMap<(InvestmentVehicle, Exchange, String), f64>);
 
+/// A trade that occured at some time (UTC).
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Trade {
 	id: u64,
@@ -56,6 +58,7 @@ pub struct MarketSummary {
 	volume_quote: f64,
 }
 
+/// Summary of the price of an asset over a time period.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PriceSummary {
 	last: f64,
@@ -64,12 +67,14 @@ pub struct PriceSummary {
 	change: PriceChange,
 }
 
+/// percentage change in a price over a time period.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PriceChange {
 	percentage: f64,
 	absolute: f64,
 }
 
+/// Summaries of every market and every pair.
 #[derive(Serialize, Debug)]
 pub struct AllMarketSummaries<'a> {
 	pub(crate) inner: HashMap<(Exchange, Pair<'a>), MarketSummary>,

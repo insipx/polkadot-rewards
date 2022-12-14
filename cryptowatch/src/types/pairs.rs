@@ -23,6 +23,7 @@ pub struct PairInfo<'a> {
 	route: Route,
 }
 
+/// General details about a pair.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct PairDetails<'a> {
 	id: u64,
