@@ -4,41 +4,41 @@ use std::borrow::Cow;
 use super::*;
 
 /// An single asset
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Asset<'a> {
-	id: u64,
+	pub id: u64,
 	#[serde(borrow)]
-	sid: Cow<'a, str>,
+	pub sid: Cow<'a, str>,
 	#[serde(borrow)]
-	symbol: Cow<'a, str>,
+	pub symbol: Cow<'a, str>,
 	#[serde(borrow)]
-	name: Cow<'a, str>,
-	fiat: bool,
-	route: Route,
+	pub name: Cow<'a, str>,
+	pub fiat: bool,
+	pub route: Route,
 }
 
 /// Details about an asset.
 #[derive(Serialize, Deserialize, Debug)]
 pub struct AssetDetails<'a> {
-	id: u64,
+	pub id: u64,
 	#[serde(borrow)]
-	sid: Cow<'a, str>,
+	pub sid: Cow<'a, str>,
 	#[serde(borrow)]
-	symbol: Cow<'a, str>,
+	pub symbol: Cow<'a, str>,
 	#[serde(borrow)]
-	name: Cow<'a, str>,
-	fiat: bool,
+	pub name: Cow<'a, str>,
+	pub fiat: bool,
 	#[serde(borrow)]
-	markets: CurrencyPair<'a>,
+	pub markets: CurrencyPair<'a>,
 }
 
 ///  Base/Quote for an Asset
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CurrencyPair<'a> {
 	#[serde(borrow)]
-	base: Vec<MarketAsset<'a>>,
+	pub base: Vec<MarketAsset<'a>>,
 	#[serde(borrow)]
-	quote: Vec<MarketAsset<'a>>,
+	pub quote: Vec<MarketAsset<'a>>,
 }
 
 #[cfg(test)]

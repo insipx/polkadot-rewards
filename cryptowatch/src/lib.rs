@@ -1,3 +1,5 @@
+#![feature(async_fn_in_trait)]
+
 /// Client type
 pub mod client;
 /// Possible error types

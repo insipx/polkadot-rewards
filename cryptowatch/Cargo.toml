@@ -27,3 +27,4 @@ once_cell = "1.16"
 
 [dev-dependencies]
 assert_ok = "1"
+tokio-test = "0.4"
