@@ -1,5 +1,7 @@
 #![feature(async_fn_in_trait)]
 
+/// The API Implementation (Endpoints)
+mod api;
 /// Client type
 pub mod client;
 /// Possible error types
@@ -14,6 +16,7 @@ pub mod types;
 
 pub mod prelude {
 	use super::*;
+	pub use api::*;
 	pub use client::*;
 	pub use error::*;
 	pub use impls::*;
