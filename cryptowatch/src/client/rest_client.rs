@@ -5,7 +5,6 @@ use super::*;
 use crate::error::Error;
 use http::HeaderMap;
 use hyper::Uri;
-use once_cell::sync::Lazy;
 use serde::{Deserialize, Serialize};
 use std::{
 	io::{Error as IoError, ErrorKind},
@@ -22,7 +21,6 @@ pub struct ClientConfig {
 	/// create one here: https://cryptowat.ch/account/api-access
 	pub credentials: ClientCredentials,
 }
-
 impl Default for ClientConfig {
 	fn default() -> Self {
 		ClientConfig { timeout: Duration::from_secs(30), credentials: ClientCredentials::default() }
@@ -66,9 +64,10 @@ impl ClientCredentials {
 
 /// Get the endpoint and data for some cryptowatch data type.
 pub trait CryptowatchDataSet {
-	fn endpoint(&self) -> Uri;
-	async fn get_owned() -> Self;
-	async fn get() -> Result<hyper::Response<hyper::Body>, Error>;
+	fn endpoint() -> Uri;
+	async fn get() -> Result<Self, Error> where Self: Sized;
+	// possibly use borrowed data
+	// async fn get() -> Result<hyper::Response<hyper::Body>, Error>;
 }
 
 pub trait UriExt {
@@ -133,5 +132,10 @@ impl RestClient {
 		self.credentials = credentials;
 		self.headers = Self::build_headers(&self.credentials)?;
 		Ok(())
+	}
+
+	pub async fn request<T: CryptowatchDataSet>(&self) -> Result<T, Error> {
+		let data = T::get().await?;
+		Ok(data)
 	}
 }
