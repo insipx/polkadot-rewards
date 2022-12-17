@@ -40,7 +40,7 @@ mod tests {
 
 	#[test]
 	fn can_build() {
-		AssetPairs::builder().pair("btceur").build().unwrap();
+		AssetPairs::builder().pair("btc").build().unwrap();
 	}
 
 	#[test]
