@@ -1,5 +1,5 @@
 //! Implementations for `Exchange` types.
-use crate::{error::Error, types::*};
+use crate::{types::*};
 
 impl From<String> for Exchange {
 	fn from(s: String) -> Self {
