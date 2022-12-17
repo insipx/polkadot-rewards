@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use super::*;
 
 /// An single asset
-#[derive(Serialize, Deserialize, Debug, Clone)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq)]
 pub struct Asset {
 	pub id: u64,
 	pub sid: String,
@@ -14,7 +14,7 @@ pub struct Asset {
 }
 
 /// Details about an asset.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct AssetDetails {
 	pub id: u64,
 	pub sid: String,
@@ -25,7 +25,7 @@ pub struct AssetDetails {
 }
 
 ///  Base/Quote for an Asset
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct CurrencyPair {
 	pub base: Vec<MarketAsset>,
 	pub quote: Vec<MarketAsset>,

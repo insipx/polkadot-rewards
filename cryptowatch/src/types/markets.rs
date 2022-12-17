@@ -6,7 +6,7 @@ use serde_aux::field_attributes::deserialize_number_from_string;
 use std::collections::HashMap;
 
 /// An asset describing a market
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct MarketAsset {
 	id: u64,
 	exchange: Exchange,
@@ -16,7 +16,7 @@ pub struct MarketAsset {
 }
 
 /// Details about a single asset belonging to one particular exchange.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct MarketAssetDetails {
 	id: u64,
 	exchange: Exchange,
@@ -33,10 +33,11 @@ pub enum InvestmentVehicle {
 }
 
 /// A mapping of investment vehicle, exchange, and pair to a price.
+#[derive(Debug, PartialEq)]
 pub struct PriceMap(pub HashMap<(InvestmentVehicle, Exchange, String), f64>);
 
 /// A trade that occured at some time (UTC).
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct Trade {
 	id: u64,
 	#[serde(with = "ts_seconds")]
@@ -46,7 +47,7 @@ pub struct Trade {
 }
 
 /// Summary of the market for one asset in a 24-hour time period
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct MarketSummary {
 	/// Price of the asset
 	price: PriceSummary,
@@ -58,7 +59,7 @@ pub struct MarketSummary {
 }
 
 /// Summary of the price of an asset over a time period.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct PriceSummary {
 	last: f64,
 	high: f64,
@@ -67,7 +68,7 @@ pub struct PriceSummary {
 }
 
 /// percentage change in a price over a time period.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct PriceChange {
 	percentage: f64,
 	absolute: f64,
@@ -80,14 +81,14 @@ pub struct AllMarketSummaries {
 }
 
 /// An individual offer to either sell or buy an `amount` of an asset at a `price`.
-#[derive(Debug, Serialize)]
+#[derive(Debug, Serialize, PartialEq)]
 pub struct Offer {
 	pub(crate) price: f64,
 	pub(crate) amount: f64,
 }
 
 /// The order book for a given market
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct Orderbook {
 	/// Asks for an asset. The lowest price a seller is willing to sell the asset.
 	asks: Vec<Offer>,
@@ -99,12 +100,12 @@ pub struct Orderbook {
 	sequence_number: u64,
 }
 
-#[derive(Debug, PartialEq, Clone, Copy, Serialize)]
+#[derive(Debug, Clone, Copy, Serialize, PartialEq)]
 #[serde(transparent)]
 pub(crate) struct F64(pub f64);
 
 /// Sums of the base and quote assets at different point levels.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct LiquiditySums {
 	/// The base asset
 	// TODO: What is the 'base' asset?
@@ -132,7 +133,7 @@ pub enum BasisPointLevel {
 }
 
 /// Liquidity sums at several basis point levels in the order book.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct OrderbookLiquidity {
 	/// Asks for an asset. The lowest price a seller is willing to sell the asset.
 	ask: LiquiditySums,
@@ -141,14 +142,14 @@ pub struct OrderbookLiquidity {
 }
 
 /// Provides a live quote from the order book for a given buy & sell amount
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct OrderbookCalculator {
 	buy: OrderbookQuote,
 	sell: OrderbookQuote,
 }
 
 /// Average price and deltas of a sell or buy
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct OrderbookQuote {
 	#[serde(rename = "avgPrice")]
 	#[serde(deserialize_with = "deserialize_number_from_string")]
@@ -173,7 +174,7 @@ pub struct OrderbookQuote {
 	r#use: SpendOrReceive,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub enum SpendOrReceive {
 	#[serde(rename = "spend")]
 	#[serde(deserialize_with = "deserialize_number_from_string")]
@@ -184,7 +185,7 @@ pub enum SpendOrReceive {
 }
 
 /// Mapping of Period to the [`OHLC`] data for that length of time
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 #[serde(transparent)]
 pub struct PeriodMap(HashMap<Period, Vec<OHLC>>);
 
@@ -222,7 +223,7 @@ pub enum Period {
 }
 
 /// "OHLC" data for a period of time. "OHLC" stands for "Open-High-Low-Close"
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct OHLC {
 	#[serde(with = "ts_seconds")]
 	close_time: DateTime<Utc>,

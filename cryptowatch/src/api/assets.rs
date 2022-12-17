@@ -9,12 +9,13 @@ use std::borrow::Cow;
 #[builder(setter(strip_option), build_fn(validate = "Self::validate"))]
 pub struct Assets<'a> {
 	/// If the request is paginated, the previously received cursor value.
-	#[builder(setter(into), default)]
+	#[builder(setter(into), default, private)]
 	cursor: Option<Cow<'a, str>>,
 	/// Maximum number of results to be returned (Default: 5000, Maximum: 5000)
 	#[builder(default)]
 	limit: Option<u64>,
 	/// Details about a specific asset.
+	/// If this is set, all other parameters are ignored.
 	#[builder(setter(into), default)]
 	asset: Option<Cow<'a, str>>,
 }
@@ -49,7 +50,7 @@ impl<'a> AssetsBuilder<'a> {
 	fn validate(&self) -> Result<(), String> {
 		if let Some(_) = self.asset {
 			if !(self.limit.is_none() && self.cursor.is_none()) {
-				return Err("asset cannot be used with limit or cursor".into())
+				tracing::warn!(target: "cryptowatch::api", "Ignoring limit and cursor parameters because asset is set");
 			}
 		}
 		Ok(())
@@ -72,13 +73,6 @@ mod tests {
 	}
 
 	#[test]
-	fn asset_must_be_alone() {
-		assert!(matches!(Assets::builder().asset("btc").limit(100).build(), Err(_)));
-		assert!(matches!(Assets::builder().asset("btc").cursor("test").build(), Err(_)));
-		assert!(matches!(Assets::builder().asset("btc").limit(100).cursor("test").build(), Err(_)));
-	}
-
-	#[test]
 	fn endpoint_list() {
 		init();
 		let rest_client = RestClient::with_public().unwrap();
@@ -94,6 +88,15 @@ mod tests {
 		let rest_client = RestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
 		let endpoint = Assets::builder().asset("btc").build().unwrap();
+		let _: AssetDetails = tokio_test::block_on(endpoint.query(&client)).unwrap();
+	}
+
+	#[test]
+	fn endpoint_details_still_works_with_other_params() {
+		init();
+		let rest_client = RestClient::with_public().unwrap();
+		let client = CryptowatchClient::new_http(rest_client);
+		let endpoint = Assets::builder().asset("btc").limit(0).cursor("hi").build().unwrap();
 		let _: AssetDetails = tokio_test::block_on(endpoint.query(&client)).unwrap();
 	}
 }

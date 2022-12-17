@@ -10,7 +10,7 @@ pub struct Pair {
 }
 
 /// An asset/asset pairing.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct PairInfo {
 	id: u64,
 	symbol: String,
@@ -20,7 +20,7 @@ pub struct PairInfo {
 }
 
 /// General details about a pair.
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct PairDetails {
 	id: u64,
 	symbol: String,
