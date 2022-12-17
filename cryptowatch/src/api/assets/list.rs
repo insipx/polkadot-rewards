@@ -23,7 +23,7 @@ impl<'a> AssetList<'a> {
 
 impl<'a> Endpoint for AssetList<'a> {
 	fn endpoint(&self) -> Cow<'static, str> {
-		format!("assets/").into()
+		"assets/".into()
 	}
 
 	fn parameters(&self) -> QueryParams {
@@ -45,6 +45,6 @@ mod tests {
 		let client = CryptowatchClient::new_http(rest_client);
 		let endpoint = AssetList::builder().build().unwrap();
 		let assets: Vec<Asset> = tokio_test::block_on(endpoint.query(&client)).unwrap();
-		assert!(assets.len() > 0);
+		assert!(!assets.is_empty());
 	}
 }

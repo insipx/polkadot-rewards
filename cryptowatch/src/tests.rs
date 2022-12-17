@@ -38,7 +38,7 @@ pub mod test_prelude {
 		Trades,
 		TwentyFourHourSummary(OneOrAllMarkets),
 		Orderbook(OrderbookCall),
-		OHLC,
+		Ohlc,
 	}
 
 	pub enum OrderbookCall {
@@ -107,7 +107,7 @@ pub mod test_prelude {
 				Market::Orderbook(OrderbookCall::Book) => Path::new("markets").join("orderbook.json"),
 				Market::Orderbook(OrderbookCall::Liquidity) => Path::new("markets").join("orderbook-liquidity.json"),
 				Market::Orderbook(OrderbookCall::Calculator) => Path::new("markets").join("orderbook-calculator.json"),
-				Market::OHLC => Path::new("markets").join("ohlc.json"),
+				Market::Ohlc => Path::new("markets").join("ohlc.json"),
 			}
 		}
 	}
@@ -164,7 +164,7 @@ pub mod test_prelude {
 				files.find(|p| p.ends_with("markets/orderbook-liquidity.json")).unwrap(),
 			Call::Markets(Market::Orderbook(OrderbookCall::Calculator)) =>
 				files.find(|p| p.ends_with("markets/orderbook-calculator.json")).unwrap(),
-			Call::Markets(Market::OHLC) => files.find(|p| p.ends_with("markets/ohlc.json")).unwrap(),
+			Call::Markets(Market::Ohlc) => files.find(|p| p.ends_with("markets/ohlc.json")).unwrap(),
 			Call::Pairs(Pairs::List) => files.find(|p| p.ends_with("pairs/list.json")).unwrap(),
 			Call::Pairs(Pairs::Details) => files.find(|p| p.ends_with("pairs/details.json")).unwrap(),
 		};

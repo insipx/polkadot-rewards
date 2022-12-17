@@ -302,7 +302,7 @@ mod tests {
 	// Markets -> OHLC
 	#[test]
 	fn test_ohlc_deserialization() {
-		let ohlc = load_test_data(Call::Markets(Market::OHLC));
+		let ohlc = load_test_data(Call::Markets(Market::Ohlc));
 		let _: Response<PeriodMap> = assert_ok!(serde_json::from_slice(ohlc.as_slice()));
 	}
 }

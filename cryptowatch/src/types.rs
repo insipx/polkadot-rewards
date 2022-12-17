@@ -4,15 +4,15 @@ use std::borrow::Cow;
 
 mod assets;
 mod exchanges;
+mod impls;
 mod markets;
 mod pairs;
-mod impls;
 
 pub use assets::*;
 pub use exchanges::*;
+pub use impls::*;
 pub use markets::*;
 pub use pairs::*;
-pub use impls::*;
 
 /// The general REST API "Response" type.
 #[derive(Serialize, Deserialize, Debug)]
@@ -23,7 +23,7 @@ pub struct Response<T> {
 	allowance: ApiAllowance<'static>,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
+#[derive(Serialize, Deserialize, Debug, Default)]
 pub struct Cursor {
 	pub(crate) last: Option<String>,
 	#[serde(rename = "hasMore")]

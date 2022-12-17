@@ -63,7 +63,7 @@ impl ClientCredentials {
 	pub fn load_environment() -> Result<Self, IoError> {
 		envy::prefixed("CRYPTOWATCH_")
 			.from_env::<ClientCredentials>()
-			.map_err(|e| IoError::new(ErrorKind::Other, format!("Missing credentials {:#?}", e)))
+			.map_err(|e| IoError::new(ErrorKind::Other, format!("Missing credentials {e:#?}")))
 	}
 }
 

@@ -24,7 +24,7 @@ impl<'de> Visitor<'de> for PriceMapVisitor {
 				.expect("investment vehicle")
 				.try_into()
 				.expect("`InvestmentVehicle` should be in correct format");
-			let exchange = key.next().expect("exchange").try_into().map_err(|e| de::Error::custom(e))?;
+			let exchange = key.next().expect("exchange").try_into().map_err(de::Error::custom)?;
 			let pair = key.next().expect("pair").to_string();
 			let price = value;
 			price_map.insert((investment_vehicle, exchange, pair), price);
@@ -57,7 +57,7 @@ impl<'de> Visitor<'de> for MarketSummaryVisitor {
 		let mut market_summaries = HashMap::new();
 		while let Some((key, value)) = map.next_entry::<String, MarketSummary>()? {
 			let mut key = key.split(':');
-			let exchange = key.next().expect("exchange").try_into().map_err(|e| de::Error::custom(e))?;
+			let exchange = key.next().expect("exchange").try_into().map_err(de::Error::custom)?;
 			let pair: Pair = key.next().expect("pair").into();
 			market_summaries.insert((exchange, pair), value);
 		}

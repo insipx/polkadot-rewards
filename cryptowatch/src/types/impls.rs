@@ -20,12 +20,6 @@ impl<T> Response<T> {
 	}
 }
 
-impl Default for Cursor {
-	fn default() -> Self {
-		Cursor { last: None, has_more: false }
-	}
-}
-
 impl<'a> std::fmt::Display for ApiAllowance<'a> {
 	fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> Result<(), std::fmt::Error> {
 		write!(

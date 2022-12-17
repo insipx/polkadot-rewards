@@ -15,7 +15,7 @@ use url::Url;
 const CRYPTOWATCH_RS_VERSION: Option<&'static str> = option_env!("CARGO_PKG_VERSION");
 
 /// Cryptowat.ch URL
-pub const CRYPTOWATCH_URL: Lazy<Url> = Lazy::new(|| Url::parse("https://api.cryptowat.ch").unwrap());
+pub static CRYPTOWATCH_URL: Lazy<Url> = Lazy::new(|| Url::parse("https://api.cryptowat.ch").unwrap());
 
 /// CryptowatchClient that supports cryptowat.ch websockets and REST API functions
 pub struct CryptowatchClient {
