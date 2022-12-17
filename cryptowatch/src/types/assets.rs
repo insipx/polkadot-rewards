@@ -18,7 +18,7 @@ pub struct Asset {
 pub struct AssetDetails {
 	pub id: u64,
 	pub sid: String,
-	pub symbol: Exchange,
+	pub symbol: String,
 	pub name: String,
 	pub fiat: bool,
 	pub markets: CurrencyPair,

@@ -19,7 +19,7 @@ pub use pairs::*;
 pub struct Response<T> {
 	pub(crate) result: T,
 	#[serde(default)]
-	cursor: Cursor,
+	pub(crate) cursor: Cursor,
 	allowance: ApiAllowance<'static>,
 }
 

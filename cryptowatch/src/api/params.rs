@@ -90,6 +90,18 @@ impl<'a> PathParams<'a> {
 		self
 	}
 
+	/// Push a single path.
+	pub fn push_opt<'b, P>(&mut self, path: Option<P>) -> &mut Self
+	where
+		P: ParamValue<'a>,
+		'b: 'a,
+	{
+		if let Some(path) = path {
+			self.paths.push(path.as_value());
+		}
+		self
+	}
+
 	/// Extend parameters with many paths.
 	pub fn extend<P, I>(&mut self, iter: I) -> &mut Self
 	where

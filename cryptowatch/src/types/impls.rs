@@ -18,6 +18,11 @@ impl<T> Response<T> {
 	pub fn unpack(self) -> T {
 		self.result
 	}
+
+	/// Get the allowance left using this API key or the public allowance.
+	pub fn allowance(self) -> ApiAllowance<'static> {
+		self.allowance
+	}
 }
 
 impl<'a> std::fmt::Display for ApiAllowance<'a> {
