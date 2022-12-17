@@ -4,6 +4,7 @@ mod mock;
 
 pub mod prelude {
 	pub use assert_ok::assert_ok;
+	pub use derive_builder::UninitializedFieldError;
 	pub use std::{
 		include_bytes,
 		io::Read,
@@ -14,9 +15,12 @@ pub mod prelude {
 
 	pub fn init() {
 		use tracing_forest::ForestLayer;
-		use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, Registry};
+		use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, EnvFilter, Registry};
 		INIT.call_once(|| {
-			Registry::default().with(ForestLayer::default()).init();
+			Registry::default()
+				.with(ForestLayer::default())
+				.with(EnvFilter::from_default_env())
+				.init();
 		})
 	}
 }

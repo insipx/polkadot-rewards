@@ -29,3 +29,31 @@ impl<'a> Endpoint for AssetPairs<'a> {
 		paths
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use crate::{
+		prelude::{AssetDetails, CryptowatchClient, Query, Response, RestClient},
+		tests::prelude::*,
+	};
+
+	#[test]
+	fn can_build() {
+		AssetPairs::builder().pair("btceur").build().unwrap();
+	}
+
+	#[test]
+	fn pair_is_required() {
+		assert!(matches!(AssetPairs::builder().build(), Err(_)));
+	}
+
+	#[test]
+	fn endpoint() {
+		init();
+		let rest_client = RestClient::with_public().unwrap();
+		let client = CryptowatchClient::new_http(rest_client);
+		let endpoint = AssetPairs::builder().pair("btc").build().unwrap();
+		let _: Response<AssetDetails> = tokio_test::block_on(endpoint.query(&client)).unwrap();
+	}
+}
