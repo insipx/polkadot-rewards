@@ -44,7 +44,7 @@ impl<'de> de::Deserialize<'de> for PriceMap {
 
 struct MarketSummaryVisitor;
 impl<'de> Visitor<'de> for MarketSummaryVisitor {
-	type Value = AllMarketSummaries<'de>;
+	type Value = AllMarketSummaries;
 
 	fn expecting(&self, formatter: &mut std::fmt::Formatter) -> std::fmt::Result {
 		formatter.write_str("a map representing market summaries")
@@ -65,7 +65,7 @@ impl<'de> Visitor<'de> for MarketSummaryVisitor {
 	}
 }
 
-impl<'de> de::Deserialize<'de> for AllMarketSummaries<'de> {
+impl<'de> de::Deserialize<'de> for AllMarketSummaries {
 	fn deserialize<D>(deserializer: D) -> Result<AllMarketSummaries<'de>, D::Error>
 	where
 		D: de::Deserializer<'de>,

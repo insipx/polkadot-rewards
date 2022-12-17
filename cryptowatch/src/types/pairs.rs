@@ -6,8 +6,8 @@ use std::borrow::Cow;
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Hash)]
 /// A single Pair between two assets. EX: "btceur"
 #[serde(transparent)]
-pub struct Pair<'a> {
-	pub(crate) pair: Cow<'a, str>,
+pub struct Pair {
+	pub pair: String,
 }
 
 /// An asset/asset pairing.

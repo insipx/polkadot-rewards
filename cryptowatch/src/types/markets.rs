@@ -17,7 +17,7 @@ pub struct MarketAsset {
 
 /// Details about a single asset belonging to one particular exchange.
 #[derive(Serialize, Deserialize, Debug)]
-pub struct MarketAssetDetails<'a> {
+pub struct MarketAssetDetails {
 	id: u64,
 	exchange: Exchange,
 	pair: Pair,

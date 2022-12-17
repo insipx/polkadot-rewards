@@ -22,17 +22,14 @@ pub struct AssetDetails {
 	pub symbol: String,
 	pub name: String,
 	pub fiat: bool,
-	#[serde(borrow)]
 	pub markets: CurrencyPair,
 }
 
 ///  Base/Quote for an Asset
 #[derive(Serialize, Deserialize, Debug)]
 pub struct CurrencyPair {
-	#[serde(borrow)]
-	pub base: Vec<MarketAsset<'a>>,
-	#[serde(borrow)]
-	pub quote: Vec<MarketAsset<'a>>,
+	pub base: Vec<MarketAsset>,
+	pub quote: Vec<MarketAsset>,
 }
 
 #[cfg(test)]
