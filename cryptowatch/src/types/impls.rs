@@ -5,7 +5,6 @@ use hyper::Uri;
 use serde::{de, ser};
 use std::str::FromStr;
 
-mod assets;
 mod exchanges;
 mod markets;
 mod pairs;

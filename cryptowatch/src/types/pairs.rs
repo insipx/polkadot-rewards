@@ -1,7 +1,6 @@
 //! Types related to market pairs.
 use super::*;
 use serde::{Deserialize, Serialize};
-use std::borrow::Cow;
 
 #[derive(Serialize, Deserialize, Debug, Eq, PartialEq, Hash)]
 /// A single Pair between two assets. EX: "btceur"

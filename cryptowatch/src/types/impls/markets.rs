@@ -59,14 +59,14 @@ impl<'de> Visitor<'de> for MarketSummaryVisitor {
 			let mut key = key.split(':');
 			let exchange = key.next().expect("exchange").try_into().map_err(|e| de::Error::custom(e))?;
 			let pair: Pair = key.next().expect("pair").into();
-			market_summaries.insert((exchange, pair.into_owned()), value);
+			market_summaries.insert((exchange, pair), value);
 		}
 		Ok(AllMarketSummaries { inner: market_summaries })
 	}
 }
 
 impl<'de> de::Deserialize<'de> for AllMarketSummaries {
-	fn deserialize<D>(deserializer: D) -> Result<AllMarketSummaries<'de>, D::Error>
+	fn deserialize<D>(deserializer: D) -> Result<AllMarketSummaries, D::Error>
 	where
 		D: de::Deserializer<'de>,
 	{

@@ -3,7 +3,7 @@ use super::*;
 use chrono::{serde::ts_seconds, DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use serde_aux::field_attributes::deserialize_number_from_string;
-use std::{borrow::Cow, collections::HashMap};
+use std::collections::HashMap;
 
 /// An asset describing a market
 #[derive(Serialize, Deserialize, Debug)]
