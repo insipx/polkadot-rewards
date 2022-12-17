@@ -6,19 +6,19 @@ use std::borrow::Cow;
 
 #[derive(Debug, Builder)]
 #[builder(setter(strip_option))]
-pub struct PairDetails<'a> {
+pub struct PairDetailsRequest<'a> {
 	/// If the request is paginate, the previously received cursor value.
 	#[builder(setter(into))]
 	pair: Cow<'a, str>,
 }
 
-impl<'a> PairDetails<'a> {
-	pub fn builder() -> PairDetailsBuilder<'a> {
-		PairDetailsBuilder::default()
+impl<'a> PairDetailsRequest<'a> {
+	pub fn builder() -> PairDetailsRequestBuilder<'a> {
+		PairDetailsRequestBuilder::default()
 	}
 }
 
-impl<'a> Endpoint for PairDetails<'a> {
+impl<'a> Endpoint for PairDetailsRequest<'a> {
 	fn endpoint(&self) -> Cow<'static, str> {
 		"pairs".into()
 	}
@@ -34,18 +34,18 @@ impl<'a> Endpoint for PairDetails<'a> {
 mod tests {
 	use super::*;
 	use crate::{
-		prelude::{CryptowatchClient, PairDetails, Query, Response, RestClient},
+		prelude::{CryptowatchClient, PairDetails, Query, RestClient},
 		tests::prelude::*,
 	};
 
 	#[test]
 	fn can_build() {
-		super::PairDetails::builder().pair("btc").build().unwrap();
+		PairDetailsRequest::builder().pair("btc").build().unwrap();
 	}
 
 	#[test]
 	fn pair_is_required() {
-		assert!(matches!(super::PairDetails::builder().build(), Err(_)));
+		assert!(matches!(PairDetailsRequest::builder().build(), Err(_)));
 	}
 
 	#[test]
@@ -53,7 +53,7 @@ mod tests {
 		init();
 		let rest_client = RestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
-		let endpoint = super::PairDetails::builder().pair("btceur").build().unwrap();
+		let endpoint = PairDetailsRequest::builder().pair("btceur").build().unwrap();
 		let _: PairDetails = tokio_test::block_on(endpoint.query(&client)).unwrap();
 	}
 }

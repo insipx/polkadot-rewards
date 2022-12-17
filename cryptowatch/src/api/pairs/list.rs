@@ -6,7 +6,7 @@ use std::borrow::Cow;
 
 #[derive(Debug, Builder)]
 #[builder(setter(strip_option))]
-pub struct PairList<'a> {
+pub struct PairListRequest<'a> {
 	/// If the request is paginate, the previously received cursor value.
 	#[builder(setter(into), default)]
 	cursor: Option<Cow<'a, str>>,
@@ -15,14 +15,14 @@ pub struct PairList<'a> {
 	limit: Option<u64>,
 }
 
-impl<'a> PairList<'a> {
+impl<'a> PairListRequest<'a> {
 	/// Create a builder for PairList
-	pub fn builder() -> PairListBuilder<'a> {
-		PairListBuilder::default()
+	pub fn builder() -> PairListRequestBuilder<'a> {
+		PairListRequestBuilder::default()
 	}
 }
 
-impl<'a> Endpoint for PairList<'a> {
+impl<'a> Endpoint for PairListRequest<'a> {
 	fn endpoint(&self) -> Cow<'static, str> {
 		"pairs".into()
 	}
@@ -39,18 +39,18 @@ impl<'a> Endpoint for PairList<'a> {
 mod tests {
 	use super::*;
 	use crate::{
-		prelude::{CryptowatchClient, PairInfo, Query, Response, RestClient},
+		prelude::{CryptowatchClient, PairInfo, Query, RestClient},
 		tests::prelude::*,
 	};
 
 	#[test]
 	fn can_build() {
-		PairList::builder().cursor("test").limit(5).build().unwrap();
+		PairListRequest::builder().cursor("test").limit(5).build().unwrap();
 	}
 
 	#[test]
 	fn does_not_require_params() {
-		assert_ok!(PairList::builder().build());
+		assert_ok!(PairListRequest::builder().build());
 	}
 
 	#[test]
@@ -58,7 +58,7 @@ mod tests {
 		init();
 		let rest_client = RestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
-		let endpoint = PairList::builder().build().unwrap();
+		let endpoint = PairListRequest::builder().build().unwrap();
 		let _: Vec<PairInfo> = tokio_test::block_on(endpoint.query(&client)).unwrap();
 	}
 }
