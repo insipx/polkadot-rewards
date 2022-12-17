@@ -54,6 +54,6 @@ mod tests {
 		let rest_client = RestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
 		let endpoint = AssetPairs::builder().pair("btc").build().unwrap();
-		let _: Response<AssetDetails> = tokio_test::block_on(endpoint.query(&client)).unwrap();
+		let _: AssetDetails = tokio_test::block_on(endpoint.query(&client)).unwrap();
 	}
 }

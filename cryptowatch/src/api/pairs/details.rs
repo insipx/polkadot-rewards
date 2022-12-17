@@ -29,3 +29,31 @@ impl<'a> Endpoint for PairDetails<'a> {
 		paths
 	}
 }
+
+#[cfg(test)]
+mod tests {
+	use super::*;
+	use crate::{
+		prelude::{CryptowatchClient, PairDetails, Query, Response, RestClient},
+		tests::prelude::*,
+	};
+
+	#[test]
+	fn can_build() {
+		super::PairDetails::builder().pair("btc").build().unwrap();
+	}
+
+	#[test]
+	fn pair_is_required() {
+		assert!(matches!(super::PairDetails::builder().build(), Err(_)));
+	}
+
+	#[test]
+	fn endpoint() {
+		init();
+		let rest_client = RestClient::with_public().unwrap();
+		let client = CryptowatchClient::new_http(rest_client);
+		let endpoint = super::PairDetails::builder().pair("btceur").build().unwrap();
+		let _: PairDetails = tokio_test::block_on(endpoint.query(&client)).unwrap();
+	}
+}

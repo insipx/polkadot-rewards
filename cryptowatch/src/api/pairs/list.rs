@@ -59,6 +59,6 @@ mod tests {
 		let rest_client = RestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
 		let endpoint = PairList::builder().build().unwrap();
-		let _: Response<Vec<PairInfo>> = tokio_test::block_on(endpoint.query(&client)).unwrap();
+		let _: Vec<PairInfo> = tokio_test::block_on(endpoint.query(&client)).unwrap();
 	}
 }

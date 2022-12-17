@@ -14,7 +14,7 @@ pub enum ApiError {
 	InvalidUrl { url: url::Url, endpoint: String, source: url::ParseError },
 	#[error(transparent)]
 	REST(#[from] hyper::Error),
-	#[error(transparent)]
+	#[error("{}: {}", .0, .0.to_string())]
 	Http(#[from] http::Error),
 }
 

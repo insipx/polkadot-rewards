@@ -13,6 +13,7 @@ mod exchanges;
 mod markets;
 mod pairs;
 
+use crate::types;
 use bytes::Bytes;
 use http::{request, response::Response, Request, Uri};
 use serde::de::DeserializeOwned;
@@ -89,7 +90,8 @@ where
 		if !status.is_success() {
 			return Err(ApiError::HttpError(status))
 		}
-		serde_json::from_value::<T>(value).map_err(ApiError::data_type::<T>)
+		let response: types::Response<T> = serde_json::from_value(value).map_err(ApiError::data_type::<T>)?;
+		Ok(response.unpack())
 	}
 }
 

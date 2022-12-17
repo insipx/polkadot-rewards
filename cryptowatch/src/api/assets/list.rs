@@ -54,7 +54,7 @@ mod tests {
 		let rest_client = RestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
 		let endpoint = AssetList::builder().build().unwrap();
-		let assets: Response<Vec<Asset>> = tokio_test::block_on(endpoint.query(&client)).unwrap();
-		assert!(!assets.unpack().is_empty());
+		let assets: Vec<Asset> = tokio_test::block_on(endpoint.query(&client)).unwrap();
+		assert!(!assets.is_empty());
 	}
 }
