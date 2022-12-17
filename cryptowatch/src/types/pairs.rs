@@ -12,27 +12,23 @@ pub struct Pair<'a> {
 
 /// An asset/asset pairing.
 #[derive(Serialize, Deserialize, Debug)]
-pub struct PairInfo<'a> {
+pub struct PairInfo {
 	id: u64,
-	#[serde(borrow)]
-	symbol: Cow<'a, str>,
-	#[serde(borrow)]
-	base: Asset<'a>,
-	#[serde(borrow)]
-	quote: Asset<'a>,
+	symbol: String,
+	base: Asset,
+	quote: Asset,
 	route: Route,
 }
 
 /// General details about a pair.
 #[derive(Serialize, Deserialize, Debug)]
-pub struct PairDetails<'a> {
+pub struct PairDetails {
 	id: u64,
-	#[serde(borrow)]
-	symbol: Cow<'a, str>,
-	base: Asset<'a>,
-	quote: Asset<'a>,
+	symbol: String,
+	base: Asset,
+	quote: Asset,
 	route: Route,
-	markets: Vec<MarketAsset<'a>>,
+	markets: Vec<MarketAsset>,
 }
 
 #[cfg(test)]

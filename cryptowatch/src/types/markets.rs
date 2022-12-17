@@ -7,10 +7,10 @@ use std::{borrow::Cow, collections::HashMap};
 
 /// An asset describing a market
 #[derive(Serialize, Deserialize, Debug)]
-pub struct MarketAsset<'a> {
+pub struct MarketAsset {
 	id: u64,
-	exchange: Cow<'a, str>,
-	pair: Cow<'a, str>,
+	exchange: Exchange,
+	pair: String,
 	active: bool,
 	route: Route,
 }
@@ -20,8 +20,7 @@ pub struct MarketAsset<'a> {
 pub struct MarketAssetDetails<'a> {
 	id: u64,
 	exchange: Exchange,
-	#[serde(borrow)]
-	pair: Pair<'a>,
+	pair: Pair,
 	active: bool,
 	routes: HashMap<RouteType, Route>,
 }
@@ -76,8 +75,8 @@ pub struct PriceChange {
 
 /// Summaries of every market and every pair.
 #[derive(Serialize, Debug)]
-pub struct AllMarketSummaries<'a> {
-	pub(crate) inner: HashMap<(Exchange, Pair<'a>), MarketSummary>,
+pub struct AllMarketSummaries {
+	pub(crate) inner: HashMap<(Exchange, Pair), MarketSummary>,
 }
 
 /// An individual offer to either sell or buy an `amount` of an asset at a `price`.

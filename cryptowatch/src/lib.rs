@@ -6,19 +6,17 @@ mod api;
 pub mod client;
 /// Possible error types
 mod error;
-/// Implementors for types and Client
-mod impls;
 /// Tests for types and client including a mock
 #[cfg(test)]
 mod tests;
 /// Types for the `cryptowatch` API
 pub mod types;
+pub use error::Error;
 
 pub mod prelude {
+	pub use super::error::*;
 	use super::*;
 	pub use api::*;
 	pub use client::*;
-	pub use error::*;
-	pub use impls::*;
 	pub use types::*;
 }

@@ -1,3 +1,4 @@
+use crate::api::ApiError;
 use chrono::{DateTime, NaiveDate, Utc};
 use std::borrow::Cow;
 use url::Url;
@@ -70,6 +71,39 @@ impl ParamValue<'static> for DateTime<Utc> {
 impl ParamValue<'static> for NaiveDate {
 	fn as_value(&self) -> Cow<'static, str> {
 		format!("{}", self.format("%Y-%m-%d")).into()
+	}
+}
+
+/// A structure for paramaters that add to a path
+#[derive(Debug, Default, Clone)]
+pub struct PathParams<'a> {
+	paths: Vec<Cow<'a, str>>,
+}
+
+impl<'a> PathParams<'a> {
+	/// Push one path to the parameters.
+	pub fn push<P>(&mut self, path: P) -> &mut Self
+	where
+		P: Into<Cow<'a, str>>,
+	{
+		self.paths.push(path.into());
+		self
+	}
+
+	/// Extend parameters with many paths.
+	pub fn extend<P, I>(&mut self, iter: I) -> &mut Self
+	where
+		P: Into<Cow<'a, str>>,
+		I: Iterator<Item = P>,
+	{
+		self.paths.extend(iter.map(Into::into));
+		self
+	}
+
+	pub fn add_to_url(&self, url: &mut Url) -> Result<(), ApiError> {
+		let mut paths = url.path_segments_mut().map_err(|_| ApiError::CannotBeABase)?;
+		paths.extend(self.paths.iter());
+		Ok(())
 	}
 }
 

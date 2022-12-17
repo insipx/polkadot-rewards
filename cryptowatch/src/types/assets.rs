@@ -5,36 +5,30 @@ use super::*;
 
 /// An single asset
 #[derive(Serialize, Deserialize, Debug, Clone)]
-pub struct Asset<'a> {
+pub struct Asset {
 	pub id: u64,
-	#[serde(borrow)]
-	pub sid: Cow<'a, str>,
-	#[serde(borrow)]
-	pub symbol: Cow<'a, str>,
-	#[serde(borrow)]
-	pub name: Cow<'a, str>,
+	pub sid: String,
+	pub symbol: String,
+	pub name: String,
 	pub fiat: bool,
 	pub route: Route,
 }
 
 /// Details about an asset.
 #[derive(Serialize, Deserialize, Debug)]
-pub struct AssetDetails<'a> {
+pub struct AssetDetails {
 	pub id: u64,
-	#[serde(borrow)]
-	pub sid: Cow<'a, str>,
-	#[serde(borrow)]
-	pub symbol: Cow<'a, str>,
-	#[serde(borrow)]
-	pub name: Cow<'a, str>,
+	pub sid: String,
+	pub symbol: String,
+	pub name: String,
 	pub fiat: bool,
 	#[serde(borrow)]
-	pub markets: CurrencyPair<'a>,
+	pub markets: CurrencyPair,
 }
 
 ///  Base/Quote for an Asset
 #[derive(Serialize, Deserialize, Debug)]
-pub struct CurrencyPair<'a> {
+pub struct CurrencyPair {
 	#[serde(borrow)]
 	pub base: Vec<MarketAsset<'a>>,
 	#[serde(borrow)]

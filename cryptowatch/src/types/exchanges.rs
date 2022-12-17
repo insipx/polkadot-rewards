@@ -1,6 +1,6 @@
 use super::*;
 use serde::{Deserialize, Serialize};
-use std::{borrow::Cow, collections::HashMap};
+use std::collections::HashMap;
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
 pub enum Exchange {
@@ -77,25 +77,21 @@ pub enum Exchange {
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub struct ExchangeDetails<'a> {
+pub struct ExchangeDetails {
 	id: u64,
-	#[serde(borrow)]
-	symbol: Cow<'a, str>,
-	#[serde(borrow)]
-	name: Cow<'a, str>,
+	symbol: String,
+	name: Exchange,
 	active: bool,
-	#[serde(borrow)]
 	#[serde(flatten)]
-	routes: SingleOrMultipleRoutes<'a>,
+	routes: SingleOrMultipleRoutes,
 }
 
 #[derive(Serialize, Deserialize, Debug)]
-pub enum SingleOrMultipleRoutes<'a> {
+pub enum SingleOrMultipleRoutes {
 	#[serde(rename = "route")]
-	Single(Cow<'a, Route>),
-	#[serde(borrow)]
+	Single(Route),
 	#[serde(rename = "routes")]
-	Multiple(HashMap<Cow<'a, str>, Cow<'a, Route>>),
+	Multiple(HashMap<String, Route>),
 }
 
 #[cfg(test)]

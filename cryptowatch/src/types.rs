@@ -6,11 +6,13 @@ mod assets;
 mod exchanges;
 mod markets;
 mod pairs;
+mod impls;
 
 pub use assets::*;
 pub use exchanges::*;
 pub use markets::*;
 pub use pairs::*;
+pub use impls::*;
 
 /// The general REST API "Response" type.
 #[derive(Serialize, Deserialize, Debug)]

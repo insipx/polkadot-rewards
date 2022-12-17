@@ -1,24 +1,55 @@
 //! Cryptowat.ch Client
 
-use hyper::Uri;
-use once_cell::sync::Lazy;
-
-mod assets;
-mod exchanges;
-mod markets;
-mod pairs;
 mod rest_client;
 
-pub use assets::*;
-pub use exchanges::*;
-pub use markets::*;
-pub use pairs::*;
+use crate::api;
+use api::ApiError;
 pub use rest_client::*;
+
+use bytes::Bytes;
+use http::{request, response::Parts, Response};
+use once_cell::sync::Lazy;
+use url::Url;
 
 /// CryptowatchRS Version
 const CRYPTOWATCH_RS_VERSION: Option<&'static str> = option_env!("CARGO_PKG_VERSION");
 
 /// Cryptowat.ch URL
-static CRYPTOWATCH_URI: Lazy<Uri> = Lazy::new(|| "https://api.cryptowat.ch".parse::<Uri>().unwrap());
+pub const CRYPTOWATCH_URL: Lazy<Url> = Lazy::new(|| Url::parse("https://api.cryptowat.ch").unwrap());
 
-pub struct Client;
+/// CryptowatchClient that supports cryptowat.ch websockets and REST API functions
+pub struct CryptowatchClient {
+	rest_client: RestClient,
+}
+
+impl CryptowatchClient {
+	pub fn new_http(rest_client: RestClient) -> Self {
+		Self { rest_client }
+	}
+}
+
+impl api::Client for CryptowatchClient {
+	type Error = super::Error;
+
+	fn rest_endpoint(&self, endpoint: &str) -> Result<Url, ApiError> {
+		log::debug!(target: "gitlab", "REST api call {}", endpoint);
+		CRYPTOWATCH_URL
+			.join(endpoint)
+			.map_err(|e| ApiError::invalid_url_endpoint(endpoint, e))
+	}
+
+	async fn rest(&self, mut request: request::Builder) -> Result<Response<Bytes>, ApiError> {
+		self.rest_client.set_headers(request.headers_mut().unwrap());
+		let response = self.rest_client.http.request(request.body(Default::default())?).await?;
+
+		let (Parts { status, version, headers, .. }, body) = response.into_parts();
+
+		let mut http_response = Response::builder().status(status).version(version);
+		let http_headers = http_response.headers_mut().unwrap();
+		http_headers.extend(headers.into_iter().map(|(name, value)| (name, value)));
+
+		http_response
+			.body(hyper::body::to_bytes(body).await?)
+			.map_err(Into::<ApiError>::into)
+	}
+}

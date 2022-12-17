@@ -12,10 +12,4 @@ pub enum Error {
 	IO(#[from] std::io::Error),
 	#[error("The header `{0}` is invalid")]
 	InvalidHeader(#[from] hyper::header::InvalidHeaderValue),
-	#[error(transparent)]
-	HttpError(#[from] hyper::http::Error),
-	#[error("The authority is missing from the URI")]
-	NoAuthority,
-	#[error("The scheme is missing from the URI")]
-	NoScheme,
 }
