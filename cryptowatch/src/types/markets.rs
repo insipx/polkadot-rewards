@@ -237,7 +237,7 @@ pub struct OHLC {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::tests::test_prelude::*;
+	use crate::tests::{data_prelude::*, prelude::*};
 
 	#[test]
 	fn test_market_list_deserialization() {

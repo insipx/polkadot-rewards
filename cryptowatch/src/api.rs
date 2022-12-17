@@ -16,7 +16,7 @@ mod pairs;
 use bytes::Bytes;
 use http::{request, response::Response, Request, Uri};
 use serde::de::DeserializeOwned;
-use std::{borrow::Cow, error::Error as StdError};
+use std::{borrow::Cow, error::Error as StdError, fmt};
 use url::Url;
 
 /// Import all endpoints
@@ -66,14 +66,16 @@ pub trait Query<T, C> {
 
 impl<E, T, C> Query<T, C> for E
 where
-	E: Endpoint,
-	T: DeserializeOwned,
-	C: Client,
+	E: Endpoint + fmt::Debug,
+	T: DeserializeOwned + fmt::Debug,
+	C: Client + fmt::Debug,
 {
+	#[tracing::instrument]
 	async fn query(&self, client: &C) -> Result<T, ApiError> {
 		let mut url = client.rest_endpoint(&self.endpoint())?;
 		self.path().add_to_url(&mut url)?;
 		self.parameters().add_to_url(&mut url);
+		tracing::debug!(target: "cryptowatch::api", "Query URL Is: {}", url);
 		let request = Request::builder().method("GET").uri(url_to_http_uri(url));
 		let response = client.rest(request).await?;
 		let status = response.status();

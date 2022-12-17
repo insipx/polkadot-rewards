@@ -2,13 +2,28 @@
 mod client;
 mod mock;
 
-pub mod test_prelude {
+pub mod prelude {
 	pub use assert_ok::assert_ok;
 	pub use std::{
 		include_bytes,
 		io::Read,
 		path::{Path, PathBuf},
+		sync::Once,
 	};
+	static INIT: Once = Once::new();
+
+	pub fn init() {
+		use tracing_forest::ForestLayer;
+		use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt, Registry};
+		INIT.call_once(|| {
+			Registry::default().with(ForestLayer::default()).init();
+		})
+	}
+}
+
+/// Maps enums to data files
+pub mod data_prelude {
+	use super::prelude::*;
 
 	#[allow(unused)]
 	pub enum Call {

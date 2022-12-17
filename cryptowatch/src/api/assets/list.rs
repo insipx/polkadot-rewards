@@ -8,9 +8,10 @@ use std::borrow::Cow;
 #[builder(setter(strip_option))]
 pub struct AssetList<'a> {
 	/// If the request is paginate, the previously received cursor value.
-	#[builder(setter(into))]
+	#[builder(setter(into), default)]
 	cursor: Option<Cow<'a, str>>,
 	/// Maximum number of results to be returned (Default: 5000, Maximum: 5000)
+	#[builder(default)]
 	limit: Option<u64>,
 }
 
@@ -23,7 +24,7 @@ impl<'a> AssetList<'a> {
 
 impl<'a> Endpoint for AssetList<'a> {
 	fn endpoint(&self) -> Cow<'static, str> {
-		"assets/".into()
+		"assets".into()
 	}
 
 	fn parameters(&self) -> QueryParams {
@@ -37,14 +38,23 @@ impl<'a> Endpoint for AssetList<'a> {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::prelude::{Asset, CryptowatchClient, Query, RestClient};
+	use crate::{
+		prelude::{Asset, CryptowatchClient, Query, Response, RestClient},
+		tests::prelude::*,
+	};
+
+	#[test]
+	fn can_build() {
+		AssetList::builder().build().unwrap();
+	}
 
 	#[test]
 	fn endpoint() {
+		init();
 		let rest_client = RestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
 		let endpoint = AssetList::builder().build().unwrap();
-		let assets: Vec<Asset> = tokio_test::block_on(endpoint.query(&client)).unwrap();
-		assert!(!assets.is_empty());
+		let assets: Response<Vec<Asset>> = tokio_test::block_on(endpoint.query(&client)).unwrap();
+		assert!(!assets.unpack().is_empty());
 	}
 }

@@ -20,7 +20,7 @@ impl<'a> AssetPairs<'a> {
 
 impl<'a> Endpoint for AssetPairs<'a> {
 	fn endpoint(&self) -> Cow<'static, str> {
-		"assets/".into()
+		"assets".into()
 	}
 
 	fn path(&self) -> PathParams {

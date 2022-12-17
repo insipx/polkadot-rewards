@@ -33,7 +33,7 @@ pub struct PairDetails {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::tests::test_prelude::*;
+	use crate::tests::{data_prelude::*, prelude::*};
 
 	#[test]
 	fn test_real_data_pair_deserialization() {

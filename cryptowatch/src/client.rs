@@ -18,6 +18,7 @@ const CRYPTOWATCH_RS_VERSION: Option<&'static str> = option_env!("CARGO_PKG_VERS
 pub static CRYPTOWATCH_URL: Lazy<Url> = Lazy::new(|| Url::parse("https://api.cryptowat.ch").unwrap());
 
 /// CryptowatchClient that supports cryptowat.ch websockets and REST API functions
+#[derive(Debug, Clone)]
 pub struct CryptowatchClient {
 	rest_client: RestClient,
 }
@@ -32,12 +33,13 @@ impl api::Client for CryptowatchClient {
 	type Error = super::Error;
 
 	fn rest_endpoint(&self, endpoint: &str) -> Result<Url, ApiError> {
-		log::debug!(target: "gitlab", "REST api call {}", endpoint);
+		tracing::debug!(target: "cryptowatch::api", "REST api call {}", endpoint);
 		CRYPTOWATCH_URL
 			.join(endpoint)
 			.map_err(|e| ApiError::invalid_url_endpoint(endpoint, e))
 	}
 
+	#[tracing::instrument]
 	async fn rest(&self, mut request: request::Builder) -> Result<Response<Bytes>, ApiError> {
 		self.rest_client.set_headers(request.headers_mut().unwrap());
 		let response = self.rest_client.http.request(request.body(Default::default())?).await?;

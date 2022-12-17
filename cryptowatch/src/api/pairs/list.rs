@@ -23,7 +23,7 @@ impl<'a> PairList<'a> {
 
 impl<'a> Endpoint for PairList<'a> {
 	fn endpoint(&self) -> Cow<'static, str> {
-		"pairs/".into()
+		"pairs".into()
 	}
 
 	fn parameters(&self) -> QueryParams {

@@ -18,7 +18,7 @@ pub struct Asset {
 pub struct AssetDetails {
 	pub id: u64,
 	pub sid: String,
-	pub symbol: String,
+	pub symbol: Exchange,
 	pub name: String,
 	pub fiat: bool,
 	pub markets: CurrencyPair,
@@ -33,7 +33,10 @@ pub struct CurrencyPair {
 
 #[cfg(test)]
 mod tests {
-	use crate::{tests::test_prelude::*, types::*};
+	use crate::{
+		tests::{data_prelude::*, prelude::*},
+		types::*,
+	};
 
 	// assets -> List
 	#[test]

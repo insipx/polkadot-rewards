@@ -2,7 +2,8 @@ use super::*;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
 
-#[derive(Serialize, Deserialize, Debug, Clone, Copy, PartialEq, Eq, Hash)]
+#[derive(Serialize, Deserialize, Debug, Clone, PartialEq, Eq, Hash)]
+#[serde(from = "String")]
 pub enum Exchange {
 	#[serde(rename = "bitflyer")]
 	BitFlyer,
@@ -14,8 +15,10 @@ pub enum Exchange {
 	Luno,
 	#[serde(rename = "gateio")]
 	Gateio,
+	#[serde(alias = "Kraken")]
 	#[serde(rename = "bitfinex")]
 	Bitfinex,
+	#[serde(alias = "Kraken")]
 	#[serde(rename = "kraken")]
 	Kraken,
 	#[serde(rename = "cexio")]
@@ -74,13 +77,19 @@ pub enum Exchange {
 	Okx,
 	#[serde(rename = "zonda")]
 	Zonda,
+	#[serde(rename = "wex")]
+	Wex,
+	#[serde(rename = "cryptsy")]
+	Cryptsy,
+	Other(String),
 }
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct ExchangeDetails {
 	id: u64,
-	symbol: String,
-	name: Exchange,
+	symbol: Exchange,
+	/// Common name for this exchange. Formatting differs.
+	name: String,
 	active: bool,
 	#[serde(flatten)]
 	routes: SingleOrMultipleRoutes,
@@ -97,7 +106,7 @@ pub enum SingleOrMultipleRoutes {
 #[cfg(test)]
 mod tests {
 	use super::*;
-	use crate::tests::test_prelude::*;
+	use crate::tests::{data_prelude::*, prelude::*};
 
 	#[test]
 	fn test_exchange_list_deserialization() {

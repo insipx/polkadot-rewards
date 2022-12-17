@@ -12,6 +12,7 @@ use std::{
 };
 
 /// General configuration values.
+#[derive(Debug, Clone)]
 pub struct ClientConfig {
 	/// The timeout to use for http connections.
 	/// Defaults to 30 seconds.
@@ -68,6 +69,7 @@ impl ClientCredentials {
 }
 
 /// Abstracts over the REST API for ergonomics.
+#[derive(Debug, Clone)]
 pub struct RestClient {
 	pub(crate) http: hyper::Client<hyper_tls::HttpsConnector<hyper::client::HttpConnector>>,
 	headers: HeaderMap<http::HeaderValue>,

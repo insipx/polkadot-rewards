@@ -20,7 +20,7 @@ impl<'a> PairDetails<'a> {
 
 impl<'a> Endpoint for PairDetails<'a> {
 	fn endpoint(&self) -> Cow<'static, str> {
-		"pairs/".into()
+		"pairs".into()
 	}
 
 	fn path(&self) -> PathParams {
