@@ -7,22 +7,13 @@ use std::collections::HashMap;
 
 /// An asset describing a market
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
-pub struct MarketAsset {
+pub struct Market {
 	id: u64,
 	exchange: Exchange,
 	pair: String,
 	active: bool,
-	route: Route,
-}
-
-/// Details about a single asset belonging to one particular exchange.
-#[derive(Serialize, Deserialize, Debug, PartialEq)]
-pub struct MarketAssetDetails {
-	id: u64,
-	exchange: Exchange,
-	pair: Pair,
-	active: bool,
-	routes: HashMap<RouteType, Route>,
+	#[serde(flatten)]
+	route: SingleOrMultipleRoutes,
 }
 
 /// How the investment was made. Either through a Market or Index.
@@ -240,70 +231,70 @@ mod tests {
 	use super::*;
 	use crate::tests::{data_prelude::*, prelude::*};
 
-	#[test]
-	fn test_market_list_deserialization() {
-		let list = load_test_data(Call::Markets(Market::List));
-		let _: Response<Vec<MarketAsset>> = assert_ok!(serde_json::from_slice(list.as_slice()));
+	#[tokio::test]
+	async fn test_market_list_deserialization() {
+		let list = test_data(Call::Markets(MarketQuery::List)).await;
+		let _: Response<Vec<Market>> = assert_ok!(serde_json::from_slice(list.as_slice()));
 	}
 
-	#[test]
-	fn test_market_details_deserialization() {
-		let details = load_test_data(Call::Markets(Market::Details));
-		let _: Response<MarketAssetDetails> = assert_ok!(serde_json::from_slice(details.as_slice()));
+	#[tokio::test]
+	async fn test_market_details_deserialization() {
+		let details = test_data(Call::Markets(MarketQuery::Details)).await;
+		let _: Response<Market> = assert_ok!(serde_json::from_slice(details.as_slice()));
 	}
 
-	#[test]
-	fn test_market_price_deserialization() {
-		let price = load_test_data(Call::Markets(Market::Price(OneOrAllMarkets::One)));
+	#[tokio::test]
+	async fn test_market_price_deserialization() {
+		let price = test_data(Call::Markets(MarketQuery::Price(OneOrAllMarkets::One))).await;
 		let _: Response<Price> = assert_ok!(serde_json::from_slice(price.as_slice()));
 	}
 
-	#[test]
-	fn test_all_market_price_deserialization() {
-		let price = load_test_data(Call::Markets(Market::Price(OneOrAllMarkets::All)));
+	#[tokio::test]
+	async fn test_all_market_price_deserialization() {
+		let price = test_data(Call::Markets(MarketQuery::Price(OneOrAllMarkets::All))).await;
 		let _: Response<PriceMap> = assert_ok!(serde_json::from_slice(price.as_slice()));
 	}
 
-	#[test]
-	fn test_trades_deserialization() {
-		let trades = load_test_data(Call::Markets(Market::Trades));
+	#[tokio::test]
+	async fn test_trades_deserialization() {
+		let trades = test_data(Call::Markets(MarketQuery::Trades)).await;
 		let _: Response<Vec<Trade>> = assert_ok!(serde_json::from_slice(trades.as_slice()));
 	}
 
-	#[test]
-	fn test_summary_deserialization() {
-		let summary = load_test_data(Call::Markets(Market::TwentyFourHourSummary(OneOrAllMarkets::One)));
+	#[tokio::test]
+	async fn test_summary_deserialization() {
+		let summary = test_data(Call::Markets(MarketQuery::TwentyFourHourSummary(OneOrAllMarkets::One))).await;
 		let _: Response<MarketSummary> = assert_ok!(serde_json::from_slice(summary.as_slice()));
 	}
 
-	#[test]
-	fn test_all_summary_deserialization() {
-		let summary = load_test_data(Call::Markets(Market::TwentyFourHourSummary(OneOrAllMarkets::All)));
+	#[tokio::test]
+	async fn test_all_summary_deserialization() {
+		let summary = test_data(Call::Markets(MarketQuery::TwentyFourHourSummary(OneOrAllMarkets::All))).await;
 		let _: Response<AllMarketSummaries> = assert_ok!(serde_json::from_slice(summary.as_slice()));
 	}
 
-	#[test]
-	fn test_orderbook_deserialization() {
-		let orderbook = load_test_data(Call::Markets(Market::Orderbook(OrderbookCall::Book)));
+	#[tokio::test]
+	async fn test_orderbook_deserialization() {
+		let orderbook = test_data(Call::Markets(MarketQuery::Orderbook(OrderbookCall::Book))).await;
 		let _: Response<Orderbook> = assert_ok!(serde_json::from_slice(orderbook.as_slice()));
 	}
 
-	#[test]
-	fn test_orderbook_liquidity_deserialization() {
-		let orderbook = load_test_data(Call::Markets(Market::Orderbook(OrderbookCall::Liquidity)));
+	#[tokio::test]
+	async fn test_orderbook_liquidity_deserialization() {
+		let orderbook = test_data(Call::Markets(MarketQuery::Orderbook(OrderbookCall::Liquidity))).await;
 		let _: Response<OrderbookLiquidity> = assert_ok!(serde_json::from_slice(orderbook.as_slice()));
 	}
 
-	#[test]
-	fn test_orderbook_calculator_deserialization() {
-		let orderbook = load_test_data(Call::Markets(Market::Orderbook(OrderbookCall::Calculator)));
+	#[tokio::test]
+	async fn test_orderbook_calculator_deserialization() {
+		let orderbook = test_data(Call::Markets(MarketQuery::Orderbook(OrderbookCall::Calculator))).await;
 		let _: Response<OrderbookCalculator> = assert_ok!(serde_json::from_slice(orderbook.as_slice()));
 	}
 
 	// Markets -> OHLC
-	#[test]
-	fn test_ohlc_deserialization() {
-		let ohlc = load_test_data(Call::Markets(Market::Ohlc));
+	#[tokio::test]
+	async fn test_ohlc_deserialization() {
+		let ohlc = test_data(Call::Markets(MarketQuery::Ohlc)).await;
 		let _: Response<PeriodMap> = assert_ok!(serde_json::from_slice(ohlc.as_slice()));
 	}
 }

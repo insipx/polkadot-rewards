@@ -27,8 +27,8 @@ pub struct AssetDetails {
 ///  Base/Quote for an Asset
 #[derive(Serialize, Deserialize, Debug, PartialEq)]
 pub struct CurrencyPair {
-	pub base: Vec<MarketAsset>,
-	pub quote: Vec<MarketAsset>,
+	pub base: Vec<Market>,
+	pub quote: Vec<Market>,
 }
 
 #[cfg(test)]
@@ -39,15 +39,15 @@ mod tests {
 	};
 
 	// assets -> List
-	#[test]
-	fn test_real_data_asset_deserialization() {
-		let assets = load_test_data(Call::Assets(Assets::List));
+	#[tokio::test]
+	async fn test_real_data_asset_deserialization() {
+		let assets = test_data(Call::Assets(Assets::List)).await;
 		let _: Response<Vec<Asset>> = assert_ok!(serde_json::from_slice(assets.as_slice()));
 	}
 
-	#[test]
-	fn test_real_data_asset_details_deserialization() {
-		let assets = load_test_data(Call::Assets(Assets::Details));
+	#[tokio::test]
+	async fn test_real_data_asset_details_deserialization() {
+		let assets = test_data(Call::Assets(Assets::Details)).await;
 		let _: Response<AssetDetails> = assert_ok!(serde_json::from_slice(assets.as_slice()));
 	}
 }

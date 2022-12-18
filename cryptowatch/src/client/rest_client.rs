@@ -70,12 +70,12 @@ impl ClientCredentials {
 
 /// Abstracts over the REST API for ergonomics.
 #[derive(Debug, Clone)]
-pub struct RestClient {
+pub struct CryptowatchRestClient {
 	pub(crate) http: hyper::Client<hyper_tls::HttpsConnector<hyper::client::HttpConnector>>,
 	headers: HeaderMap<http::HeaderValue>,
 }
 
-impl RestClient {
+impl CryptowatchRestClient {
 	/// Create a client and try to load the credentials from the environment.
 	pub fn new(credentials: ClientCredentials) -> Result<Self, Error> {
 		let config = ClientConfig::default();

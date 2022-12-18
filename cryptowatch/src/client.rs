@@ -20,24 +20,17 @@ pub static CRYPTOWATCH_URL: Lazy<Url> = Lazy::new(|| Url::parse("https://api.cry
 /// CryptowatchClient that supports cryptowat.ch websockets and REST API functions
 #[derive(Debug, Clone)]
 pub struct CryptowatchClient {
-	rest_client: RestClient,
+	rest_client: CryptowatchRestClient,
 }
 
 impl CryptowatchClient {
-	pub fn new_http(rest_client: RestClient) -> Self {
+	pub fn new_http(rest_client: CryptowatchRestClient) -> Self {
 		Self { rest_client }
 	}
 }
 
 impl api::Client for CryptowatchClient {
 	type Error = super::Error;
-
-	fn rest_endpoint(&self, endpoint: &str) -> Result<Url, ApiError> {
-		tracing::debug!(target: "cryptowatch::api", "REST api call {}", endpoint);
-		CRYPTOWATCH_URL
-			.join(endpoint)
-			.map_err(|e| ApiError::invalid_url_endpoint(endpoint, e))
-	}
 
 	#[tracing::instrument]
 	async fn rest(&self, mut request: request::Builder) -> Result<Response<Bytes>, ApiError> {
@@ -53,5 +46,16 @@ impl api::Client for CryptowatchClient {
 		http_response
 			.body(hyper::body::to_bytes(body).await?)
 			.map_err(Into::<ApiError>::into)
+	}
+}
+
+impl api::RestClient for CryptowatchClient {
+	type Error = super::Error;
+
+	fn rest_endpoint(&self, endpoint: &str) -> Result<Url, ApiError> {
+		tracing::debug!(target: "cryptowatch::api", "REST api call {}", endpoint);
+		CRYPTOWATCH_URL
+			.join(endpoint)
+			.map_err(|e| ApiError::invalid_url_endpoint(endpoint, e))
 	}
 }

@@ -21,7 +21,7 @@ use url::Url;
 pub use error::ApiError;
 pub use params::{PathParams, QueryParams};
 use serde::de::DeserializeOwned;
-pub use traits::{Client, Endpoint, Query};
+pub use traits::{Client, Endpoint, Query, RestClient};
 
 /// Import all endpoints
 pub mod prelude {
@@ -36,7 +36,7 @@ impl<E, T, C> Query<T, C> for E
 where
 	E: Endpoint + fmt::Debug,
 	T: DeserializeOwned + fmt::Debug,
-	C: Client + fmt::Debug,
+	C: Client + RestClient + fmt::Debug,
 {
 	#[tracing::instrument]
 	async fn query(&self, client: &C) -> Result<T, ApiError> {

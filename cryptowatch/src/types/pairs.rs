@@ -27,7 +27,7 @@ pub struct PairDetails {
 	base: Asset,
 	quote: Asset,
 	route: Route,
-	markets: Vec<MarketAsset>,
+	markets: Vec<Market>,
 }
 
 #[cfg(test)]
@@ -35,15 +35,15 @@ mod tests {
 	use super::*;
 	use crate::tests::{data_prelude::*, prelude::*};
 
-	#[test]
-	fn test_real_data_pair_deserialization() {
-		let pairs = load_test_data(Call::Pairs(Pairs::List));
+	#[tokio::test]
+	async fn test_real_data_pair_deserialization() {
+		let pairs = test_data(Call::Pairs(Pairs::List)).await;
 		let _: Response<Vec<PairInfo>> = assert_ok!(serde_json::from_slice(pairs.as_slice()));
 	}
 
-	#[test]
-	fn test_real_data_pair_details_deserialization() {
-		let pairs = load_test_data(Call::Pairs(Pairs::Details));
+	#[tokio::test]
+	async fn test_real_data_pair_details_deserialization() {
+		let pairs = test_data(Call::Pairs(Pairs::Details)).await;
 		let _: Response<PairDetails> = assert_ok!(serde_json::from_slice(pairs.as_slice()));
 	}
 }

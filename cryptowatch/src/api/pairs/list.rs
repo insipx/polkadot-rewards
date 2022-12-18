@@ -4,7 +4,7 @@ use crate::api::{Endpoint, QueryParams};
 use derive_builder::Builder;
 use std::borrow::Cow;
 
-#[derive(Debug, Builder)]
+#[derive(Debug, Builder, PartialEq)]
 #[builder(setter(strip_option))]
 pub struct PairListRequest<'a> {
 	/// If the request is paginate, the previously received cursor value.
@@ -39,7 +39,7 @@ impl<'a> Endpoint for PairListRequest<'a> {
 mod tests {
 	use super::*;
 	use crate::{
-		prelude::{CryptowatchClient, PairInfo, Query, RestClient},
+		prelude::{CryptowatchClient, CryptowatchRestClient, PairInfo, Query},
 		tests::prelude::*,
 	};
 
@@ -53,12 +53,12 @@ mod tests {
 		assert_ok!(PairListRequest::builder().build());
 	}
 
-	#[test]
-	fn endpoint() {
+	#[tokio::test]
+	async fn endpoint() {
 		init();
-		let rest_client = RestClient::with_public().unwrap();
+		let rest_client = CryptowatchRestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
 		let endpoint = PairListRequest::builder().build().unwrap();
-		let _: Vec<PairInfo> = tokio_test::block_on(endpoint.query(&client)).unwrap();
+		let _: Vec<PairInfo> = endpoint.query(&client).await.unwrap();
 	}
 }

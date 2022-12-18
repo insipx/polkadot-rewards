@@ -1,12 +1,11 @@
 //! Types and Utilities for Tests
 mod client;
-mod mock;
 
 pub mod prelude {
+	pub use super::client::*;
 	pub use assert_ok::assert_ok;
 	pub use derive_builder::UninitializedFieldError;
 	pub use std::{
-		include_bytes,
 		io::Read,
 		path::{Path, PathBuf},
 		sync::Once,
@@ -28,29 +27,45 @@ pub mod prelude {
 /// Maps enums to data files
 pub mod data_prelude {
 	use super::prelude::*;
+	use once_cell::sync::Lazy;
+	use std::collections::HashMap;
+	use tokio::sync::RwLock;
 
-	#[allow(unused)]
+	static DATA: Lazy<RwLock<HashMap<Call, Vec<u8>>>> = Lazy::new(|| {
+		let mut m = HashMap::new();
+		enum_iterator::all::<Call>().for_each(|call| {
+			let data = load_test_data(call);
+			m.insert(call, data);
+		});
+		RwLock::new(m)
+	});
+
+	pub async fn test_data(call: Call) -> Vec<u8> {
+		DATA.read().await.get(&call).unwrap().clone()
+	}
+
+	#[derive(enum_iterator::Sequence, PartialEq, Eq, Hash, Clone, Copy)]
 	pub enum Call {
 		Assets(Assets),
 		Exchanges(Exchanges),
-		Markets(Market),
+		Markets(MarketQuery),
 		Pairs(Pairs),
 	}
 
-	#[allow(unused)]
+	#[derive(enum_iterator::Sequence, PartialEq, Eq, Hash, Clone, Copy)]
 	pub enum Assets {
 		List,
 		Details,
 	}
 
-	#[allow(unused)]
+	#[derive(enum_iterator::Sequence, PartialEq, Eq, Hash, Clone, Copy)]
 	pub enum Pairs {
 		List,
 		Details,
 	}
 
-	#[allow(unused)]
-	pub enum Market {
+	#[derive(enum_iterator::Sequence, PartialEq, Eq, Hash, Clone, Copy)]
+	pub enum MarketQuery {
 		List,
 		Details,
 		Price(OneOrAllMarkets),
@@ -60,26 +75,29 @@ pub mod data_prelude {
 		Ohlc,
 	}
 
+	#[derive(enum_iterator::Sequence, PartialEq, Eq, Hash, Clone, Copy)]
 	pub enum OrderbookCall {
 		Book,
 		Liquidity,
 		Calculator,
 	}
 
-	#[allow(unused)]
+	#[derive(enum_iterator::Sequence, PartialEq, Eq, Hash, Clone, Copy)]
 	pub enum Exchanges {
 		List,
 		Details,
 		Markets,
 	}
 
-	#[allow(unused)]
+	#[derive(enum_iterator::Sequence, PartialEq, Eq, Hash, Clone, Copy)]
 	pub enum OneOrAllMarkets {
 		One,
 		All,
 	}
 
+	/// Test-only trait to load data from files
 	trait CallExt {
+		/// Path of a test file.
 		fn path(&self) -> PathBuf;
 	}
 
@@ -112,21 +130,24 @@ pub mod data_prelude {
 		}
 	}
 
-	impl CallExt for Market {
+	impl CallExt for MarketQuery {
 		fn path(&self) -> PathBuf {
 			match self {
-				Market::List => Path::new("markets").join("list.json"),
-				Market::Details => Path::new("markets").join("details.json"),
-				Market::Price(OneOrAllMarkets::One) => Path::new("markets").join("price.json"),
-				Market::Price(OneOrAllMarkets::All) => Path::new("markets").join("price-all.json"),
-				Market::Trades => Path::new("markets").join("trades.json"),
-				Market::TwentyFourHourSummary(OneOrAllMarkets::One) => Path::new("markets").join("24h-summary.json"),
-				Market::TwentyFourHourSummary(OneOrAllMarkets::All) =>
+				MarketQuery::List => Path::new("markets").join("list.json"),
+				MarketQuery::Details => Path::new("markets").join("details.json"),
+				MarketQuery::Price(OneOrAllMarkets::One) => Path::new("markets").join("price.json"),
+				MarketQuery::Price(OneOrAllMarkets::All) => Path::new("markets").join("price-all.json"),
+				MarketQuery::Trades => Path::new("markets").join("trades.json"),
+				MarketQuery::TwentyFourHourSummary(OneOrAllMarkets::One) =>
+					Path::new("markets").join("24h-summary.json"),
+				MarketQuery::TwentyFourHourSummary(OneOrAllMarkets::All) =>
 					Path::new("markets").join("24h-summary-all.json"),
-				Market::Orderbook(OrderbookCall::Book) => Path::new("markets").join("orderbook.json"),
-				Market::Orderbook(OrderbookCall::Liquidity) => Path::new("markets").join("orderbook-liquidity.json"),
-				Market::Orderbook(OrderbookCall::Calculator) => Path::new("markets").join("orderbook-calculator.json"),
-				Market::Ohlc => Path::new("markets").join("ohlc.json"),
+				MarketQuery::Orderbook(OrderbookCall::Book) => Path::new("markets").join("orderbook.json"),
+				MarketQuery::Orderbook(OrderbookCall::Liquidity) =>
+					Path::new("markets").join("orderbook-liquidity.json"),
+				MarketQuery::Orderbook(OrderbookCall::Calculator) =>
+					Path::new("markets").join("orderbook-calculator.json"),
+				MarketQuery::Ohlc => Path::new("markets").join("ohlc.json"),
 			}
 		}
 	}
@@ -141,7 +162,7 @@ pub mod data_prelude {
 		}
 	}
 
-	pub fn load_test_data(call: Call) -> Vec<u8> {
+	fn load_test_data(call: Call) -> Vec<u8> {
 		let mut path = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
 		path.push("data/");
 
@@ -166,24 +187,24 @@ pub mod data_prelude {
 			Call::Exchanges(Exchanges::List) => files.find(|p| p.ends_with("exchanges/list.json")).unwrap(),
 			Call::Exchanges(Exchanges::Details) => files.find(|p| p.ends_with("exchanges/details.json")).unwrap(),
 			Call::Exchanges(Exchanges::Markets) => files.find(|p| p.ends_with("exchanges/markets.json")).unwrap(),
-			Call::Markets(Market::List) => files.find(|p| p.ends_with("markets/list.json")).unwrap(),
-			Call::Markets(Market::Details) => files.find(|p| p.ends_with("markets/details.json")).unwrap(),
-			Call::Markets(Market::Price(OneOrAllMarkets::One)) =>
+			Call::Markets(MarketQuery::List) => files.find(|p| p.ends_with("markets/list.json")).unwrap(),
+			Call::Markets(MarketQuery::Details) => files.find(|p| p.ends_with("markets/details.json")).unwrap(),
+			Call::Markets(MarketQuery::Price(OneOrAllMarkets::One)) =>
 				files.find(|p| p.ends_with("markets/price.json")).unwrap(),
-			Call::Markets(Market::Price(OneOrAllMarkets::All)) =>
+			Call::Markets(MarketQuery::Price(OneOrAllMarkets::All)) =>
 				files.find(|p| p.ends_with("markets/price-all.json")).unwrap(),
-			Call::Markets(Market::Trades) => files.find(|p| p.ends_with("markets/trades.json")).unwrap(),
-			Call::Markets(Market::TwentyFourHourSummary(OneOrAllMarkets::One)) =>
+			Call::Markets(MarketQuery::Trades) => files.find(|p| p.ends_with("markets/trades.json")).unwrap(),
+			Call::Markets(MarketQuery::TwentyFourHourSummary(OneOrAllMarkets::One)) =>
 				files.find(|p| p.ends_with("markets/24h-summary.json")).unwrap(),
-			Call::Markets(Market::TwentyFourHourSummary(OneOrAllMarkets::All)) =>
+			Call::Markets(MarketQuery::TwentyFourHourSummary(OneOrAllMarkets::All)) =>
 				files.find(|p| p.ends_with("markets/24h-summary-all.json")).unwrap(),
-			Call::Markets(Market::Orderbook(OrderbookCall::Book)) =>
+			Call::Markets(MarketQuery::Orderbook(OrderbookCall::Book)) =>
 				files.find(|p| p.ends_with("markets/orderbook.json")).unwrap(),
-			Call::Markets(Market::Orderbook(OrderbookCall::Liquidity)) =>
+			Call::Markets(MarketQuery::Orderbook(OrderbookCall::Liquidity)) =>
 				files.find(|p| p.ends_with("markets/orderbook-liquidity.json")).unwrap(),
-			Call::Markets(Market::Orderbook(OrderbookCall::Calculator)) =>
+			Call::Markets(MarketQuery::Orderbook(OrderbookCall::Calculator)) =>
 				files.find(|p| p.ends_with("markets/orderbook-calculator.json")).unwrap(),
-			Call::Markets(Market::Ohlc) => files.find(|p| p.ends_with("markets/ohlc.json")).unwrap(),
+			Call::Markets(MarketQuery::Ohlc) => files.find(|p| p.ends_with("markets/ohlc.json")).unwrap(),
 			Call::Pairs(Pairs::List) => files.find(|p| p.ends_with("pairs/list.json")).unwrap(),
 			Call::Pairs(Pairs::Details) => files.find(|p| p.ends_with("pairs/details.json")).unwrap(),
 		};

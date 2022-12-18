@@ -15,7 +15,7 @@ pub enum Exchange {
 	Luno,
 	#[serde(rename = "gateio")]
 	Gateio,
-	#[serde(alias = "Kraken")]
+	#[serde(alias = "Bitfinex")]
 	#[serde(rename = "bitfinex")]
 	Bitfinex,
 	#[serde(alias = "Kraken")]
@@ -95,34 +95,26 @@ pub struct ExchangeDetails {
 	routes: SingleOrMultipleRoutes,
 }
 
-#[derive(Serialize, Deserialize, Debug)]
-pub enum SingleOrMultipleRoutes {
-	#[serde(rename = "route")]
-	Single(Route),
-	#[serde(rename = "routes")]
-	Multiple(HashMap<String, Route>),
-}
-
 #[cfg(test)]
 mod tests {
 	use super::*;
 	use crate::tests::{data_prelude::*, prelude::*};
 
-	#[test]
-	fn test_exchange_list_deserialization() {
-		let list = load_test_data(Call::Exchanges(Exchanges::List));
+	#[tokio::test]
+	async fn test_exchange_list_deserialization() {
+		let list = test_data(Call::Exchanges(Exchanges::List)).await;
 		let _: Response<Vec<ExchangeDetails>> = assert_ok!(serde_json::from_slice(list.as_slice()));
 	}
 
-	#[test]
-	fn test_exchange_details_deserialization() {
-		let details = load_test_data(Call::Exchanges(Exchanges::Details));
+	#[tokio::test]
+	async fn test_exchange_details_deserialization() {
+		let details = test_data(Call::Exchanges(Exchanges::Details)).await;
 		let _: Response<ExchangeDetails> = assert_ok!(serde_json::from_slice(details.as_slice()));
 	}
 
-	#[test]
-	fn test_exchange_market_deserialization() {
-		let market = load_test_data(Call::Exchanges(Exchanges::Markets));
-		let _: Response<Vec<MarketAsset>> = assert_ok!(serde_json::from_slice(market.as_slice()));
+	#[tokio::test]
+	async fn test_exchange_market_deserialization() {
+		let market = test_data(Call::Exchanges(Exchanges::Markets)).await;
+		let _: Response<Vec<Market>> = assert_ok!(serde_json::from_slice(market.as_slice()));
 	}
 }

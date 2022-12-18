@@ -1,6 +1,6 @@
 use hyper::Uri;
 use serde::{Deserialize, Serialize};
-use std::borrow::Cow;
+use std::{borrow::Cow, collections::HashMap};
 
 mod assets;
 mod exchanges;
@@ -62,6 +62,16 @@ pub enum RouteType {
 	OHLC,
 	#[serde(rename = "markets")]
 	Markets,
+}
+
+//TODO: Can deserialize this into Vec<Endpoint> instead of this enum. It would make
+// these routes much more useful, since once could actually query them immediately.
+#[derive(Serialize, Deserialize, Debug, PartialEq)]
+pub enum SingleOrMultipleRoutes {
+	#[serde(rename = "route")]
+	Single(Route),
+	#[serde(rename = "routes")]
+	Multiple(HashMap<String, Route>),
 }
 
 #[cfg(test)]

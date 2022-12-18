@@ -16,6 +16,10 @@ pub enum ApiError {
 	REST(#[from] hyper::Error),
 	#[error("{}: {}", .0, .0.to_string())]
 	Http(#[from] http::Error),
+
+	#[cfg(test)]
+	#[error(transparent)]
+	UrlParse(#[from] url::ParseError),
 }
 
 impl ApiError {

@@ -4,7 +4,7 @@ use crate::api::{Endpoint, PathParams};
 use derive_builder::Builder;
 use std::borrow::Cow;
 
-#[derive(Debug, Builder)]
+#[derive(Debug, Builder, PartialEq)]
 #[builder(setter(strip_option))]
 pub struct PairDetailsRequest<'a> {
 	/// If the request is paginate, the previously received cursor value.
@@ -34,7 +34,7 @@ impl<'a> Endpoint for PairDetailsRequest<'a> {
 mod tests {
 	use super::*;
 	use crate::{
-		prelude::{CryptowatchClient, PairDetails, Query, RestClient},
+		prelude::{CryptowatchClient, CryptowatchRestClient, PairDetails, Query},
 		tests::prelude::*,
 	};
 
@@ -48,12 +48,12 @@ mod tests {
 		assert!(matches!(PairDetailsRequest::builder().build(), Err(_)));
 	}
 
-	#[test]
-	fn endpoint() {
+	#[tokio::test]
+	async fn endpoint() {
 		init();
-		let rest_client = RestClient::with_public().unwrap();
+		let rest_client = CryptowatchRestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
 		let endpoint = PairDetailsRequest::builder().pair("btceur").build().unwrap();
-		let _: PairDetails = tokio_test::block_on(endpoint.query(&client)).unwrap();
+		let _: PairDetails = endpoint.query(&client).await.unwrap();
 	}
 }

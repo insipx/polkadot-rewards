@@ -6,7 +6,7 @@ use std::borrow::Cow;
 
 #[derive(Debug, Builder, PartialEq)]
 #[builder(setter(strip_option))]
-pub struct AssetListRequest<'a> {
+pub struct MarketListRequest<'a> {
 	/// If the request is paginate, the previously received cursor value.
 	#[builder(setter(into), default)]
 	cursor: Option<Cow<'a, str>>,
@@ -15,16 +15,16 @@ pub struct AssetListRequest<'a> {
 	limit: Option<u64>,
 }
 
-impl<'a> AssetListRequest<'a> {
-	/// Create a builder for AssetList
-	pub fn builder() -> AssetListRequestBuilder<'a> {
-		AssetListRequestBuilder::default()
+impl<'a> MarketListRequest<'a> {
+	/// Create a builder for MarketList
+	pub fn builder() -> MarketListRequestBuilder<'a> {
+		MarketListRequestBuilder::default()
 	}
 }
 
-impl<'a> Endpoint for AssetListRequest<'a> {
+impl<'a> Endpoint for MarketListRequest<'a> {
 	fn endpoint(&self) -> Cow<'static, str> {
-		"assets".into()
+		"markets".into()
 	}
 
 	fn parameters(&self) -> QueryParams {
@@ -39,13 +39,19 @@ impl<'a> Endpoint for AssetListRequest<'a> {
 mod tests {
 	use super::*;
 	use crate::{
-		prelude::{Asset, CryptowatchClient, CryptowatchRestClient, Query},
+		prelude::{CryptowatchClient, CryptowatchRestClient, Market, Query},
 		tests::prelude::*,
 	};
 
 	#[test]
-	fn can_build() {
-		AssetListRequest::builder().build().unwrap();
+	fn builder_is_sufficient() {
+		MarketListRequest::builder().build().unwrap();
+	}
+
+	#[test]
+	fn params_work() {
+		let build = MarketListRequest::builder().limit(1).cursor("test").build().unwrap();
+		assert_eq!(build, MarketListRequest { cursor: Some("test".into()), limit: Some(1) });
 	}
 
 	#[tokio::test]
@@ -53,8 +59,8 @@ mod tests {
 		init();
 		let rest_client = CryptowatchRestClient::with_public().unwrap();
 		let client = CryptowatchClient::new_http(rest_client);
-		let endpoint = AssetListRequest::builder().build().unwrap();
-		let assets: Vec<Asset> = endpoint.query(&client).await.unwrap();
+		let endpoint = MarketListRequest::builder().build().unwrap();
+		let assets: Vec<Market> = endpoint.query(&client).await.unwrap();
 		assert!(!assets.is_empty());
 	}
 }
