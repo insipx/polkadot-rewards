@@ -979,29 +979,17 @@ checksum = "a507befe795404456341dfab10cef66ead4c041f62b8b11bbb92bffe5d0953e0"
 
 [[package]]
 name = "sp-arithmetic"
-version = "7.0.0"
+version = "10.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "bd6413ad82d166d40d995aa95ca6e0cbb473f973d3a2f0b433ae19813048c6c1"
+checksum = "4bb16ffd6331b8cecb158bde7dd8803d3aec7c21166a9b679814a9f2b983dea5"
 dependencies = [
  "integer-sqrt",
  "num-traits",
  "parity-scale-codec",
  "scale-info",
  "serde",
- "sp-debug-derive",
  "sp-std",
  "static_assertions",
-]
-
-[[package]]
-name = "sp-debug-derive"
-version = "6.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "66fb9dc63d54de7d7bed62a505b6e0bd66c122525ea1abb348f6564717c3df2d"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
 ]
 
 [[package]]
