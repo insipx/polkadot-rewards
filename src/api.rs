@@ -93,9 +93,9 @@ impl<'a> Api<'a> {
 				.set(&key, &serde_json::to_string(&price).expect("Failed to serialize freshly-deserialized"))?;
 
 			// coingecko allows 50 requests per minute
-			// it seems to be a bit oversensitive. We therefore restrain ourselfs
+			// it seems to be a bit oversensitive. We therefore restrain ourselves
 			// to 30 requests a minute.
-			std::thread::sleep(std::time::Duration::from_millis(2000));
+			std::thread::sleep(std::time::Duration::from_millis(5000));
 
 			price
 		};
