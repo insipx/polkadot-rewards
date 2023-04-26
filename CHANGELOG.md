@@ -8,6 +8,14 @@ and this project adheres to
 
 ## [Unreleased]
 
+## [v0.5.4] - 2023-04-24
+
+### Fixed
+- ([#179](https://github.com/insipx/polkadot-rewards/pull/179)) Increase pricing pause to 5s from 2s.
+
+### Changed
+- update Cargo dependencies
+
 ## [v0.5.3] - 2022-12-06
 
 ### Added
