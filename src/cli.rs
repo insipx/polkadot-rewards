@@ -82,7 +82,7 @@ pub struct App {
 
 fn default_user_agent() -> String {
 	let version = env!("CARGO_PKG_VERSION");
-	format!("polkadot-rewards/{}", version)
+	format!("polkadot-rewards/{version}")
 }
 
 fn default_file_location() -> PathBuf {
@@ -196,7 +196,7 @@ pub fn app() -> Result<(), Error> {
 		if app.stdout {
 			progress.map(|p| p.finish_with_message("Writing data to STDOUT"));
 		} else {
-			progress.map(move |p| p.finish_with_message(format!("Wrote data to file: {}", file_name)));
+			progress.map(move |p| p.finish_with_message(format!("Wrote data to file: {file_name}")));
 		}
 	} else {
 		cli_table::print_stdout(rewards.with_title())?;
@@ -210,7 +210,7 @@ pub fn app() -> Result<(), Error> {
 fn create_grouped_rewards(api: &Api, app: &App) -> Result<Vec<GroupedCsvRecord>, Error> {
 	let rewards = api.fetch_all_rewards().context("Failed to fetch rewards.")?;
 	let prices = if app.no_price {
-		(0..rewards.len()).into_iter().map(|_| None).collect::<Vec<Option<_>>>()
+		(0..rewards.len()).map(|_| None).collect::<Vec<Option<_>>>()
 	} else {
 		let dates: Vec<NaiveDate> = rewards.iter().map(|r| r.day).collect();
 		api.fetch_prices(dates.as_slice()).context("Failed to fetch prices.")?.into_iter().map(Some).collect::<Vec<_>>()
@@ -223,7 +223,7 @@ fn create_grouped_rewards(api: &Api, app: &App) -> Result<Vec<GroupedCsvRecord>,
 		.zip(&prices)
 		.map(|(reward, price)| {
 			Ok(GroupedCsvRecord {
-				block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{}+{}", acc, i))[1..]
+				block_nums: reward.block_nums.iter().fold(String::new(), |acc, i| format!("{acc}+{i}"))[1..]
 					.to_string(),
 				date: reward.day.format(&app.date_format).to_string(),
 				amount: app.network.amount_to_network(&reward.amount)?,
@@ -280,5 +280,6 @@ fn construct_progress_bar() -> Result<ProgressBar, Error> {
 
 // constructs a file name in the format: `dot-address-from_date-to_date-rewards.csv`
 fn construct_file_name(app: &App, from: String, to: String) -> String {
-	format!("{}->{}-{}-{}--{}-rewards", app.network.id(), app.currency, &app.address, from, to)
+	let App { network, currency, address, .. } = app;
+	format!("{}->{currency}-{address}-{from}--{to}-rewards", network.id())
 }
