@@ -42,13 +42,13 @@ const REWARD_SLASH: &str = "scan/account/reward_slash";
 
 fn get_endpoint(network: &Network, end: &str) -> String {
 	match network {
-		Network::Polkadot => format!("{}{}", POLKADOT_ENDPOINT, end),
-		Network::Kusama => format!("{}{}", KUSAMA_ENDPOINT, end),
-		Network::Moonriver => format!("{}{}", MOONRIVER_ENDPOINT, end),
-		Network::Moonbeam => format!("{}{}", MOONBEAM_ENDPOINT, end),
-		Network::Astar => format!("{}{}", ASTAR_ENDPOINT, end),
-		Network::Calamari => format!("{}{}", CALAMARI_ENDPOINT, end),
-		Network::Aleph => format!("{}{}", ALEPH_ENDPOINT, end),
+		Network::Polkadot => format!("{POLKADOT_ENDPOINT}{end}"),
+		Network::Kusama => format!("{KUSAMA_ENDPOINT}{end}"),
+		Network::Moonriver => format!("{MOONRIVER_ENDPOINT}{end}"),
+		Network::Moonbeam => format!("{MOONBEAM_ENDPOINT}{end}"),
+		Network::Astar => format!("{ASTAR_ENDPOINT}{end}"),
+		Network::Calamari => format!("{CALAMARI_ENDPOINT}{end}"),
+		Network::Aleph => format!("{ALEPH_ENDPOINT}{end}"),
 	}
 }
 
@@ -118,11 +118,11 @@ impl<'a> Api<'a> {
 				"row": count
 			}))
 			.with_context(|| {
-				format!("Failed to fetch reward for address={} page={} row={}", self.app.address, page, count,)
+				format!("Failed to fetch reward for address={} page={page} row={count}", self.app.address)
 			})?
 			.into_string()?;
 		let rewards: ApiResponse<List<Reward>> =
-			serde_json::from_str(&rewards).with_context(|| format!("Failed to decode response: {}", rewards))?;
+			serde_json::from_str(&rewards).with_context(|| format!("Failed to decode response: {rewards}"))?;
 		Ok(rewards.consume())
 	}
 
@@ -153,7 +153,7 @@ impl<'a> Api<'a> {
 				self.progress.map(|p| p.inc(1));
 				// subscan allows 10 requests per second
 				std::thread::sleep(std::time::Duration::from_millis(300));
-				self.rewards(i, PAGE_SIZE).with_context(|| format!("Failed to fetch page {}", i)).unwrap().list
+				self.rewards(i, PAGE_SIZE).with_context(|| format!("Failed to fetch page {i}")).unwrap().list
 			})
 			.take_while(|list| list.is_some())
 			.flatten()
@@ -202,7 +202,7 @@ impl<'a> Api<'a> {
 				.or_insert(value);
 		}
 
-		Ok(merged.into_iter().map(|(_k, v)| v).rev().collect())
+		Ok(merged.into_values().rev().collect())
 	}
 
 	pub fn fetch_all_rewards_separated(&self) -> Result<Vec<SeparatedRewardEntry>, Error> {

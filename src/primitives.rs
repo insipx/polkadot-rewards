@@ -165,7 +165,7 @@ impl OptionalPrice {
 impl fmt::Display for OptionalPrice {
 	fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
 		if let Some(p) = self.0 {
-			write!(f, "{}", p)
+			write!(f, "{p}")
 		} else {
 			write!(f, "")
 		}
