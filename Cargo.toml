@@ -1,6 +1,6 @@
 [package]
 name = "polkadot-rewards"
-version = "0.5.3"
+version = "0.5.4"
 authors = ["Andrew Plaza <andrew.plaza@parity.io>"]
 edition = "2018"
 description = "Handy CLI for all your Polkadot ecosystem staking rewards needs."
