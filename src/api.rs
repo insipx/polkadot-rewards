@@ -151,11 +151,11 @@ impl<'a> Api<'a> {
 		let rewards: Vec<Reward> = (0..)
 			.map(|i| {
 				self.progress.map(|p| p.inc(1));
-				// subscan allows 10 requests per second
+				// subscan allows 5 requests per second.
 				std::thread::sleep(std::time::Duration::from_millis(300));
 				self.rewards(i, PAGE_SIZE).with_context(|| format!("Failed to fetch page {i}")).unwrap().list
 			})
-			.take_while(|list| list.is_some())
+			.take_while(|list| list.as_ref().map_or(false, |l| !l.is_empty()))
 			.flatten()
 			.flatten()
 			.filter(|r| {

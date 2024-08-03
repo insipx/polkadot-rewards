@@ -720,7 +720,7 @@ checksum = "e0a7ae3ac2f1173085d398531c705756c94a4c56843785df85a60c1a0afac116"
 
 [[package]]
 name = "polkadot-rewards"
-version = "0.5.3"
+version = "0.5.4"
 dependencies = [
  "anyhow",
  "argh",
